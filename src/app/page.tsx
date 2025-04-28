@@ -7,6 +7,50 @@ import {Mail} from 'lucide-react';
 export default function Home() {
   return (
     <div className="container mx-auto py-10">
+      <header className="sticky top-0 bg-background z-10 py-4 border-b">
+        <div className="container mx-auto">
+          <nav className="flex justify-between items-center">
+            <ul className="flex space-x-6">
+              <li>
+                <a href="#home" className="hover:text-accent">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#professional-summary" className="hover:text-accent">
+                  Professional Summary
+                </a>
+              </li>
+              <li>
+                <a href="#work-experience" className="hover:text-accent">
+                  Work Experience
+                </a>
+              </li>
+              <li>
+                <a href="#skills" className="hover:text-accent">
+                  Skills
+                </a>
+              </li>
+              <li>
+                <a href="#projects" className="hover:text-accent">
+                  Projects
+                </a>
+              </li>
+              <li>
+                <a href="#certifications" className="hover:text-accent">
+                  Certifications
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-accent">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
       <section id="home" className="mb-16">
         <h1 className="text-4xl font-bold tracking-tight mb-4">Aasim Malik</h1>
         <p className="text-lg text-muted-foreground">
