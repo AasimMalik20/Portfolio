@@ -1,3 +1,5 @@
+'use client';
+
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Mail} from 'lucide-react';
@@ -5,7 +7,7 @@ import {Mail} from 'lucide-react';
 export default function Home() {
   return (
     <div className="container mx-auto py-10">
-      <section className="mb-16">
+      <section id="home" className="mb-16">
         <h1 className="text-4xl font-bold tracking-tight mb-4">Aasim Malik</h1>
         <p className="text-lg text-muted-foreground">
           Google Cloud Certified Professional Cloud Architect with expertise in
@@ -13,7 +15,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="mb-16">
+      <section id="professional-summary" className="mb-16">
         <h2 className="text-3xl font-semibold tracking-tight mb-4">
           Professional Summary
         </h2>
@@ -39,7 +41,48 @@ export default function Home() {
         </Card>
       </section>
 
-      <section className="mb-16">
+      <section id="work-experience" className="mb-16">
+        <h2 className="text-3xl font-semibold tracking-tight mb-4">
+          Work Experience
+        </h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Google</CardTitle>
+            <CardDescription>
+              Cloud Architect
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Designed and implemented cloud solutions for enterprise clients.
+              Reduced cloud costs by 15% and improved system reliability by 40%.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="skills" className="mb-16">
+        <h2 className="text-3xl font-semibold tracking-tight mb-4">Skills</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Technical Skills</CardTitle>
+            <CardDescription>
+              List of my technical skills.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc list-inside">
+              <li>GCP Services</li>
+              <li>Cloud Architecture</li>
+              <li>Infrastructure Optimization</li>
+              <li>Data Pipelines</li>
+              <li>Serverless Architecture</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="projects" className="mb-16">
         <h2 className="text-3xl font-semibold tracking-tight mb-4">
           Project Showcase
         </h2>
@@ -124,7 +167,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
+      <section id="certifications" className="mb-16">
+        <h2 className="text-3xl font-semibold tracking-tight mb-4">
+          Certifications
+        </h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Google Cloud Certified Professional Cloud Architect</CardTitle>
+            <CardDescription>
+              Google Cloud Certified Professional Cloud Architect
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Google Cloud Certified Professional Cloud Architect with expertise
+              in designing and implementing scalable, secure cloud solutions.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="contact" className="mb-16">
         <h2 className="text-3xl font-semibold tracking-tight mb-4">
           Contact Information
         </h2>
