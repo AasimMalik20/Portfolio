@@ -43,6 +43,9 @@ import {
   ChevronRight, // Import ChevronRight
   Menu, // Import Menu for mobile
   Star, // Icon for Core Competencies
+  Phone, // Added for WhatsApp
+  Twitter, // Added for Twitter
+  BookOpen, // Added for Medium
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
@@ -1001,6 +1004,7 @@ export default function Home() {
                     </p>
                  </div>
                 <div className="flex flex-wrap justify-center gap-3 mt-4">
+                    {/* Email Button */}
                     <Button variant="default" asChild>
                       <a
                         href="mailto:aasimmalik29@gmail.com"
@@ -1009,18 +1013,39 @@ export default function Home() {
                         Send Email <Mail className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
+                    {/* LinkedIn Button */}
                     <Button variant="outline" asChild>
-                        {/* Ensure LinkedIn URL is correct */}
+                        {/* Correct LinkedIn URL from resume */}
                         <a href="https://www.linkedin.com/in/aasim-malik-b6a008224/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                         </a>
                     </Button>
+                    {/* GitHub Button */}
                      <Button variant="outline" asChild>
-                         {/* Ensure GitHub URL is correct */}
-                        <a href="https://github.com/aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                         {/* Correct GitHub URL */}
+                        <a href="https://github.com/AasimMalik20" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
                     </Button>
+                    {/* WhatsApp Button */}
+                    <Button variant="outline" asChild>
+                      <a href="https://wa.me/919176462019" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <Phone className="mr-2 h-4 w-4" /> WhatsApp {/* Using Phone icon as proxy */}
+                      </a>
+                    </Button>
+                    {/* Twitter Button */}
+                    <Button variant="outline" asChild>
+                      <a href="https://x.com/AasimMalik4957?t=b-o3zb-2ZiYHZe2s5AYnLQ&s=09" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <Twitter className="mr-2 h-4 w-4" /> Twitter
+                      </a>
+                    </Button>
+                    {/* Medium Button */}
+                    <Button variant="outline" asChild>
+                      <a href="https://medium.com/@aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <BookOpen className="mr-2 h-4 w-4" /> Medium {/* Using BookOpen as proxy */}
+                      </a>
+                    </Button>
+
                     {/* Add Portfolio link if available (e.g., link to this site itself or another) */}
                      {/* <Button variant="outline" asChild>
                         <a href="#" target="_blank" rel="noopener noreferrer"> Portfolio </a>
