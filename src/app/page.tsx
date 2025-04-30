@@ -51,6 +51,7 @@ import {
   SheetTrigger,
   SheetClose // Import SheetClose
 } from "@/components/ui/sheet"; // Import Sheet components for mobile menu
+import { Separator } from '@/components/ui/separator'; // Import Separator
 
 // Placeholder Logo Component
 const Logo = () => (
@@ -98,27 +99,37 @@ const technologies: { name: string; icon: LucideIcon }[] = [
   { name: 'Bash', icon: Terminal },
 ];
 
-// Extract skills from resume for the Skills section
-const skillsList = [
-  // Cloud Platforms
-  'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure',
-  // Cloud Services
-  'Compute Engine', 'Cloud Storage', 'Cloud SQL', 'BigQuery', 'Cloud Functions', 'Pub/Sub', 'Cloud Run',
-  // Infrastructure as Code
-  'Terraform', 'Google Cloud Deployment Manager',
-  // Containerization
-  'Docker', 'Kubernetes', 'Google Kubernetes Engine (GKE)',
-  // Security & Compliance
-  'IAM', 'VPC Service Controls', 'Cloud Security Command Center', 'Data Encryption',
-  // Networking
-  'VPC', 'Cloud Load Balancing', 'Cloud CDN', 'Cloud Interconnect', 'Cloud DNS',
-  // Database Systems
-  'Cloud SQL', 'Cloud Spanner', 'Firestore', 'Bigtable', 'BigQuery',
-  // Monitoring & Analytics
-  'Cloud Monitoring', 'Cloud Logging', 'Error Reporting', 'Cloud Trace',
-  // Scripting & Programming
-  'Python', 'Bash',
-];
+// Categorized Skills for improved display
+const categorizedSkills = {
+  'Cloud Platforms': [
+    'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure',
+   ],
+  'Cloud Services': [
+     'Compute Engine', 'Cloud Storage', 'Cloud SQL', 'BigQuery', 'Cloud Functions', 'Pub/Sub', 'Cloud Run',
+   ],
+  'Infrastructure as Code': [
+    'Terraform', 'Google Cloud Deployment Manager',
+  ],
+  'Containerization': [
+     'Docker', 'Kubernetes', 'Google Kubernetes Engine (GKE)',
+  ],
+  'Security & Compliance': [
+    'IAM', 'VPC Service Controls', 'Cloud Security Command Center', 'Data Encryption',
+  ],
+  'Networking': [
+     'VPC', 'Cloud Load Balancing', 'Cloud CDN', 'Cloud Interconnect', 'Cloud DNS',
+  ],
+  'Database Systems': [
+    'Cloud SQL', 'Cloud Spanner', 'Firestore', 'Bigtable', 'BigQuery', // Note: BigQuery also listed under Services
+  ],
+  'Monitoring & Analytics': [
+    'Cloud Monitoring', 'Cloud Logging', 'Error Reporting', 'Cloud Trace',
+  ],
+  'Scripting & Programming': [
+    'Python', 'Bash',
+  ],
+};
+
 
 // Core Experience Data (For Expertise Section)
 const coreExperiences = [
@@ -520,30 +531,40 @@ export default function Home() {
         </section>
 
 
-        {/* Skills Section */}
-        <section id="skills" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
-          <div className="container mx-auto px-4 md:px-6">
-             <div className="flex justify-center items-center gap-2 mb-8">
-                <List className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-semibold tracking-tight text-center">
-                 Skills & Expertise
-                </h2>
-             </div>
-             <Card className="max-w-3xl mx-auto shadow-md border border-border">
-               <CardHeader>
-                 <CardTitle>Technical Skills</CardTitle>
-                 {/* Removed unnecessary description */}
-               </CardHeader>
-               <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {skillsList.map((skill, index) => (
-                       <Badge key={index} variant="secondary">{skill}</Badge>
-                    ))}
-                  </div>
-               </CardContent>
-             </Card>
-           </div>
+        {/* Skills Section - Updated Layout */}
+        <section id="skills" className="py-16 bg-secondary">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="flex justify-center items-center gap-2 mb-12">
+                    <List className="h-6 w-6 text-primary" />
+                    <h2 className="text-3xl font-semibold tracking-tight text-center">
+                        Skills & Expertise
+                    </h2>
+                </div>
+                <Card className="max-w-5xl mx-auto shadow-md border border-border bg-card/80 backdrop-blur-sm">
+                    <CardContent className="p-6 md:p-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+                            {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
+                                <div key={catIndex} className="space-y-4">
+                                    <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2 mb-3">
+                                        {category}
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {skills.map((skill, skillIndex) => (
+                                            <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
+                                                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
+                                                {skill}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    {/* Add separator between categories visually if needed, handled by grid gap */}
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
         </section>
+
 
         {/* Projects Section */}
         <section id="projects" className="py-16 bg-background"> {/* Changed bg for alternation */}
@@ -838,3 +859,4 @@ export default function Home() {
     </div>
   );
 }
+
