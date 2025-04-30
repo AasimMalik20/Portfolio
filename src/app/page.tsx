@@ -8,6 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter, // Import CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -233,20 +234,81 @@ const workExperiences = [
   },
 ];
 
+// Project Data
+const projects = [
+  {
+    title: 'Cloud-Based RAG Application with Llama Index',
+    date: 'Apr 2024 - May 2024',
+    description: 'Built a production-ready RAG application leveraging serverless GCP services and Vertex AI for efficient, scalable, and secure AI-powered functionality.',
+    points: [
+      'Built a production-ready RAG application using Google Cloud Run, Cloud Storage, and Vertex AI.',
+      'Implemented serverless architecture with automatic scaling to handle variable workloads efficiently.',
+      'Designed secure API endpoints with Cloud IAM authentication and authorization.',
+      'Optimized cloud resource usage to minimize costs while maintaining high performance.',
+      'Utilized Google Cloud Monitoring for comprehensive application observability.',
+    ],
+    tags: ['GCP', 'Cloud Run', 'Cloud Storage', 'Vertex AI', 'Serverless', 'Python', 'Llama Index', 'RAG'],
+    githubLink: null, // Add link if available e.g., "https://github.com/..."
+    liveLink: null,   // Add link if available
+  },
+  {
+    title: 'Secure Cloud Data Platform',
+    date: 'Dec 2022 - Feb 2023',
+    description: 'Architected a secure and compliant data platform on GCP, implementing robust security measures and optimizing data processing workflows.',
+    points: [
+      'Architected a secure data platform on GCP using BigQuery, Cloud Storage, and Data Catalog.',
+      'Implemented column-level security and data masking for sensitive information.',
+      'Designed data pipelines using Cloud Dataflow for efficient ETL processes.',
+      'Created comprehensive data governance framework compliant with industry regulations.',
+      'Reduced data processing costs by 35% through query optimization and storage tiering.',
+    ],
+    tags: ['GCP', 'BigQuery', 'Cloud Storage', 'Data Catalog', 'Dataflow', 'Security', 'Governance', 'ETL'],
+    githubLink: null,
+    liveLink: null,
+  },
+  {
+    title: 'Multi-Region Cloud Infrastructure',
+    date: 'Jul 2022 - Nov 2022',
+    description: 'Designed and deployed a highly available multi-region cloud infrastructure for a critical IBM application, ensuring business continuity and optimized performance.',
+    points: [
+      'Designed and implemented a multi-region cloud architecture for high availability.',
+      'Created disaster recovery procedures with RPO/RTO targets aligned to business requirements.',
+      'Implemented global load balancing and CDN for optimized content delivery.',
+      'Established monitoring and alerting across regions with centralized logging.',
+      'Achieved 99.99% uptime for critical business applications.',
+    ],
+    tags: ['Cloud Architecture', 'High Availability', 'Disaster Recovery', 'Load Balancing', 'CDN', 'Monitoring', 'GCP'], // Added GCP tag based on context
+    githubLink: null,
+    liveLink: null,
+  },
+];
 
 export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0); // State for carousel, starts at 0 (latest experience)
+  const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0); // State for experience carousel
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
+  const handlePrevExperience = () => {
+    setCurrentExperienceIndex((prevIndex) =>
       prevIndex === 0 ? workExperiences.length - 1 : prevIndex - 1
     );
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
+  const handleNextExperience = () => {
+    setCurrentExperienceIndex((prevIndex) =>
       prevIndex === workExperiences.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePrevProject = () => {
+    setCurrentProjectIndex((prevIndex) =>
+      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextProject = () => {
+    setCurrentProjectIndex((prevIndex) =>
+      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -465,7 +527,7 @@ export default function Home() {
                     <div className="relative h-[500px] overflow-visible"> {/* Allow overflow for side cards */}
                         {workExperiences.map((exp, index) => {
                             // Calculate offset relative to the current index
-                            let offset = index - currentIndex;
+                            let offset = index - currentExperienceIndex;
                             const totalItems = workExperiences.length;
 
                             // Handle wrapping for circular effect
@@ -493,13 +555,13 @@ export default function Home() {
                                         transform: `translateX(${translateX}%) scale(${scale})`,
                                         opacity: opacity,
                                         zIndex: zIndex,
-                                        pointerEvents: index === currentIndex ? 'auto' : 'none', // Interaction only for current card
+                                        pointerEvents: index === currentExperienceIndex ? 'auto' : 'none', // Interaction only for current card
                                     }}
                                 >
                                     <Card className={cn(
                                         "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[450px] flex flex-col", // Fixed height and flex col
                                         "bg-gradient-to-br from-background to-secondary/30", // Subtle gradient background
-                                        index !== currentIndex && "blur-[1px]" // Slightly blur non-active cards
+                                        index !== currentExperienceIndex && "blur-[1px]" // Slightly blur non-active cards
                                     )}>
                                         <CardHeader>
                                             <div className="flex justify-between items-start flex-wrap gap-2">
@@ -531,7 +593,7 @@ export default function Home() {
                         variant="outline"
                         size="icon"
                         className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
-                        onClick={handlePrev}
+                        onClick={handlePrevExperience}
                         aria-label="Previous Experience"
                     >
                         <ChevronLeft className="h-6 w-6" />
@@ -540,7 +602,7 @@ export default function Home() {
                         variant="outline"
                         size="icon"
                         className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
-                        onClick={handleNext}
+                        onClick={handleNextExperience}
                         aria-label="Next Experience"
                     >
                         <ChevronRight className="h-6 w-6" />
@@ -612,10 +674,8 @@ export default function Home() {
             </div>
         </section>
 
-
-
-        {/* Projects Section */}
-        <section id="projects" className="py-16 bg-background"> {/* Changed bg for alternation */}
+        {/* Projects Section - Carousel */}
+        <section id="projects" className="py-16 bg-background overflow-hidden"> {/* Changed bg and added overflow */}
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex justify-center items-center gap-2 mb-12">
                  <FolderGit2 className="h-6 w-6 text-primary" />
@@ -623,109 +683,110 @@ export default function Home() {
                   Project Showcase
                  </h2>
             </div>
-            <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
-              {/* Project 1 */}
-              <Card className="shadow-sm border border-border flex flex-col">
-                <CardHeader>
-                  <CardTitle>
-                    Cloud-Based RAG Application with Llama Index
-                  </CardTitle>
-                   <CardDescription>Apr 2024 - May 2024</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
-                    <li>Built a production-ready RAG application using Google Cloud Run, Cloud Storage, and Vertex AI.</li>
-                    <li>Implemented serverless architecture with automatic scaling to handle variable workloads efficiently.</li>
-                    <li>Designed secure API endpoints with Cloud IAM authentication and authorization.</li>
-                    <li>Optimized cloud resource usage to minimize costs while maintaining high performance.</li>
-                     <li>Utilized Google Cloud Monitoring for comprehensive application observability.</li>
-                  </ul>
-                   <div className="mt-4 flex flex-wrap gap-1">
-                       <Badge variant="outline" className="text-xs">GCP</Badge>
-                       <Badge variant="outline" className="text-xs">Cloud Run</Badge>
-                       <Badge variant="outline" className="text-xs">Cloud Storage</Badge>
-                       <Badge variant="outline" className="text-xs">Vertex AI</Badge>
-                       <Badge variant="outline" className="text-xs">Serverless</Badge>
-                       <Badge variant="outline" className="text-xs">Python</Badge>
-                       <Badge variant="outline" className="text-xs">Llama Index</Badge>
-                   </div>
-                </CardContent>
-                 {/* Optional Links */}
-                 {/* <CardFooter className="pt-4 flex gap-2">
-                    <Button variant="link" size="sm" asChild>
-                       <a href="#" target="_blank" rel="noopener noreferrer">
-                          GitHub <Github className="ml-1 h-3 w-3" />
-                       </a>
-                    </Button>
-                 </CardFooter> */}
-              </Card>
 
-              {/* Project 2 */}
-              <Card className="shadow-sm border border-border flex flex-col">
-                <CardHeader>
-                  <CardTitle>Secure Cloud Data Platform</CardTitle>
-                  <CardDescription>Dec 2022 - Feb 2023</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                   <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
-                    <li>Architected a secure data platform on GCP using BigQuery, Cloud Storage, and Data Catalog.</li>
-                    <li>Implemented column-level security and data masking for sensitive information.</li>
-                    <li>Designed data pipelines using Cloud Dataflow for efficient ETL processes.</li>
-                    <li>Created comprehensive data governance framework compliant with industry regulations.</li>
-                    <li>Reduced data processing costs by 35% through query optimization and storage tiering.</li>
-                  </ul>
-                   <div className="mt-4 flex flex-wrap gap-1">
-                       <Badge variant="outline" className="text-xs">GCP</Badge>
-                       <Badge variant="outline" className="text-xs">BigQuery</Badge>
-                       <Badge variant="outline" className="text-xs">Cloud Storage</Badge>
-                       <Badge variant="outline" className="text-xs">Data Catalog</Badge>
-                       <Badge variant="outline" className="text-xs">Dataflow</Badge>
-                       <Badge variant="outline" className="text-xs">Security</Badge>
-                       <Badge variant="outline" className="text-xs">Governance</Badge>
-                   </div>
-                </CardContent>
-                 {/* Optional Links */}
-                 {/* <CardFooter className="pt-4 flex gap-2">
-                    <Button variant="link" size="sm" asChild>
-                       <a href="#" target="_blank" rel="noopener noreferrer">
-                          GitHub <Github className="ml-1 h-3 w-3" />
-                       </a>
-                    </Button>
-                 </CardFooter> */}
-              </Card>
+            <div className="relative max-w-5xl mx-auto">
+                 {/* Use a fixed height container for projects */}
+                 <div className="relative h-[550px] overflow-visible"> {/* Adjust height as needed */}
+                    {projects.map((project, index) => {
+                        // Calculate offset relative to the current project index
+                        let offset = index - currentProjectIndex;
+                        const totalItems = projects.length;
 
-               {/* Project 3 */}
-              <Card className="shadow-sm border border-border flex flex-col">
-                <CardHeader>
-                  <CardTitle>Multi-Region Cloud Infrastructure</CardTitle>
-                  <CardDescription>Jul 2022 - Nov 2022 (Client: IBM)</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                   <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
-                    <li>Designed and implemented a multi-region cloud architecture for high availability.</li>
-                    <li>Created disaster recovery procedures with RPO/RTO targets aligned to business requirements.</li>
-                    <li>Implemented global load balancing and CDN for optimized content delivery.</li>
-                    <li>Established monitoring and alerting across regions with centralized logging.</li>
-                    <li>Achieved 99.99% uptime for critical business applications.</li>
-                   </ul>
-                    <div className="mt-4 flex flex-wrap gap-1">
-                       <Badge variant="outline" className="text-xs">Cloud Architecture</Badge>
-                       <Badge variant="outline" className="text-xs">High Availability</Badge>
-                       <Badge variant="outline" className="text-xs">Disaster Recovery</Badge>
-                       <Badge variant="outline" className="text-xs">Load Balancing</Badge>
-                       <Badge variant="outline" className="text-xs">CDN</Badge>
-                       <Badge variant="outline" className="text-xs">Monitoring</Badge>
-                   </div>
-                </CardContent>
-                 {/* Optional Links */}
-                 {/* <CardFooter className="pt-4 flex gap-2">
-                    <Button variant="link" size="sm" asChild>
-                       <a href="#" target="_blank" rel="noopener noreferrer">
-                          GitHub <Github className="ml-1 h-3 w-3" />
-                       </a>
-                    </Button>
-                 </CardFooter> */}
-              </Card>
+                        // Handle wrapping for circular effect
+                        if (offset > totalItems / 2) {
+                            offset -= totalItems;
+                        } else if (offset < -totalItems / 2) {
+                            offset += totalItems;
+                        }
+
+                        const scale = 1 - Math.abs(offset) * 0.1;
+                        const opacity = Math.max(0, 1 - Math.abs(offset) * 0.4);
+                        const zIndex = totalItems - Math.abs(offset);
+                        const translateX = offset * 75; // Adjust spacing
+
+                        // Skip rendering cards that are too far away
+                        if (Math.abs(offset) > 2) {
+                            return null;
+                        }
+
+                        return (
+                            <div
+                                key={index}
+                                className="absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center"
+                                style={{
+                                    transform: `translateX(${translateX}%) scale(${scale})`,
+                                    opacity: opacity,
+                                    zIndex: zIndex,
+                                    pointerEvents: index === currentProjectIndex ? 'auto' : 'none',
+                                }}
+                            >
+                                <Card className={cn(
+                                    "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[500px] flex flex-col", // Fixed height
+                                    "bg-gradient-to-br from-background to-secondary/30",
+                                    index !== currentProjectIndex && "blur-[1px]"
+                                )}>
+                                    <CardHeader>
+                                        <div className="flex justify-between items-start flex-wrap gap-2">
+                                            <CardTitle>{project.title}</CardTitle>
+                                            <Badge variant="outline">{project.date}</Badge>
+                                        </div>
+                                        <CardDescription className="pt-1">{project.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="flex-grow overflow-y-auto scrollbar-hide">
+                                        <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
+                                            {project.points.map((point, pIndex) => (
+                                                <li key={pIndex}>{point}</li>
+                                            ))}
+                                        </ul>
+                                        <div className="mt-4 flex flex-wrap gap-1">
+                                            {project.tags.map((tag, tIndex) => (
+                                                <Badge key={tIndex} variant="secondary" className="text-xs">{tag}</Badge> // Use secondary for tags
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                    {(project.githubLink || project.liveLink) && ( // Only show footer if links exist
+                                        <CardFooter className="pt-4 flex gap-2 border-t mt-auto">
+                                            {project.githubLink && (
+                                                <Button variant="link" size="sm" asChild>
+                                                   <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                                                      GitHub <Github className="ml-1 h-3 w-3" />
+                                                   </a>
+                                                </Button>
+                                            )}
+                                            {project.liveLink && (
+                                                <Button variant="link" size="sm" asChild>
+                                                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                                                      Live Demo <ArrowRight className="ml-1 h-3 w-3" />
+                                                   </a>
+                                                </Button>
+                                            )}
+                                        </CardFooter>
+                                    )}
+                                </Card>
+                            </div>
+                        );
+                    })}
+                 </div>
+
+                 {/* Navigation Arrows for Projects */}
+                 <Button
+                     variant="outline"
+                     size="icon"
+                     className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                     onClick={handlePrevProject}
+                     aria-label="Previous Project"
+                 >
+                     <ChevronLeft className="h-6 w-6" />
+                 </Button>
+                 <Button
+                     variant="outline"
+                     size="icon"
+                     className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                     onClick={handleNextProject}
+                     aria-label="Next Project"
+                 >
+                     <ChevronRight className="h-6 w-6" />
+                 </Button>
             </div>
           </div>
         </section>
