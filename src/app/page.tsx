@@ -24,6 +24,10 @@ import {
   Activity,
   Code,
   Terminal,
+  Linkedin, // Added LinkedIn
+  Github, // Added GitHub
+  School, // Added School for Education
+  GraduationCap, // Added GraduationCap for Education
 } from 'lucide-react'; // Added Download and technology icons
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react'; // Import LucideIcon type
@@ -59,7 +63,7 @@ const Logo = () => (
   </div>
 );
 
-// Define Technology Icons
+// Define Technology Icons based on resume
 const technologies: { name: string; icon: LucideIcon }[] = [
   { name: 'GCP', icon: Cloud },
   { name: 'OCI', icon: Database }, // Using Database as a proxy for Oracle Cloud
@@ -68,16 +72,38 @@ const technologies: { name: string; icon: LucideIcon }[] = [
   { name: 'Kubernetes/GKE', icon: ShipWheel },
   { name: 'Security', icon: ShieldCheck },
   { name: 'Networking', icon: Network },
-  { name: 'Databases', icon: DatabaseZap },
-  { name: 'Monitoring', icon: Activity },
+  { name: 'Databases', icon: DatabaseZap }, // e.g., Cloud SQL, Firestore, BigQuery
+  { name: 'Monitoring', icon: Activity }, // e.g., Cloud Monitoring, Logging
   { name: 'Python', icon: Code },
   { name: 'Bash', icon: Terminal },
+];
+
+// Extract skills from resume for the Skills section
+const skillsList = [
+  // Cloud Platforms
+  'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure',
+  // Cloud Services
+  'Compute Engine', 'Cloud Storage', 'Cloud SQL', 'BigQuery', 'Cloud Functions', 'Pub/Sub', 'Cloud Run',
+  // Infrastructure as Code
+  'Terraform', 'Google Cloud Deployment Manager',
+  // Containerization
+  'Docker', 'Kubernetes', 'Google Kubernetes Engine (GKE)',
+  // Security & Compliance
+  'IAM', 'VPC Service Controls', 'Cloud Security Command Center', 'Data Encryption',
+  // Networking
+  'VPC', 'Cloud Load Balancing', 'Cloud CDN', 'Cloud Interconnect', 'Cloud DNS',
+  // Database Systems
+  'Cloud SQL', 'Cloud Spanner', 'Firestore', 'Bigtable', 'BigQuery',
+  // Monitoring & Analytics
+  'Cloud Monitoring', 'Cloud Logging', 'Error Reporting', 'Cloud Trace',
+  // Scripting & Programming
+  'Python', 'Bash',
 ];
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <header className="sticky top-0 bg-background z-50 py-4 border-b border-border">
+      <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
           <Logo />
           <nav className="hidden md:flex items-center space-x-6">
@@ -111,11 +137,17 @@ export default function Home() {
             >
               PROJECTS
             </a>
-            <a
+             <a
               href="#certifications"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               CERTIFICATIONS
+            </a>
+             <a
+              href="#education"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              EDUCATION
             </a>
             <a
               href="#contact"
@@ -206,20 +238,14 @@ export default function Home() {
             <Card className="max-w-3xl mx-auto shadow-md border border-border">
               <CardHeader>
                 <CardTitle>About Me</CardTitle>
-                <CardDescription>
-                  An overview of my skills and experience.
-                </CardDescription>
+                 {/* Removed unnecessary description */}
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  Google Cloud Certified Professional Cloud Architect with
-                  expertise in designing and implementing scalable, secure
-                  cloud solutions. Skilled in GCP services, cloud architecture,
-                  and infrastructure optimization. Proven track record of
-                  reducing cloud costs by 15%, improving system reliability by
-                  40%, and implementing secure, compliant cloud environments.
-                  Passionate about leveraging cloud-native technologies to drive
-                  business transformation and innovation.
+                  Google Cloud Certified Professional Cloud Architect with expertise in designing and implementing scalable, secure cloud
+                  solutions. Skilled in GCP services, cloud architecture, and infrastructure optimization. Proven track record of reducing cloud
+                  costs by 15%, improving system reliability by 40%, and implementing secure, compliant cloud environments. Passionate
+                  about leveraging cloud-native technologies to drive business transformation and innovation.
                 </p>
               </CardContent>
             </Card>
@@ -235,7 +261,7 @@ export default function Home() {
               {/* Experience 1: Accenture */}
               <Card className="shadow-sm border border-border">
                 <CardHeader>
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-start flex-wrap gap-2">
                     <div>
                       <CardTitle>Associate Software Engineer</CardTitle>
                       <CardDescription className="text-primary font-medium">
@@ -262,7 +288,7 @@ export default function Home() {
               {/* Experience 2: Kode Kloud (Sr) */}
                <Card className="shadow-sm border border-border">
                 <CardHeader>
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-start flex-wrap gap-2">
                     <div>
                       <CardTitle>Sr Devops Engineer</CardTitle>
                       <CardDescription className="text-primary font-medium">
@@ -287,7 +313,7 @@ export default function Home() {
               {/* Experience 3: Kode Kloud */}
                <Card className="shadow-sm border border-border">
                 <CardHeader>
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-start flex-wrap gap-2">
                     <div>
                       <CardTitle>Devops Engineer</CardTitle>
                       <CardDescription className="text-primary font-medium">
@@ -319,54 +345,13 @@ export default function Home() {
             <Card className="max-w-3xl mx-auto shadow-md border border-border">
               <CardHeader>
                 <CardTitle>Technical Skills</CardTitle>
-                <CardDescription>
-                  My areas of technical proficiency.
-                </CardDescription>
+                {/* Removed unnecessary description */}
               </CardHeader>
               <CardContent>
                  <div className="flex flex-wrap gap-2">
-                   {/* Cloud Platforms */}
-                   <Badge variant="secondary">Google Cloud Platform (GCP)</Badge>
-                   <Badge variant="secondary">Oracle Cloud Infrastructure (OCI)</Badge>
-                   {/* Cloud Services */}
-                   <Badge variant="secondary">Compute Engine</Badge>
-                   <Badge variant="secondary">Cloud Storage</Badge>
-                   <Badge variant="secondary">Cloud SQL</Badge>
-                   <Badge variant="secondary">BigQuery</Badge>
-                   <Badge variant="secondary">Cloud Functions</Badge>
-                   <Badge variant="secondary">Pub/Sub</Badge>
-                   <Badge variant="secondary">Cloud Run</Badge>
-                   {/* IaC */}
-                   <Badge variant="secondary">Terraform</Badge>
-                   <Badge variant="secondary">Cloud Deployment Manager</Badge>
-                   {/* Containerization */}
-                   <Badge variant="secondary">Docker</Badge>
-                   <Badge variant="secondary">Kubernetes</Badge>
-                   <Badge variant="secondary">Google Kubernetes Engine (GKE)</Badge>
-                   {/* Security */}
-                   <Badge variant="secondary">IAM</Badge>
-                   <Badge variant="secondary">VPC Service Controls</Badge>
-                   <Badge variant="secondary">Cloud Security Command Center</Badge>
-                   <Badge variant="secondary">Data Encryption</Badge>
-                   {/* Networking */}
-                   <Badge variant="secondary">VPC</Badge>
-                   <Badge variant="secondary">Cloud Load Balancing</Badge>
-                   <Badge variant="secondary">Cloud CDN</Badge>
-                   <Badge variant="secondary">Cloud Interconnect</Badge>
-                   <Badge variant="secondary">Cloud DNS</Badge>
-                   {/* Databases */}
-                   <Badge variant="secondary">Cloud SQL</Badge>
-                   <Badge variant="secondary">Cloud Spanner</Badge>
-                   <Badge variant="secondary">Firestore</Badge>
-                   <Badge variant="secondary">Bigtable</Badge>
-                   {/* Monitoring & Analytics */}
-                   <Badge variant="secondary">Cloud Monitoring</Badge>
-                   <Badge variant="secondary">Cloud Logging</Badge>
-                   <Badge variant="secondary">Error Reporting</Badge>
-                   <Badge variant="secondary">Cloud Trace</Badge>
-                   {/* Scripting */}
-                   <Badge variant="secondary">Python</Badge>
-                   <Badge variant="secondary">Bash</Badge>
+                   {skillsList.map((skill, index) => (
+                      <Badge key={index} variant="secondary">{skill}</Badge>
+                   ))}
                  </div>
               </CardContent>
             </Card>
@@ -378,7 +363,7 @@ export default function Home() {
             <h2 className="text-3xl font-semibold tracking-tight mb-12 text-center">
               Project Showcase
             </h2>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2"> {/* Adjusted grid for potentially fewer projects */}
               {/* Project 1 */}
               <Card className="shadow-sm border border-border flex flex-col">
                 <CardHeader>
@@ -390,10 +375,10 @@ export default function Home() {
                 <CardContent className="flex-grow">
                   <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
                     <li>Built a production-ready RAG application using Google Cloud Run, Cloud Storage, and Vertex AI.</li>
-                    <li>Implemented serverless architecture with automatic scaling.</li>
-                    <li>Designed secure API endpoints with Cloud IAM authentication.</li>
-                    <li>Optimized cloud resource usage for cost-effectiveness.</li>
-                     <li>Utilized Google Cloud Monitoring for observability.</li>
+                    <li>Implemented serverless architecture with automatic scaling to handle variable workloads efficiently.</li>
+                    <li>Designed secure API endpoints with Cloud IAM authentication and authorization.</li>
+                    <li>Optimized cloud resource usage to minimize costs while maintaining high performance.</li>
+                     <li>Utilized Google Cloud Monitoring for comprehensive application observability.</li>
                   </ul>
                    <div className="mt-4 flex flex-wrap gap-1">
                        <Badge variant="outline" className="text-xs">GCP</Badge>
@@ -405,14 +390,14 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Llama Index</Badge>
                    </div>
                 </CardContent>
-                <CardContent>
-                  {/* Add GitHub link if available */}
-                  {/* <Button variant="link" asChild>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      View on GitHub <ArrowRight className="ml-1 h-4 w-4" />
-                    </a>
-                  </Button> */}
-                </CardContent>
+                {/* Add GitHub/Live Demo links if applicable - Keeping structure */}
+                 {/* <CardContent className="pt-4 flex gap-2">
+                   <Button variant="link" size="sm" asChild>
+                     <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
+                     {/*  GitHub <Github className="ml-1 h-3 w-3" />
+                     </a>
+                   </Button>
+                 </CardContent> */}
               </Card>
 
               {/* Project 2 */}
@@ -424,10 +409,10 @@ export default function Home() {
                 <CardContent className="flex-grow">
                    <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
                     <li>Architected a secure data platform on GCP using BigQuery, Cloud Storage, and Data Catalog.</li>
-                    <li>Implemented column-level security and data masking.</li>
-                    <li>Designed data pipelines using Cloud Dataflow for ETL.</li>
-                    <li>Created data governance framework compliant with regulations.</li>
-                    <li>Reduced data processing costs by 35% through optimization.</li>
+                    <li>Implemented column-level security and data masking for sensitive information.</li>
+                    <li>Designed data pipelines using Cloud Dataflow for efficient ETL processes.</li>
+                    <li>Created comprehensive data governance framework compliant with industry regulations.</li>
+                    <li>Reduced data processing costs by 35% through query optimization and storage tiering.</li>
                   </ul>
                    <div className="mt-4 flex flex-wrap gap-1">
                        <Badge variant="outline" className="text-xs">GCP</Badge>
@@ -436,29 +421,34 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Data Catalog</Badge>
                        <Badge variant="outline" className="text-xs">Dataflow</Badge>
                        <Badge variant="outline" className="text-xs">Security</Badge>
+                       <Badge variant="outline" className="text-xs">Governance</Badge>
                    </div>
                 </CardContent>
-                 <CardContent>
-                    {/* Add GitHub link if available */}
-                 </CardContent>
+                 {/* <CardContent className="pt-4 flex gap-2">
+                    <Button variant="link" size="sm" asChild>
+                       <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
+                          {/* GitHub <Github className="ml-1 h-3 w-3" />
+                       </a>
+                    </Button>
+                 </CardContent> */}
               </Card>
 
                {/* Project 3 */}
               <Card className="shadow-sm border border-border flex flex-col">
                 <CardHeader>
                   <CardTitle>Multi-Region Cloud Infrastructure</CardTitle>
-                  <CardDescription>Jul 2022 - Nov 2022 (for IBM)</CardDescription>
+                  <CardDescription>Jul 2022 - Nov 2022 (Client: IBM)</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                    <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-1 text-sm leading-relaxed">
                     <li>Designed and implemented a multi-region cloud architecture for high availability.</li>
-                    <li>Created disaster recovery procedures with defined RPO/RTO targets.</li>
-                    <li>Implemented global load balancing and CDN.</li>
-                    <li>Established monitoring and alerting across regions.</li>
-                    <li>Achieved 99.99% uptime for critical applications.</li>
+                    <li>Created disaster recovery procedures with RPO/RTO targets aligned to business requirements.</li>
+                    <li>Implemented global load balancing and CDN for optimized content delivery.</li>
+                    <li>Established monitoring and alerting across regions with centralized logging.</li>
+                    <li>Achieved 99.99% uptime for critical business applications.</li>
                    </ul>
                     <div className="mt-4 flex flex-wrap gap-1">
-                       <Badge variant="outline" className="text-xs">GCP</Badge> {/* Or specify IBM Cloud if that was the platform */}
+                       <Badge variant="outline" className="text-xs">Cloud Architecture</Badge> {/* Generic as platform not specified for IBM */}
                        <Badge variant="outline" className="text-xs">High Availability</Badge>
                        <Badge variant="outline" className="text-xs">Disaster Recovery</Badge>
                        <Badge variant="outline" className="text-xs">Load Balancing</Badge>
@@ -466,9 +456,13 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Monitoring</Badge>
                    </div>
                 </CardContent>
-                 <CardContent>
-                   {/* Add GitHub link if available */}
-                 </CardContent>
+                 {/* <CardContent className="pt-4 flex gap-2">
+                    <Button variant="link" size="sm" asChild>
+                       <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
+                          {/* GitHub <Github className="ml-1 h-3 w-3" />
+                       </a>
+                    </Button>
+                 </CardContent> */}
               </Card>
             </div>
           </div>
@@ -483,39 +477,62 @@ export default function Home() {
               {/* Certification 1 */}
               <Card className="shadow-sm border border-border">
                 <CardHeader>
-                  <CardTitle className="text-lg">Professional Cloud Architect</CardTitle>
-                  <CardDescription>Google Cloud</CardDescription>
+                   <div className="flex items-center gap-3">
+                      <Cloud className="h-6 w-6 text-primary" />
+                      <div>
+                         <CardTitle className="text-lg">Professional Cloud Architect</CardTitle>
+                         <CardDescription>Google Cloud</CardDescription>
+                      </div>
+                   </div>
                 </CardHeader>
-                 {/* Optional: Add link/details */}
-                 {/* <CardContent><p className="text-xs text-muted-foreground">Validation: [Link/ID]</p></CardContent> */}
               </Card>
               {/* Certification 2 */}
                <Card className="shadow-sm border border-border">
                 <CardHeader>
-                  <CardTitle className="text-lg">Associate Cloud Engineer</CardTitle>
-                  <CardDescription>Google Cloud</CardDescription>
+                   <div className="flex items-center gap-3">
+                      <Cloud className="h-6 w-6 text-primary" />
+                      <div>
+                         <CardTitle className="text-lg">Associate Cloud Engineer</CardTitle>
+                         <CardDescription>Google Cloud</CardDescription>
+                       </div>
+                   </div>
                 </CardHeader>
               </Card>
                {/* Certification 3 */}
                <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <CardTitle className="text-lg">OCI Generative AI Professional</CardTitle>
-                  <CardDescription>Oracle</CardDescription>
-                </CardHeader>
+                 <CardHeader>
+                    <div className="flex items-center gap-3">
+                       <Database className="h-6 w-6 text-primary" /> {/* Using Database for Oracle */}
+                       <div>
+                          <CardTitle className="text-lg">Oracle Cloud Infrastructure Generative AI Professional</CardTitle>
+                          <CardDescription>Oracle</CardDescription>
+                       </div>
+                    </div>
+                 </CardHeader>
               </Card>
                {/* Certification 4 */}
                 <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <CardTitle className="text-lg">OCI Foundations Associate</CardTitle>
-                   <CardDescription>Oracle (1Z0-1085-23)</CardDescription>
-                </CardHeader>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                       <Database className="h-6 w-6 text-primary" /> {/* Using Database for Oracle */}
+                       <div>
+                          <CardTitle className="text-lg">Oracle Cloud Infrastructure 2023 Certified Foundations Associate</CardTitle>
+                          <CardDescription>Oracle (1Z0-1085-23)</CardDescription>
+                       </div>
+                    </div>
+                 </CardHeader>
               </Card>
                {/* Certification 5 */}
                 <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <CardTitle className="text-lg">Cybersecurity Essentials</CardTitle>
-                  <CardDescription>Cisco</CardDescription>
-                </CardHeader>
+                  <CardHeader>
+                     <div className="flex items-center gap-3">
+                       <ShieldCheck className="h-6 w-6 text-primary" /> {/* Using ShieldCheck for Cisco */}
+                       <div>
+                          <CardTitle className="text-lg">Cybersecurity Essentials</CardTitle>
+                          <CardDescription>Cisco</CardDescription>
+                        </div>
+                     </div>
+                  </CardHeader>
               </Card>
             </div>
           </div>
@@ -529,19 +546,24 @@ export default function Home() {
             </h2>
             <Card className="max-w-3xl mx-auto shadow-sm border border-border">
               <CardHeader>
-                 <div className="flex justify-between items-start">
-                     <div>
-                        <CardTitle>B.E Computer Science and Engineering</CardTitle>
-                        <CardDescription className="text-primary font-medium">
-                            St. Joseph's College of Engineering
-                        </CardDescription>
+                 <div className="flex justify-between items-start flex-wrap gap-2">
+                     <div className="flex items-center gap-3">
+                         <GraduationCap className="h-6 w-6 text-primary" /> {/* Use GraduationCap */}
+                         <div>
+                            <CardTitle>B.E Computer Science and Engineering</CardTitle>
+                            <CardDescription className="text-primary font-medium">
+                                St. Joseph's College of Engineering
+                            </CardDescription>
+                         </div>
                      </div>
                      <Badge variant="outline">Graduated May 2023</Badge>
                  </div>
-                 <CardDescription className="pt-1">Chennai, Tamil Nadu</CardDescription>
+                 <CardDescription className="pt-2 pl-9"> {/* Indent description */}
+                    Chennai, Tamil Nadu
+                 </CardDescription>
               </CardHeader>
               {/* Optional: Add GPA or relevant coursework if desired */}
-              {/* <CardContent><p className="text-sm text-muted-foreground">Relevant Coursework: ...</p></CardContent> */}
+              {/* <CardContent><p className="text-sm text-muted-foreground pl-9">Relevant Coursework: ...</p></CardContent> */}
             </Card>
           </div>
         </section>
@@ -556,16 +578,24 @@ export default function Home() {
               <CardHeader className="text-center">
                 <CardTitle>Get in Touch</CardTitle>
                 <CardDescription>
-                  Interested in collaborating or have questions? Reach out!
+                  Let's connect! Feel free to reach out.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col items-center space-y-4">
-                 <div className="text-center text-muted-foreground">
+                 <div className="text-center text-muted-foreground space-y-1">
                     <p>Srinagar, J&K, India</p>
-                    <p>Email: aasimmalik29@gmail.com</p>
-                    <p>Phone: +91 9176462019</p>
+                    <p>
+                       <a href="mailto:aasimmalik29@gmail.com" className="hover:text-primary transition-colors">
+                          aasimmalik29@gmail.com
+                       </a>
+                    </p>
+                    <p>
+                       <a href="tel:+919176462019" className="hover:text-primary transition-colors">
+                         +91 9176462019
+                       </a>
+                    </p>
                  </div>
-                <div className="flex space-x-4 mt-4">
+                <div className="flex flex-wrap justify-center gap-3 mt-4">
                     <Button variant="default" asChild>
                       <a
                         href="mailto:aasimmalik29@gmail.com"
@@ -575,15 +605,21 @@ export default function Home() {
                       </a>
                     </Button>
                     <Button variant="outline" asChild>
-                        <a href="https://www.linkedin.com/in/aasim-malik-/" target="_blank" rel="noopener noreferrer"> {/* Replace with actual LinkedIn URL */}
-                            LinkedIn
+                        <a href="https://www.linkedin.com/in/aasim-malik-/" target="_blank" rel="noopener noreferrer" className="flex items-center"> {/* Updated LinkedIn URL */}
+                            <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                         </a>
                     </Button>
                      <Button variant="outline" asChild>
-                        <a href="https://github.com/aasimmalik29" target="_blank" rel="noopener noreferrer"> {/* Replace with actual GitHub URL */}
-                            GitHub
+                        <a href="https://github.com/aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center"> {/* Updated GitHub URL */}
+                            <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
                     </Button>
+                    {/* Add Portfolio link from resume */}
+                     {/* <Button variant="outline" asChild>
+                        <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # with Portfolio URL */}
+                            {/* Portfolio
+                        </a>
+                    </Button> */}
                 </div>
               </CardContent>
             </Card>
