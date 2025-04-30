@@ -31,7 +31,7 @@ import {
   Briefcase,
   Award,
   MessageSquare,
-  User,
+  User, // Keep User icon for the renamed Core Experience section
   List,
   FolderGit2,
   Sparkles, // Added for Core Experience title
@@ -107,13 +107,13 @@ const skillsList = [
   'Python', 'Bash',
 ];
 
-// Core Experience Data
+// Core Experience Data (Now serves as Professional Summary)
 const coreExperiences = [
    {
     company: 'ACCENTURE',
     role: 'Associate Software Engineer',
     date: 'PRESENT', // Updated date format
-    location: 'Bengaluru, Karnataka' // Added location for context if needed later
+    location: 'Bengaluru, Karnataka'
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
@@ -128,10 +128,10 @@ const coreExperiences = [
     location: 'Remote'
   },
   {
-    company: 'GOWTH CENTRAL VC', // Assuming this is the correct name
-    role: 'SME Intern', // Assuming Subject Matter Expert
+    company: 'GOWTH CENTRAL VC',
+    role: 'SME Intern',
     date: 'JULY 2022', // Updated date format
-    location: 'Remote/Specific Location?' // Add location if known
+    location: 'Remote' // Assuming remote
   },
 ];
 
@@ -150,16 +150,17 @@ export default function Home() {
               HOME
             </a>
             <a
-              href="#professional-summary"
+              href="#professional-summary" // This now points to the Core Experience section
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               SUMMARY
             </a>
-             <a
-              href="#core-experience" // Link to the new section
+             {/* Removed the separate EXPERIENCE link */}
+            <a
+              href="#work-experience" // Link to detailed experience
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              EXPERIENCE {/* Changed nav link text */}
+              EXPERIENCE {/* Link to Detailed Experience */}
             </a>
             <a
               href="#skills"
@@ -259,35 +260,18 @@ export default function Home() {
            </div>
         </section>
 
-        {/* Professional Summary Section */}
-        <section id="professional-summary" className="py-16 bg-secondary">
-          <div className="container mx-auto px-4 md:px-6">
-             <div className="flex justify-center items-center gap-2 mb-8">
-                <User className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-semibold tracking-tight text-center">
-                 Professional Summary
-                </h2>
-             </div>
-             <Card className="max-w-3xl mx-auto shadow-md border border-border">
-               <CardHeader>
-                 <CardTitle>About Me</CardTitle>
-                  {/* Removed unnecessary description */}
-               </CardHeader>
-               <CardContent>
-                 <p className="text-muted-foreground leading-relaxed">
-                   Google Cloud Certified Professional Cloud Architect with expertise in designing and implementing scalable, secure cloud
-                   solutions. Skilled in GCP services, cloud architecture, and infrastructure optimization. Proven track record of reducing cloud
-                   costs by 15%, improving system reliability by 40%, and implementing secure, compliant cloud environments. Passionate
-                   about leveraging cloud-native technologies to drive business transformation and innovation.
-                 </p>
-               </CardContent>
-             </Card>
-           </div>
-        </section>
+        {/* Removed the old Professional Summary Section */}
 
-        {/* Core Experience Section */}
-        <section id="core-experience" className="py-16 bg-background">
+        {/* Core Experience Section (Renamed ID to professional-summary) */}
+        <section id="professional-summary" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
             <div className="container mx-auto px-4 md:px-6">
+                 {/* Title centered above the grid */}
+                <div className="flex justify-center items-center gap-2 mb-12">
+                    <User className="h-6 w-6 text-primary" /> {/* Using User icon */}
+                    <h2 className="text-3xl font-semibold tracking-tight text-center">
+                        Professional Summary & Experience
+                    </h2>
+                </div>
                 <div className="grid md:grid-cols-2 gap-16 items-start">
                     {/* Left Column */}
                     <div className="space-y-6">
@@ -297,9 +281,9 @@ export default function Home() {
                         >
                             CORE EXPERIENCE
                         </Badge>
-                        <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+                        <h3 className="text-4xl lg:text-5xl font-bold tracking-tight"> {/* Changed from h2 to h3 */}
                            I architect scalable & secure cloud solutions
-                        </h2>
+                        </h3>
                         <p className="text-muted-foreground leading-relaxed max-w-md">
                             As a Google Cloud Certified Professional Cloud Architect, I specialize in designing and implementing robust cloud infrastructures. My focus is on optimizing costs, enhancing system reliability, and ensuring security and compliance, leveraging cloud-native technologies to drive innovation.
                         </p>
@@ -312,7 +296,7 @@ export default function Home() {
                             <div key={index}>
                                 <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{exp.company}</p>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
-                                    <h3 className="text-xl font-medium text-foreground">{exp.role}</h3>
+                                    <h4 className="text-xl font-medium text-foreground">{exp.role}</h4> {/* Changed from h3 to h4 */}
                                     <p className="text-sm text-muted-foreground whitespace-nowrap">({exp.date})</p>
                                 </div>
                                  {/* Optional: Add location back if needed */}
@@ -324,9 +308,8 @@ export default function Home() {
             </div>
         </section>
 
-        {/* Work Experience Section (Original - Kept for detailed view if needed, or can be removed) */}
-        {/* Consider removing this if the Core Experience section is sufficient */}
-        <section id="work-experience" className="py-16 bg-secondary">
+        {/* Work Experience Section (Original - Kept for detailed view if needed) */}
+        <section id="work-experience" className="py-16 bg-background"> {/* Changed bg */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
                 <Briefcase className="h-6 w-6 text-primary" />
@@ -435,7 +418,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="py-16 bg-background"> {/* Changed bg for alternation */}
+        <section id="skills" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <List className="h-6 w-6 text-primary" />
@@ -460,7 +443,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
+        <section id="projects" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex justify-center items-center gap-2 mb-12">
                  <FolderGit2 className="h-6 w-6 text-primary" />
@@ -576,7 +559,7 @@ export default function Home() {
         </section>
 
         {/* Certifications Section */}
-        <section id="certifications" className="py-16 bg-background"> {/* Changed bg for alternation */}
+        <section id="certifications" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
                  <Award className="h-6 w-6 text-primary" />
@@ -650,7 +633,7 @@ export default function Home() {
         </section>
 
         {/* Education Section */}
-        <section id="education" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
+        <section id="education" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <School className="h-6 w-6 text-primary" />
@@ -683,7 +666,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-16 bg-background"> {/* Changed bg for alternation */}
+        <section id="contact" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <MessageSquare className="h-6 w-6 text-primary" />
@@ -744,7 +727,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-6 border-t border-border mt-16 bg-secondary"> {/* Changed bg for alternation */}
+      <footer className="py-6 border-t border-border mt-16 bg-background"> {/* Changed bg for alternation */}
         <div className="container mx-auto text-center text-muted-foreground text-xs px-4 md:px-6">
           © {new Date().getFullYear()} Aasim Malik. All rights reserved.
         </div>
@@ -752,3 +735,5 @@ export default function Home() {
     </div>
   );
 }
+
+  
