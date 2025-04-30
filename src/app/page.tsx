@@ -283,6 +283,113 @@ const projects = [
   },
 ];
 
+// Type for Project Card including flipped state
+type ProjectCardProps = {
+  project: typeof projects[0];
+  style: React.CSSProperties;
+  isActive: boolean;
+  onClick?: () => void; // Optional click handler for flipping
+};
+
+// Flippable Project Card Component
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onClick }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleCardClick = () => {
+    // Only allow flipping the active card if it has a github link
+    if (isActive && project.githubLink) {
+      setIsFlipped(!isFlipped);
+      if (onClick) onClick(); // Call the provided onClick if needed
+    }
+  };
+
+  return (
+    <div
+      className={cn(
+        "absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center perspective-1000",
+        // Make inactive cards non-interactive for flipping
+        !isActive && "pointer-events-none"
+      )}
+      style={style}
+      onClick={handleCardClick} // Handle click on the outer div
+    >
+      <div
+        className={cn(
+          "w-full max-w-2xl h-[500px] relative transition-transform duration-700 transform-style-preserve-3d cursor-pointer",
+          isFlipped && "rotate-y-180",
+           // Apply blur only to non-active cards, not the flip container itself
+          !isActive && "blur-[1px]"
+        )}
+      >
+        {/* Front of the card */}
+        <Card className={cn(
+          "absolute inset-0 backface-hidden overflow-hidden flex flex-col",
+          "bg-gradient-to-br from-background to-secondary/30 shadow-lg border border-border"
+        )}>
+          <CardHeader>
+            <div className="flex justify-between items-start flex-wrap gap-2">
+              <CardTitle>{project.title}</CardTitle>
+              <Badge variant="outline">{project.date}</Badge>
+            </div>
+            <CardDescription className="pt-1">{project.description}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow overflow-y-auto scrollbar-hide">
+            <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
+              {project.points.map((point, pIndex) => (
+                <li key={pIndex}>{point}</li>
+              ))}
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-1">
+              {project.tags.map((tag, tIndex) => (
+                <Badge key={tIndex} variant="secondary" className="text-xs">{tag}</Badge>
+              ))}
+            </div>
+          </CardContent>
+          {(project.githubLink || project.liveLink) && (
+            <CardFooter className="pt-4 flex gap-2 border-t mt-auto">
+              {project.githubLink && (
+                // Prevent link click from propagating to the card flip
+                <Button variant="link" size="sm" asChild onClick={(e) => e.stopPropagation()}>
+                   <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                      GitHub <Github className="ml-1 h-3 w-3" />
+                   </a>
+                </Button>
+              )}
+              {project.liveLink && (
+                <Button variant="link" size="sm" asChild onClick={(e) => e.stopPropagation()}>
+                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                      Live Demo <ArrowRight className="ml-1 h-3 w-3" />
+                   </a>
+                </Button>
+              )}
+            </CardFooter>
+          )}
+        </Card>
+
+        {/* Back of the card */}
+        <Card className={cn(
+          "absolute inset-0 backface-hidden overflow-hidden flex flex-col items-center justify-center rotate-y-180",
+           "bg-gradient-to-br from-secondary/30 to-background shadow-lg border border-border" // Slightly different gradient for back
+        )}>
+           {project.githubLink && (
+             // Prevent link click from propagating to the card flip
+             <Button variant="default" size="lg" asChild onClick={(e) => e.stopPropagation()}>
+               <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                 View on GitHub <Github className="ml-2 h-5 w-5" />
+               </a>
+             </Button>
+           )}
+           {!project.githubLink && (
+                <p className="text-muted-foreground">No link available for this project.</p>
+            )}
+
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+
 export default function Home() {
   const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0); // State for experience carousel
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
@@ -317,6 +424,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <style jsx global>{`
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+      `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
           <Logo />
@@ -675,118 +788,75 @@ export default function Home() {
         </section>
 
         {/* Projects Section - Carousel */}
-        <section id="projects" className="py-16 bg-background overflow-hidden"> {/* Changed bg and added overflow */}
+        <section id="projects" className="py-16 bg-background overflow-hidden">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex justify-center items-center gap-2 mb-12">
-                 <FolderGit2 className="h-6 w-6 text-primary" />
-                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                  Project Showcase
-                 </h2>
+              <FolderGit2 className="h-6 w-6 text-primary" />
+              <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Project Showcase
+              </h2>
             </div>
 
             <div className="relative max-w-5xl mx-auto">
-                 {/* Use a fixed height container for projects */}
-                 <div className="relative h-[550px] overflow-visible"> {/* Adjust height as needed */}
-                    {projects.map((project, index) => {
-                        // Calculate offset relative to the current project index
-                        let offset = index - currentProjectIndex;
-                        const totalItems = projects.length;
+              {/* Container for projects */}
+              <div className="relative h-[550px] overflow-visible"> {/* Ensure container allows visibility of offset cards */}
+                {projects.map((project, index) => {
+                  // Calculate offset relative to the current project index
+                  let offset = index - currentProjectIndex;
+                  const totalItems = projects.length;
 
-                        // Handle wrapping for circular effect
-                        if (offset > totalItems / 2) {
-                            offset -= totalItems;
-                        } else if (offset < -totalItems / 2) {
-                            offset += totalItems;
-                        }
+                  // Handle wrapping for circular effect
+                  if (offset > totalItems / 2) {
+                    offset -= totalItems;
+                  } else if (offset < -totalItems / 2) {
+                    offset += totalItems;
+                  }
 
-                        const scale = 1 - Math.abs(offset) * 0.1;
-                        const opacity = Math.max(0, 1 - Math.abs(offset) * 0.4);
-                        const zIndex = totalItems - Math.abs(offset);
-                        const translateX = offset * 75; // Adjust spacing
+                  const scale = 1 - Math.abs(offset) * 0.1;
+                  const opacity = Math.max(0, 1 - Math.abs(offset) * 0.4);
+                  const zIndex = totalItems - Math.abs(offset);
+                  const translateX = offset * 75; // Adjust spacing
 
-                        // Skip rendering cards that are too far away
-                        if (Math.abs(offset) > 2) {
-                            return null;
-                        }
+                  // Skip rendering cards that are too far away
+                  if (Math.abs(offset) > 2) {
+                    return null;
+                  }
 
-                        return (
-                            <div
-                                key={index}
-                                className="absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center"
-                                style={{
-                                    transform: `translateX(${translateX}%) scale(${scale})`,
-                                    opacity: opacity,
-                                    zIndex: zIndex,
-                                    pointerEvents: index === currentProjectIndex ? 'auto' : 'none',
-                                }}
-                            >
-                                <Card className={cn(
-                                    "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[500px] flex flex-col", // Fixed height
-                                    "bg-gradient-to-br from-background to-secondary/30",
-                                    index !== currentProjectIndex && "blur-[1px]"
-                                )}>
-                                    <CardHeader>
-                                        <div className="flex justify-between items-start flex-wrap gap-2">
-                                            <CardTitle>{project.title}</CardTitle>
-                                            <Badge variant="outline">{project.date}</Badge>
-                                        </div>
-                                        <CardDescription className="pt-1">{project.description}</CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="flex-grow overflow-y-auto scrollbar-hide">
-                                        <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
-                                            {project.points.map((point, pIndex) => (
-                                                <li key={pIndex}>{point}</li>
-                                            ))}
-                                        </ul>
-                                        <div className="mt-4 flex flex-wrap gap-1">
-                                            {project.tags.map((tag, tIndex) => (
-                                                <Badge key={tIndex} variant="secondary" className="text-xs">{tag}</Badge> // Use secondary for tags
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                    {(project.githubLink || project.liveLink) && ( // Only show footer if links exist
-                                        <CardFooter className="pt-4 flex gap-2 border-t mt-auto">
-                                            {project.githubLink && (
-                                                <Button variant="link" size="sm" asChild>
-                                                   <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                                                      GitHub <Github className="ml-1 h-3 w-3" />
-                                                   </a>
-                                                </Button>
-                                            )}
-                                            {project.liveLink && (
-                                                <Button variant="link" size="sm" asChild>
-                                                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                                                      Live Demo <ArrowRight className="ml-1 h-3 w-3" />
-                                                   </a>
-                                                </Button>
-                                            )}
-                                        </CardFooter>
-                                    )}
-                                </Card>
-                            </div>
-                        );
-                    })}
-                 </div>
+                  return (
+                    <ProjectCard
+                        key={project.title + index} // Ensure unique key
+                        project={project}
+                        isActive={index === currentProjectIndex}
+                        style={{
+                            transform: `translateX(${translateX}%) scale(${scale})`,
+                            opacity: opacity,
+                            zIndex: zIndex,
+                        }}
+                        // Pass onClick to handle flip state if needed, but main flip logic is inside ProjectCard
+                     />
+                  );
+                })}
+              </div>
 
-                 {/* Navigation Arrows for Projects */}
-                 <Button
-                     variant="outline"
-                     size="icon"
-                     className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
-                     onClick={handlePrevProject}
-                     aria-label="Previous Project"
-                 >
-                     <ChevronLeft className="h-6 w-6" />
-                 </Button>
-                 <Button
-                     variant="outline"
-                     size="icon"
-                     className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
-                     onClick={handleNextProject}
-                     aria-label="Next Project"
-                 >
-                     <ChevronRight className="h-6 w-6" />
-                 </Button>
+              {/* Navigation Arrows for Projects */}
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                onClick={handlePrevProject}
+                aria-label="Previous Project"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                onClick={handleNextProject}
+                aria-label="Next Project"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
             </div>
           </div>
         </section>
@@ -800,67 +870,50 @@ export default function Home() {
                   Certifications
                  </h2>
              </div>
-            <div className="max-w-3xl mx-auto grid gap-6 md:grid-cols-2">
+            <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3"> {/* Increased max-width and added lg:grid-cols-3 */}
               {/* Certification 1 */}
-              <Card className="shadow-sm border border-border">
-                <CardHeader>
-                   <div className="flex items-center gap-3">
-                      <Cloud className="h-6 w-6 text-primary" />
-                      <div>
-                         <CardTitle className="text-lg">Professional Cloud Architect</CardTitle>
-                         <CardDescription>Google Cloud</CardDescription>
-                      </div>
-                   </div>
+              <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90"> {/* Increased padding, centered text, explicit bg */}
+                <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
+                   <Award className="h-16 w-16 text-primary mb-4" /> {/* Larger icon */}
+                   <CardTitle className="text-lg font-semibold">Professional Cloud Architect</CardTitle>
+                   <CardDescription className="text-base text-muted-foreground mt-1">Google Cloud</CardDescription> {/* Increased font size */}
                 </CardHeader>
+                 {/* <CardContent className="pt-2"> Optional content </CardContent> */}
               </Card>
               {/* Certification 2 */}
-               <Card className="shadow-sm border border-border">
-                <CardHeader>
-                   <div className="flex items-center gap-3">
-                      <Cloud className="h-6 w-6 text-primary" />
-                      <div>
-                         <CardTitle className="text-lg">Associate Cloud Engineer</CardTitle>
-                         <CardDescription>Google Cloud</CardDescription>
-                       </div>
-                   </div>
+               <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
+                <CardHeader className="p-0 mb-4">
+                   <Award className="h-16 w-16 text-primary mb-4" />
+                   <CardTitle className="text-lg font-semibold">Associate Cloud Engineer</CardTitle>
+                   <CardDescription className="text-base text-muted-foreground mt-1">Google Cloud</CardDescription>
                 </CardHeader>
               </Card>
                {/* Certification 3 */}
-               <Card className="shadow-sm border border-border">
-                 <CardHeader>
-                    <div className="flex items-center gap-3">
-                       <Database className="h-6 w-6 text-primary" /> {/* Using Database for Oracle */}
-                       <div>
-                          <CardTitle className="text-lg">Oracle Cloud Infrastructure Generative AI Professional</CardTitle>
-                          <CardDescription>Oracle</CardDescription>
-                       </div>
-                    </div>
+               <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
+                 <CardHeader className="p-0 mb-4">
+                    <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
+                    <CardTitle className="text-lg font-semibold">Oracle Cloud Infrastructure Generative AI Professional</CardTitle>
+                    <CardDescription className="text-base text-muted-foreground mt-1">Oracle</CardDescription>
                  </CardHeader>
               </Card>
                {/* Certification 4 */}
-                <Card className="shadow-sm border border-border">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                       <Database className="h-6 w-6 text-primary" /> {/* Using Database for Oracle */}
-                       <div>
-                          <CardTitle className="text-lg">Oracle Cloud Infrastructure 2023 Certified Foundations Associate</CardTitle>
-                          <CardDescription>Oracle (1Z0-1085-23)</CardDescription>
-                       </div>
-                    </div>
+                <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
+                  <CardHeader className="p-0 mb-4">
+                     <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
+                     <CardTitle className="text-lg font-semibold">Oracle Cloud Infrastructure 2023 Certified Foundations Associate</CardTitle>
+                     <CardDescription className="text-base text-muted-foreground mt-1">Oracle (1Z0-1085-23)</CardDescription>
                  </CardHeader>
               </Card>
                {/* Certification 5 */}
-                <Card className="shadow-sm border border-border">
-                  <CardHeader>
-                     <div className="flex items-center gap-3">
-                       <ShieldCheck className="h-6 w-6 text-primary" /> {/* Using ShieldCheck for Cisco */}
-                       <div>
-                          <CardTitle className="text-lg">Cybersecurity Essentials</CardTitle>
-                          <CardDescription>Cisco</CardDescription>
-                        </div>
-                     </div>
+                <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
+                  <CardHeader className="p-0 mb-4">
+                     <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
+                     <CardTitle className="text-lg font-semibold">Cybersecurity Essentials</CardTitle>
+                     <CardDescription className="text-base text-muted-foreground mt-1">Cisco</CardDescription>
                   </CardHeader>
               </Card>
+              {/* Add an empty div as a placeholder to push the last item to the left on lg screens if only 5 items */}
+              <div className="hidden lg:block"></div>
             </div>
           </div>
         </section>
