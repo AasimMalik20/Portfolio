@@ -130,19 +130,22 @@ const categorizedSkills = {
   ],
 };
 
-// Soft Skills Section Data
-const softSkills = [
+// Updated Core Competencies / Soft Skills Section Data
+const coreCompetencies = [
     'Cloud Architecture & Design',
-    'Problem Solving',
+    'Problem Solving & Critical Thinking',
     'Cost Optimization Strategies',
     'Performance Tuning & Improvement',
     'Security Implementation & Best Practices',
-    'Technical Documentation',
-    'Collaboration & Knowledge Sharing',
+    'Technical Documentation & Runbooks',
+    'Effective Communication (Technical & Non-Technical)',
+    'Team Collaboration & Knowledge Sharing',
     'Process Automation (IaC, CI/CD)',
     'Migration Planning & Execution',
-    'High Availability & Disaster Recovery',
+    'High Availability & Disaster Recovery Design',
     'System Reliability Enhancement',
+    'Client Interaction & Requirements Gathering',
+    'Agile Methodologies',
 ];
 
 
@@ -546,67 +549,64 @@ export default function Home() {
         </section>
 
 
-        {/* Skills Section - Updated Layout */}
+         {/* Skills Section - Updated Layout */}
         <section id="skills" className="py-16 bg-secondary">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex justify-center items-center gap-2 mb-12">
                     <List className="h-6 w-6 text-primary" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
-                        Skills & Expertise
+                        Skills
                     </h2>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"> {/* Changed grid to 2 columns */}
-                    {/* Technical Skills Card */}
-                    <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
-                        <CardHeader>
-                           <CardTitle className="text-center text-2xl font-semibold flex items-center justify-center gap-2">
-                              <Terminal className="h-5 w-5" /> {/* Technical icon */}
-                              Technical Skills
-                           </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-6 md:p-8">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
-                                {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
-                                    <div key={catIndex} className="space-y-4">
-                                        <h3 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
-                                            {category}
-                                        </h3>
-                                        <ul className="space-y-2">
-                                            {skills.map((skill, skillIndex) => (
-                                                <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
-                                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
-                                                    {skill}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
+                <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
+                    <CardContent className="p-6 md:p-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"> {/* Main grid for technical vs core competencies */}
+                            {/* Technical Skills Area */}
+                            <div>
+                                <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                                    <Terminal className="h-5 w-5" />
+                                    Technical Skills
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+                                    {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
+                                        <div key={catIndex} className="space-y-4">
+                                            <h4 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
+                                                {category}
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {skills.map((skill, skillIndex) => (
+                                                    <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
+                                                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
+                                                        {skill}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </CardContent>
-                    </Card>
 
-                    {/* Soft Skills Card */}
-                     <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
-                        <CardHeader>
-                            <CardTitle className="text-center text-2xl font-semibold flex items-center justify-center gap-2">
-                                <Sparkles className="h-5 w-5" /> {/* Soft skills icon */}
-                                Core Competencies
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-6 md:p-8">
-                            <ul className="space-y-3">
-                                {softSkills.map((skill, index) => (
-                                    <li key={index} className="flex items-center text-sm text-muted-foreground">
-                                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent mr-2.5 flex-shrink-0 border border-primary/30"></span>
-                                        {skill}
-                                    </li>
-                                ))}
-                            </ul>
-                        </CardContent>
-                    </Card>
-                </div>
+                            {/* Core Competencies / Soft Skills Area */}
+                            <div>
+                                <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                                    <Sparkles className="h-5 w-5" />
+                                    Core Competencies
+                                </h3>
+                                <ul className="space-y-3">
+                                    {coreCompetencies.map((skill, index) => (
+                                        <li key={index} className="flex items-center text-sm text-muted-foreground">
+                                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent mr-2.5 flex-shrink-0 border border-primary/30"></span>
+                                            {skill}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </section>
+
 
 
         {/* Projects Section */}
@@ -902,3 +902,4 @@ export default function Home() {
     </div>
   );
 }
+
