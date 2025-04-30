@@ -961,7 +961,7 @@ export default function Home() {
                             </CardDescription>
                          </div>
                      </div>
-                     <Badge variant="outline">Graduated May 2023</Badge>
+                     <Badge variant="outline">Graduated with 9.01/10.00 CGPA in May 2023</Badge> {/* Updated Badge Text */}
                  </div>
                  <CardDescription className="pt-2 pl-9">
                     Chennai, Tamil Nadu
