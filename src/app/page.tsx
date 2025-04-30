@@ -36,7 +36,7 @@ import {
   User,
   List,
   FolderGit2,
-  Sparkles,
+  Sparkles, // Keep Sparkles for Soft Skills
   Lightbulb,
   ChevronLeft, // Import ChevronLeft
   ChevronRight, // Import ChevronRight
@@ -99,7 +99,7 @@ const technologies: { name: string; icon: LucideIcon }[] = [
   { name: 'Bash', icon: Terminal },
 ];
 
-// Categorized Skills for improved display
+// Categorized Skills for improved display (including Soft Skills)
 const categorizedSkills = {
   'Cloud Platforms': [
     'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure',
@@ -129,6 +129,21 @@ const categorizedSkills = {
     'Python', 'Bash',
   ],
 };
+
+// Soft Skills Section Data
+const softSkills = [
+    'Cloud Architecture & Design',
+    'Problem Solving',
+    'Cost Optimization Strategies',
+    'Performance Tuning & Improvement',
+    'Security Implementation & Best Practices',
+    'Technical Documentation',
+    'Collaboration & Knowledge Sharing',
+    'Process Automation (IaC, CI/CD)',
+    'Migration Planning & Execution',
+    'High Availability & Disaster Recovery',
+    'System Reliability Enhancement',
+];
 
 
 // Core Experience Data (For Expertise Section)
@@ -540,28 +555,56 @@ export default function Home() {
                         Skills & Expertise
                     </h2>
                 </div>
-                <Card className="max-w-5xl mx-auto shadow-md border border-border bg-card/80 backdrop-blur-sm">
-                    <CardContent className="p-6 md:p-8">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
-                            {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
-                                <div key={catIndex} className="space-y-4">
-                                    <h3 className="text-lg font-semibold text-foreground border-b border-border pb-2 mb-3">
-                                        {category}
-                                    </h3>
-                                    <ul className="space-y-2">
-                                        {skills.map((skill, skillIndex) => (
-                                            <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
-                                                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
-                                                {skill}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    {/* Add separator between categories visually if needed, handled by grid gap */}
-                                </div>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"> {/* Changed grid to 2 columns */}
+                    {/* Technical Skills Card */}
+                    <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
+                        <CardHeader>
+                           <CardTitle className="text-center text-2xl font-semibold flex items-center justify-center gap-2">
+                              <Terminal className="h-5 w-5" /> {/* Technical icon */}
+                              Technical Skills
+                           </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-6 md:p-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+                                {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
+                                    <div key={catIndex} className="space-y-4">
+                                        <h3 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
+                                            {category}
+                                        </h3>
+                                        <ul className="space-y-2">
+                                            {skills.map((skill, skillIndex) => (
+                                                <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
+                                                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
+                                                    {skill}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Soft Skills Card */}
+                     <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
+                        <CardHeader>
+                            <CardTitle className="text-center text-2xl font-semibold flex items-center justify-center gap-2">
+                                <Sparkles className="h-5 w-5" /> {/* Soft skills icon */}
+                                Core Competencies
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-6 md:p-8">
+                            <ul className="space-y-3">
+                                {softSkills.map((skill, index) => (
+                                    <li key={index} className="flex items-center text-sm text-muted-foreground">
+                                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent mr-2.5 flex-shrink-0 border border-primary/30"></span>
+                                        {skill}
+                                    </li>
+                                ))}
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
         </section>
 
@@ -859,4 +902,3 @@ export default function Home() {
     </div>
   );
 }
-
