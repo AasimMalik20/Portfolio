@@ -248,8 +248,8 @@ const projects = [
       'Utilized Google Cloud Monitoring for comprehensive application observability.',
     ],
     tags: ['GCP', 'Cloud Run', 'Cloud Storage', 'Vertex AI', 'Serverless', 'Python', 'Llama Index', 'RAG'],
-    githubLink: null, // Add link if available e.g., "https://github.com/..."
-    liveLink: null,   // Add link if available
+    githubLink: "https://github.com/AasimMalik20/JavaScript-RAG-Web-Apps-with-LlamaIndex", // Added GitHub link
+    liveLink: null,
   },
   {
     title: 'Secure Cloud Data Platform',
