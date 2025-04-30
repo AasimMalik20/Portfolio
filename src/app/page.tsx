@@ -129,7 +129,7 @@ export default function Home() {
               href="#skills"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              EXPERTISE
+              SKILLS {/* Updated from EXPERTISE */}
             </a>
             <a
               href="#projects"
@@ -340,7 +340,7 @@ export default function Home() {
         <section id="skills" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Skills & Expertise
+              Skills & Expertise {/* Keep title matching nav */}
             </h2>
             <Card className="max-w-3xl mx-auto shadow-md border border-border">
               <CardHeader>
