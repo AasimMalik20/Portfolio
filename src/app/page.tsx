@@ -24,19 +24,20 @@ import {
   Activity,
   Code,
   Terminal,
-  Linkedin, // Added LinkedIn
-  Github, // Added GitHub
-  School, // Added School for Education
-  GraduationCap, // Added GraduationCap for Education
-  Briefcase, // Added Briefcase for Work Experience
-  Award, // Added Award for Certifications
-  MessageSquare, // Added MessageSquare for Contact
-  User, // Added User for Summary
-  List, // Added List for Skills
-  FolderGit2, // Added FolderGit2 for Projects
-} from 'lucide-react'; // Added more icons
+  Linkedin,
+  Github,
+  School,
+  GraduationCap,
+  Briefcase,
+  Award,
+  MessageSquare,
+  User,
+  List,
+  FolderGit2,
+  Sparkles, // Added for Core Experience title
+} from 'lucide-react';
 import Image from 'next/image';
-import type { LucideIcon } from 'lucide-react'; // Import LucideIcon type
+import type { LucideIcon } from 'lucide-react';
 
 // Placeholder Logo Component
 const Logo = () => (
@@ -106,6 +107,35 @@ const skillsList = [
   'Python', 'Bash',
 ];
 
+// Core Experience Data
+const coreExperiences = [
+   {
+    company: 'ACCENTURE',
+    role: 'Associate Software Engineer',
+    date: 'PRESENT', // Updated date format
+    location: 'Bengaluru, Karnataka' // Added location for context if needed later
+  },
+  {
+    company: 'KODE KLOUD ENGINEER (PLATFORM)',
+    role: 'Sr Devops Engineer',
+    date: 'JAN 2023 - JUL 2023', // Updated date format
+    location: 'Remote'
+  },
+  {
+    company: 'KODE KLOUD ENGINEER (PLATFORM)',
+    role: 'Devops Engineer',
+    date: 'FEB 2022 - DEC 2022', // Updated date format
+    location: 'Remote'
+  },
+  {
+    company: 'GOWTH CENTRAL VC', // Assuming this is the correct name
+    role: 'SME Intern', // Assuming Subject Matter Expert
+    date: 'JULY 2022', // Updated date format
+    location: 'Remote/Specific Location?' // Add location if known
+  },
+];
+
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
@@ -125,17 +155,17 @@ export default function Home() {
             >
               SUMMARY
             </a>
-            <a
-              href="#work-experience"
+             <a
+              href="#core-experience" // Link to the new section
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              EXPERIENCE
+              EXPERIENCE {/* Changed nav link text */}
             </a>
             <a
               href="#skills"
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              SKILLS {/* Updated from EXPERTISE */}
+              SKILLS
             </a>
             <a
               href="#projects"
@@ -162,103 +192,146 @@ export default function Home() {
               CONTACT
             </a>
           </nav>
-          {/* Mobile Menu Trigger (Optional) */}
-          <button className="md:hidden p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            <span className="sr-only">Open menu</span>
-          </button>
+          {/* Mobile Menu Trigger (Simplified) */}
+           <button className="md:hidden p-2 -mr-2"> {/* Adjusted padding */}
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+             <span className="sr-only">Open menu</span>
+           </button>
         </div>
       </header>
 
       <main className="flex-grow">
+        {/* Hero Section */}
         <section
           id="home"
           className="pt-24 pb-16 text-center container mx-auto flex flex-col items-center px-4 md:px-6"
         >
-          <Badge
-            variant="outline"
-            className="mb-4 border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
-          >
-            HELLO! I AM AASIM MALIK
-          </Badge>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
-            Cloud Architect & Developer
-          </h1>
-          <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
-            <Image
-              src="https://picsum.photos/400/400?grayscale" // Grayscale placeholder, make it square
-              alt="Aasim Malik Portrait"
-              layout="fill"
-              objectFit="cover"
-              className="grayscale" // Ensure grayscale effect
-              priority // Load image eagerly as it's above the fold
-            />
-          </div>
+           <Badge
+             variant="outline"
+             className="mb-4 border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
+           >
+             HELLO! I AM AASIM MALIK
+           </Badge>
+           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
+             Cloud Architect & Developer
+           </h1>
+           <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
+             <Image
+               src="https://picsum.photos/400/400?grayscale" // Grayscale placeholder, make it square
+               alt="Aasim Malik Portrait"
+               layout="fill"
+               objectFit="cover"
+               className="grayscale" // Ensure grayscale effect
+               priority // Load image eagerly as it's above the fold
+             />
+           </div>
 
-          {/* Download CV Button */}
-          <div className="mb-16">
-            <Button variant="outline" size="lg" asChild>
-              {/* Replace '#' with the actual path to your CV file */}
-              <a href="/aasim_malik_cv.pdf" download="Aasim_Malik_CV.pdf">
-                DOWNLOAD CV
-                <Download className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          </div>
+           {/* Download CV Button */}
+           <div className="mb-16">
+             <Button variant="outline" size="lg" asChild>
+               {/* Replace '#' with the actual path to your CV file or URL */}
+               <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_CV.pdf">
+                 DOWNLOAD CV
+                 <Download className="ml-2 h-4 w-4" />
+               </a>
+             </Button>
+           </div>
 
-          {/* Technology Icons Slideshow */}
-          <div className="w-full max-w-4xl overflow-hidden pb-4 group"> {/* Added group class */}
-             <p className="text-sm text-muted-foreground mb-6">TECHNOLOGIES I WORK WITH</p>
-             {/* Outer div for overflow hiding and hover effect */}
-            <div className="relative overflow-hidden">
-                 {/* Inner div for animation, doubled content */}
-                <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
-                    {/* Original Icons */}
-                    {[...technologies, ...technologies].map((tech, index) => ( // Duplicate the array
-                    <Card
-                    key={index} // Use index as key for simplicity here
-                    className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0" // Added mx-2 and flex-shrink-0
-                    title={tech.name} // Tooltip for accessibility
-                    >
-                    <tech.icon className="h-8 w-8 text-muted-foreground" />
-                    </Card>
-                ))}
-                </div>
-            </div>
-          </div>
+           {/* Technology Icons Slideshow */}
+           <div className="w-full max-w-4xl overflow-hidden pb-4 group"> {/* Added group class */}
+              <p className="text-sm text-muted-foreground mb-6">TECHNOLOGIES I WORK WITH</p>
+              {/* Outer div for overflow hiding and hover effect */}
+             <div className="relative overflow-hidden">
+                  {/* Inner div for animation, doubled content */}
+                 <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
+                     {/* Original Icons */}
+                     {[...technologies, ...technologies].map((tech, index) => ( // Duplicate the array
+                     <Card
+                     key={index} // Use index as key for simplicity here
+                     className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0" // Added mx-2 and flex-shrink-0
+                     title={tech.name} // Tooltip for accessibility
+                     >
+                     <tech.icon className="h-8 w-8 text-muted-foreground" />
+                     </Card>
+                 ))}
+                 </div>
+             </div>
+           </div>
         </section>
 
+        {/* Professional Summary Section */}
         <section id="professional-summary" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <User className="h-6 w-6 text-primary" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                Professional Summary
+                 Professional Summary
                 </h2>
-            </div>
-            <Card className="max-w-3xl mx-auto shadow-md border border-border">
-              <CardHeader>
-                <CardTitle>About Me</CardTitle>
-                 {/* Removed unnecessary description */}
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  Google Cloud Certified Professional Cloud Architect with expertise in designing and implementing scalable, secure cloud
-                  solutions. Skilled in GCP services, cloud architecture, and infrastructure optimization. Proven track record of reducing cloud
-                  costs by 15%, improving system reliability by 40%, and implementing secure, compliant cloud environments. Passionate
-                  about leveraging cloud-native technologies to drive business transformation and innovation.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+             </div>
+             <Card className="max-w-3xl mx-auto shadow-md border border-border">
+               <CardHeader>
+                 <CardTitle>About Me</CardTitle>
+                  {/* Removed unnecessary description */}
+               </CardHeader>
+               <CardContent>
+                 <p className="text-muted-foreground leading-relaxed">
+                   Google Cloud Certified Professional Cloud Architect with expertise in designing and implementing scalable, secure cloud
+                   solutions. Skilled in GCP services, cloud architecture, and infrastructure optimization. Proven track record of reducing cloud
+                   costs by 15%, improving system reliability by 40%, and implementing secure, compliant cloud environments. Passionate
+                   about leveraging cloud-native technologies to drive business transformation and innovation.
+                 </p>
+               </CardContent>
+             </Card>
+           </div>
         </section>
 
-        <section id="work-experience" className="py-16 bg-background">
+        {/* Core Experience Section */}
+        <section id="core-experience" className="py-16 bg-background">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="grid md:grid-cols-2 gap-16 items-start">
+                    {/* Left Column */}
+                    <div className="space-y-6">
+                        <Badge
+                            variant="outline"
+                            className="border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
+                        >
+                            CORE EXPERIENCE
+                        </Badge>
+                        <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
+                           I architect scalable & secure cloud solutions
+                        </h2>
+                        <p className="text-muted-foreground leading-relaxed max-w-md">
+                            As a Google Cloud Certified Professional Cloud Architect, I specialize in designing and implementing robust cloud infrastructures. My focus is on optimizing costs, enhancing system reliability, and ensuring security and compliance, leveraging cloud-native technologies to drive innovation.
+                        </p>
+                         {/* Removed "Book a Call" button */}
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-12 border-border">
+                        {coreExperiences.map((exp, index) => (
+                            <div key={index}>
+                                <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{exp.company}</p>
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                                    <h3 className="text-xl font-medium text-foreground">{exp.role}</h3>
+                                    <p className="text-sm text-muted-foreground whitespace-nowrap">({exp.date})</p>
+                                </div>
+                                 {/* Optional: Add location back if needed */}
+                                {/* <p className="text-sm text-muted-foreground mt-1">{exp.location}</p> */}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Work Experience Section (Original - Kept for detailed view if needed, or can be removed) */}
+        {/* Consider removing this if the Core Experience section is sufficient */}
+        <section id="work-experience" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
                 <Briefcase className="h-6 w-6 text-primary" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                Work Experience
+                 Detailed Work Experience
                 </h2>
              </div>
             <div className="max-w-3xl mx-auto space-y-8">
@@ -337,43 +410,65 @@ export default function Home() {
                   </ul>
                 </CardContent>
               </Card>
+
+                 {/* Experience 4: Gowth Central VC Intern */}
+               <Card className="shadow-sm border border-border">
+                <CardHeader>
+                  <div className="flex justify-between items-start flex-wrap gap-2">
+                    <div>
+                      <CardTitle>SME Intern</CardTitle>
+                      <CardDescription className="text-primary font-medium">
+                        Gowth Central VC
+                      </CardDescription>
+                    </div>
+                    <Badge variant="outline">July 2022</Badge>
+                  </div>
+                   <CardDescription className="pt-1">Remote</CardDescription>
+                </CardHeader>
+                <CardContent>
+                   {/* Add bullet points if available from resume or leave empty */}
+                  <p className="text-sm text-muted-foreground italic">Details for this role were not provided in the resume.</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        <section id="skills" className="py-16 bg-secondary">
+        {/* Skills Section */}
+        <section id="skills" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <List className="h-6 w-6 text-primary" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                Skills & Expertise {/* Keep title matching nav */}
+                 Skills & Expertise
                 </h2>
-            </div>
-            <Card className="max-w-3xl mx-auto shadow-md border border-border">
-              <CardHeader>
-                <CardTitle>Technical Skills</CardTitle>
-                {/* Removed unnecessary description */}
-              </CardHeader>
-              <CardContent>
-                 <div className="flex flex-wrap gap-2">
-                   {skillsList.map((skill, index) => (
-                      <Badge key={index} variant="secondary">{skill}</Badge>
-                   ))}
-                 </div>
-              </CardContent>
-            </Card>
-          </div>
+             </div>
+             <Card className="max-w-3xl mx-auto shadow-md border border-border">
+               <CardHeader>
+                 <CardTitle>Technical Skills</CardTitle>
+                 {/* Removed unnecessary description */}
+               </CardHeader>
+               <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {skillsList.map((skill, index) => (
+                       <Badge key={index} variant="secondary">{skill}</Badge>
+                    ))}
+                  </div>
+               </CardContent>
+             </Card>
+           </div>
         </section>
 
-        <section id="projects" className="py-16 bg-background">
+        {/* Projects Section */}
+        <section id="projects" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex justify-center items-center gap-2 mb-12">
                  <FolderGit2 className="h-6 w-6 text-primary" />
                  <h2 className="text-3xl font-semibold tracking-tight text-center">
-                 Project Showcase
+                  Project Showcase
                  </h2>
             </div>
-            <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2"> {/* Adjusted grid for potentially fewer projects */}
+            <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
               {/* Project 1 */}
               <Card className="shadow-sm border border-border flex flex-col">
                 <CardHeader>
@@ -400,14 +495,14 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Llama Index</Badge>
                    </div>
                 </CardContent>
-                {/* Add GitHub/Live Demo links if applicable - Keeping structure */}
-                 {/* <CardContent className="pt-4 flex gap-2">
-                   <Button variant="link" size="sm" asChild>
-                     <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
-                     {/*  GitHub <Github className="ml-1 h-3 w-3" />
-                     </a>
-                   </Button>
-                 </CardContent> */}
+                 {/* Optional Links */}
+                 {/* <CardFooter className="pt-4 flex gap-2">
+                    <Button variant="link" size="sm" asChild>
+                       <a href="#" target="_blank" rel="noopener noreferrer">
+                          GitHub <Github className="ml-1 h-3 w-3" />
+                       </a>
+                    </Button>
+                 </CardFooter> */}
               </Card>
 
               {/* Project 2 */}
@@ -434,13 +529,14 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Governance</Badge>
                    </div>
                 </CardContent>
-                 {/* <CardContent className="pt-4 flex gap-2">
+                 {/* Optional Links */}
+                 {/* <CardFooter className="pt-4 flex gap-2">
                     <Button variant="link" size="sm" asChild>
-                       <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
-                          {/* GitHub <Github className="ml-1 h-3 w-3" />
+                       <a href="#" target="_blank" rel="noopener noreferrer">
+                          GitHub <Github className="ml-1 h-3 w-3" />
                        </a>
                     </Button>
-                 </CardContent> */}
+                 </CardFooter> */}
               </Card>
 
                {/* Project 3 */}
@@ -458,7 +554,7 @@ export default function Home() {
                     <li>Achieved 99.99% uptime for critical business applications.</li>
                    </ul>
                     <div className="mt-4 flex flex-wrap gap-1">
-                       <Badge variant="outline" className="text-xs">Cloud Architecture</Badge> {/* Generic as platform not specified for IBM */}
+                       <Badge variant="outline" className="text-xs">Cloud Architecture</Badge>
                        <Badge variant="outline" className="text-xs">High Availability</Badge>
                        <Badge variant="outline" className="text-xs">Disaster Recovery</Badge>
                        <Badge variant="outline" className="text-xs">Load Balancing</Badge>
@@ -466,24 +562,26 @@ export default function Home() {
                        <Badge variant="outline" className="text-xs">Monitoring</Badge>
                    </div>
                 </CardContent>
-                 {/* <CardContent className="pt-4 flex gap-2">
+                 {/* Optional Links */}
+                 {/* <CardFooter className="pt-4 flex gap-2">
                     <Button variant="link" size="sm" asChild>
-                       <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # */}
-                          {/* GitHub <Github className="ml-1 h-3 w-3" />
+                       <a href="#" target="_blank" rel="noopener noreferrer">
+                          GitHub <Github className="ml-1 h-3 w-3" />
                        </a>
                     </Button>
-                 </CardContent> */}
+                 </CardFooter> */}
               </Card>
             </div>
           </div>
         </section>
 
-        <section id="certifications" className="py-16 bg-secondary">
+        {/* Certifications Section */}
+        <section id="certifications" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
                  <Award className="h-6 w-6 text-primary" />
                  <h2 className="text-3xl font-semibold tracking-tight text-center">
-                 Certifications
+                  Certifications
                  </h2>
              </div>
             <div className="max-w-3xl mx-auto grid gap-6 md:grid-cols-2">
@@ -552,19 +650,19 @@ export default function Home() {
         </section>
 
         {/* Education Section */}
-        <section id="education" className="py-16 bg-background">
+        <section id="education" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <School className="h-6 w-6 text-primary" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                Education
+                 Education
                 </h2>
              </div>
             <Card className="max-w-3xl mx-auto shadow-sm border border-border">
               <CardHeader>
                  <div className="flex justify-between items-start flex-wrap gap-2">
                      <div className="flex items-center gap-3">
-                         <GraduationCap className="h-6 w-6 text-primary" /> {/* Use GraduationCap */}
+                         <GraduationCap className="h-6 w-6 text-primary" />
                          <div>
                             <CardTitle>B.E Computer Science and Engineering</CardTitle>
                             <CardDescription className="text-primary font-medium">
@@ -574,7 +672,7 @@ export default function Home() {
                      </div>
                      <Badge variant="outline">Graduated May 2023</Badge>
                  </div>
-                 <CardDescription className="pt-2 pl-9"> {/* Indent description */}
+                 <CardDescription className="pt-2 pl-9">
                     Chennai, Tamil Nadu
                  </CardDescription>
               </CardHeader>
@@ -584,13 +682,13 @@ export default function Home() {
           </div>
         </section>
 
-
-        <section id="contact" className="py-16 bg-secondary">
+        {/* Contact Section */}
+        <section id="contact" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
                 <MessageSquare className="h-6 w-6 text-primary" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                Contact Me
+                 Contact Me
                 </h2>
              </div>
             <Card className="max-w-xl mx-auto shadow-md border border-border">
@@ -624,20 +722,20 @@ export default function Home() {
                       </a>
                     </Button>
                     <Button variant="outline" asChild>
-                        <a href="https://www.linkedin.com/in/aasim-malik-/" target="_blank" rel="noopener noreferrer" className="flex items-center"> {/* Updated LinkedIn URL */}
+                        {/* Ensure LinkedIn URL is correct */}
+                        <a href="https://www.linkedin.com/in/aasim-malik-b6a008224/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                         </a>
                     </Button>
                      <Button variant="outline" asChild>
-                        <a href="https://github.com/aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center"> {/* Updated GitHub URL */}
+                         {/* Ensure GitHub URL is correct */}
+                        <a href="https://github.com/aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
                     </Button>
-                    {/* Add Portfolio link from resume */}
+                    {/* Add Portfolio link if available (e.g., link to this site itself or another) */}
                      {/* <Button variant="outline" asChild>
-                        <a href="#" target="_blank" rel="noopener noreferrer"> {/* Replace # with Portfolio URL */}
-                            {/* Portfolio
-                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer"> Portfolio </a>
                     </Button> */}
                 </div>
               </CardContent>
@@ -646,7 +744,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-6 border-t border-border mt-16 bg-background">
+      <footer className="py-6 border-t border-border mt-16 bg-secondary"> {/* Changed bg for alternation */}
         <div className="container mx-auto text-center text-muted-foreground text-xs px-4 md:px-6">
           © {new Date().getFullYear()} Aasim Malik. All rights reserved.
         </div>
