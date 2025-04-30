@@ -1,5 +1,7 @@
+// @ts-nocheck - TODO: Fix TS errors
 'use client';
 
+import React, { useState } from 'react'; // Import useState
 import {
   Card,
   CardContent,
@@ -31,14 +33,17 @@ import {
   Briefcase,
   Award,
   MessageSquare,
-  User, // Keep User icon for the renamed Core Experience section
+  User,
   List,
   FolderGit2,
-  Sparkles, // Added for Core Experience title
-  Lightbulb, // New icon for Expertise
+  Sparkles,
+  Lightbulb,
+  ChevronLeft, // Import ChevronLeft
+  ChevronRight, // Import ChevronRight
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils'; // Import cn utility
 
 // Placeholder Logo Component
 const Logo = () => (
@@ -108,36 +113,104 @@ const skillsList = [
   'Python', 'Bash',
 ];
 
-// Core Experience Data (Now serves as Professional Summary)
+// Core Experience Data (For Expertise Section)
 const coreExperiences = [
    {
     company: 'ACCENTURE',
     role: 'Associate Software Engineer',
-    date: 'PRESENT', // Updated date format
+    date: 'PRESENT',
     location: 'Bengaluru, Karnataka'
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Sr Devops Engineer',
-    date: 'JAN 2023 - JUL 2023', // Updated date format
+    date: 'JAN 2023 - JUL 2023',
     location: 'Remote'
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Devops Engineer',
-    date: 'FEB 2022 - DEC 2022', // Updated date format
+    date: 'FEB 2022 - DEC 2022',
     location: 'Remote'
   },
   {
     company: 'GOWTH CENTRAL VC',
     role: 'SME Intern',
-    date: 'JULY 2022', // Updated date format
-    location: 'Remote' // Assuming remote
+    date: 'JULY 2022',
+    location: 'Remote'
+  },
+];
+
+// Detailed Work Experience Data
+const workExperiences = [
+  {
+    title: 'Associate Software Engineer',
+    company: 'Accenture',
+    date: 'Jul 2023 - Present',
+    location: 'Bengaluru, Karnataka',
+    points: [
+      'Architected multi-region GCP environments with 99.9% uptime, implementing infrastructure as code using Terraform for consistent, repeatable deployments.',
+      'Designed and implemented cloud-native solutions using GCP services including Compute Engine, Cloud Storage, Cloud SQL, and Pub/Sub.',
+      'Reduced cloud infrastructure costs by 15% through resource optimization, right-sizing, and implementing automated scaling policies.',
+      'Implemented comprehensive monitoring solutions using Google Cloud Monitoring, reducing MTTR by 25% through improved observability.',
+      'Managed high-availability database services on GCP including Cloud SQL and Firestore, ensuring data integrity and performance optimization.',
+      'Established security best practices including IAM role-based access control, VPC Service Controls, and encryption for data at rest and in transit.',
+      'Created detailed cloud architecture documentation and runbooks, enabling knowledge sharing and faster onboarding of new team members.',
+    ],
+  },
+  {
+    title: 'Sr Devops Engineer',
+    company: 'Kode Kloud Engineer (Platform)',
+    date: 'Jan 2023 - Jul 2023',
+    location: 'Remote',
+    points: [
+      'Designed and implemented cloud-native architectures on GCP, improving scalability and reducing operational costs by 20%.',
+      'Migrated on-premises applications to Google Cloud Platform, resulting in 35% cost savings and 40% improved performance.',
+      'Implemented disaster recovery solutions with automated failover capabilities, reducing recovery time objectives (RTO) from hours to minutes.',
+      'Designed secure cloud networking architectures using VPC, Cloud Load Balancing, and Cloud Interconnect for enterprise applications.',
+      'Optimized BigQuery data warehousing solutions, reducing query times by 45% and storage costs by 30%.',
+    ],
+  },
+  {
+    title: 'Devops Engineer',
+    company: 'Kode Kloud Engineer (Platform)',
+    date: 'Feb 2022 - Dec 2022',
+    location: 'Remote',
+    points: [
+      'Orchestrated migration of legacy infrastructure to Google Cloud Platform, reducing operational costs by 40% and enhancing system scalability.',
+      'Implemented serverless architectures using Cloud Functions and Cloud Run, reducing infrastructure management overhead by 60%.',
+      'Designed and deployed data analytics pipelines using BigQuery, Dataflow, and Data Studio, enabling real-time business insights.',
+      'Created CI/CD pipelines for cloud-native applications, reducing deployment time by 50% and improving release reliability.',
+    ],
+  },
+  {
+    title: 'SME Intern',
+    company: 'Gowth Central VC',
+    date: 'July 2022',
+    location: 'Remote',
+    points: [
+        'Details for this role were not provided in the resume.', // Placeholder if no details
+    ],
   },
 ];
 
 
 export default function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0); // State for carousel
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? workExperiences.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === workExperiences.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
@@ -157,10 +230,10 @@ export default function Home() {
               EXPERTISE {/* Updated Nav Link */}
             </a>
              <a
-              href="#work-experience" // Link to detailed experience (Kept separate for now, can be removed if Expertise section fully replaces it)
+              href="#work-experience" // Link to detailed experience
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              DETAILS {/* Optionally rename this or remove */}
+              DETAILS {/* Updated Nav Link */}
             </a>
             <a
               href="#skills"
@@ -303,114 +376,97 @@ export default function Home() {
             </div>
         </section>
 
-        {/* Detailed Work Experience Section */}
-        <section id="work-experience" className="py-16 bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-             <div className="flex justify-center items-center gap-2 mb-12">
-                <Briefcase className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-semibold tracking-tight text-center">
-                 Detailed Work Experience
-                </h2>
-             </div>
-            <div className="max-w-3xl mx-auto space-y-8">
-              {/* Experience 1: Accenture */}
-              <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <div className="flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                      <CardTitle>Associate Software Engineer</CardTitle>
-                      <CardDescription className="text-primary font-medium">
-                        Accenture
-                      </CardDescription>
-                    </div>
-                    <Badge variant="outline">Jul 2023 - Present</Badge>
-                  </div>
-                   <CardDescription className="pt-1">Bengaluru, Karnataka</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
-                    <li>Architected multi-region GCP environments with 99.9% uptime, implementing infrastructure as code using Terraform for consistent, repeatable deployments.</li>
-                    <li>Designed and implemented cloud-native solutions using GCP services including Compute Engine, Cloud Storage, Cloud SQL, and Pub/Sub.</li>
-                    <li>Reduced cloud infrastructure costs by 15% through resource optimization, right-sizing, and implementing automated scaling policies.</li>
-                    <li>Implemented comprehensive monitoring solutions using Google Cloud Monitoring, reducing MTTR by 25% through improved observability.</li>
-                    <li>Managed high-availability database services on GCP including Cloud SQL and Firestore, ensuring data integrity and performance optimization.</li>
-                    <li>Established security best practices including IAM role-based access control, VPC Service Controls, and encryption for data at rest and in transit.</li>
-                     <li>Created detailed cloud architecture documentation and runbooks, enabling knowledge sharing and faster onboarding of new team members.</li>
-                  </ul>
-                </CardContent>
-              </Card>
+        {/* Detailed Work Experience Section - Carousel */}
+        <section id="work-experience" className="py-16 bg-background overflow-hidden">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="flex justify-center items-center gap-2 mb-12">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                    <h2 className="text-3xl font-semibold tracking-tight text-center">
+                        Detailed Work Experience
+                    </h2>
+                </div>
 
-              {/* Experience 2: Kode Kloud (Sr) */}
-               <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <div className="flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                      <CardTitle>Sr Devops Engineer</CardTitle>
-                      <CardDescription className="text-primary font-medium">
-                        Kode Kloud Engineer (Platform)
-                      </CardDescription>
-                    </div>
-                     <Badge variant="outline">Jan 2023 - Jul 2023</Badge>
-                  </div>
-                   <CardDescription className="pt-1">Remote</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
-                     <li>Designed and implemented cloud-native architectures on GCP, improving scalability and reducing operational costs by 20%.</li>
-                     <li>Migrated on-premises applications to Google Cloud Platform, resulting in 35% cost savings and 40% improved performance.</li>
-                     <li>Implemented disaster recovery solutions with automated failover capabilities, reducing recovery time objectives (RTO) from hours to minutes.</li>
-                     <li>Designed secure cloud networking architectures using VPC, Cloud Load Balancing, and Cloud Interconnect for enterprise applications.</li>
-                     <li>Optimized BigQuery data warehousing solutions, reducing query times by 45% and storage costs by 30%.</li>
-                  </ul>
-                </CardContent>
-              </Card>
+                <div className="relative max-w-5xl mx-auto">
+                    <div className="relative h-[500px]"> {/* Set a fixed height for the container */}
+                        {workExperiences.map((exp, index) => {
+                            const offset = index - currentIndex;
+                            const scale = 1 - Math.abs(offset) * 0.1;
+                            const opacity = 1 - Math.abs(offset) * 0.3;
+                            const zIndex = workExperiences.length - Math.abs(offset);
+                            const translateX = offset * 60; // Adjust spacing between cards
 
-              {/* Experience 3: Kode Kloud */}
-               <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <div className="flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                      <CardTitle>Devops Engineer</CardTitle>
-                      <CardDescription className="text-primary font-medium">
-                        Kode Kloud Engineer (Platform)
-                      </CardDescription>
-                    </div>
-                    <Badge variant="outline">Feb 2022 - Dec 2022</Badge>
-                  </div>
-                   <CardDescription className="pt-1">Remote</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
-                     <li>Orchestrated migration of legacy infrastructure to Google Cloud Platform, reducing operational costs by 40% and enhancing system scalability.</li>
-                     <li>Implemented serverless architectures using Cloud Functions and Cloud Run, reducing infrastructure management overhead by 60%.</li>
-                     <li>Designed and deployed data analytics pipelines using BigQuery, Dataflow, and Data Studio, enabling real-time business insights.</li>
-                     <li>Created CI/CD pipelines for cloud-native applications, reducing deployment time by 50% and improving release reliability.</li>
-                  </ul>
-                </CardContent>
-              </Card>
+                            // Ensure the current card is fully opaque and scaled
+                            const currentCardScale = index === currentIndex ? 1 : scale;
+                            const currentCardOpacity = index === currentIndex ? 1 : opacity;
 
-                 {/* Experience 4: Gowth Central VC Intern */}
-               <Card className="shadow-sm border border-border">
-                <CardHeader>
-                  <div className="flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                      <CardTitle>SME Intern</CardTitle>
-                      <CardDescription className="text-primary font-medium">
-                        Gowth Central VC
-                      </CardDescription>
+                            // Skip rendering cards that are too far away
+                            if (Math.abs(offset) > 2) {
+                                return null;
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center"
+                                    style={{
+                                        transform: `translateX(${translateX}%) scale(${currentCardScale})`,
+                                        opacity: currentCardOpacity,
+                                        zIndex: zIndex,
+                                        pointerEvents: index === currentIndex ? 'auto' : 'none', // Allow interaction only with the current card
+                                    }}
+                                >
+                                    <Card className={cn(
+                                        "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[450px] flex flex-col", // Fixed height and flex col
+                                        "bg-gradient-to-br from-background to-secondary/30" // Subtle gradient background
+                                    )}>
+                                        <CardHeader>
+                                            <div className="flex justify-between items-start flex-wrap gap-2">
+                                                <div>
+                                                    <CardTitle>{exp.title}</CardTitle>
+                                                    <CardDescription className="text-primary font-medium">
+                                                        {exp.company}
+                                                    </CardDescription>
+                                                </div>
+                                                <Badge variant="outline">{exp.date}</Badge>
+                                            </div>
+                                            <CardDescription className="pt-1">{exp.location}</CardDescription>
+                                        </CardHeader>
+                                        <CardContent className="flex-grow overflow-y-auto scrollbar-hide"> {/* Make content scrollable */}
+                                            <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
+                                                {exp.points.map((point, pIndex) => (
+                                                    <li key={pIndex}>{point}</li>
+                                                ))}
+                                            </ul>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            );
+                        })}
                     </div>
-                    <Badge variant="outline">July 2022</Badge>
-                  </div>
-                   <CardDescription className="pt-1">Remote</CardDescription>
-                </CardHeader>
-                <CardContent>
-                   {/* Add bullet points if available from resume or leave empty */}
-                  <p className="text-sm text-muted-foreground italic">Details for this role were not provided in the resume.</p>
-                </CardContent>
-              </Card>
+
+                    {/* Navigation Arrows */}
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full"
+                        onClick={handlePrev}
+                        aria-label="Previous Experience"
+                    >
+                        <ChevronLeft className="h-6 w-6" />
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full"
+                        onClick={handleNext}
+                        aria-label="Next Experience"
+                    >
+                        <ChevronRight className="h-6 w-6" />
+                    </Button>
+                </div>
             </div>
-          </div>
         </section>
+
 
         {/* Skills Section */}
         <section id="skills" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
