@@ -3,7 +3,7 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Badge} from '@/components/ui/badge';
-import {Mail, ArrowRight, Mic} from 'lucide-react';
+import {Mail, ArrowRight} from 'lucide-react'; // Removed Mic import
 import Image from 'next/image';
 
 // Placeholder Logo Component
@@ -56,7 +56,7 @@ export default function Home() {
               href="#projects"
               className="text-sm font-medium hover:text-primary"
             >
-              CASE STUDY
+              PROJECTS {/* Changed from CASE STUDY */}
             </a>
             <a
               href="#contact"
@@ -65,17 +65,7 @@ export default function Home() {
               CONTACT
             </a>
           </nav>
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="outline"
-              className="rounded-full border-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              BOOK A CALL <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Mic className="h-5 w-5" />
-            </Button>
-          </div>
+          {/* Removed the div containing Book A Call and Mic buttons */}
           {/* Add mobile menu trigger here if needed */}
         </div>
       </header>
@@ -187,7 +177,7 @@ export default function Home() {
         <section id="projects" className="py-16">
           <div className="container mx-auto">
             <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Project Showcase (Case Studies)
+              Project Showcase
             </h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               <Card className="shadow-md flex flex-col">
