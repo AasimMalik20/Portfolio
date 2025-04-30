@@ -16,12 +16,12 @@ import {
   Mail,
   ArrowRight,
   Download,
-  Cloud,
-  Database,
+  Cloud, // Keep Cloud (Used for GCP Certs & Tech)
+  Database, // Keep Database (Used for Oracle Certs & Tech)
   Layers,
   Container,
   ShipWheel,
-  ShieldCheck,
+  ShieldCheck, // Keep ShieldCheck (Used for Cisco Cert & Tech)
   Network,
   DatabaseZap,
   Activity,
@@ -32,7 +32,7 @@ import {
   School,
   GraduationCap,
   Briefcase,
-  Award,
+  Award, // Keep Award for the section header, but use specific icons in cards
   MessageSquare,
   User,
   List,
@@ -303,6 +303,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
     }
   };
 
+  // Reset flip state if the card becomes inactive
+  React.useEffect(() => {
+    if (!isActive) {
+      setIsFlipped(false);
+    }
+  }, [isActive]);
+
+
   return (
     <div
       className={cn(
@@ -315,8 +323,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
     >
       <div
         className={cn(
-          "w-full max-w-2xl h-[500px] relative transition-transform duration-700 transform-style-preserve-3d cursor-pointer",
-          isFlipped && "rotate-y-180",
+          "w-full max-w-2xl h-[500px] relative transition-transform duration-700 transform-style-preserve-3d",
+           isFlipped && "rotate-y-180",
+           isActive && project.githubLink && "cursor-pointer", // Only show cursor pointer if flippable
            // Apply blur only to non-active cards, not the flip container itself
           !isActive && "blur-[1px]"
         )}
@@ -388,6 +397,40 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
     </div>
   );
 };
+
+// Certification Data with Icons
+const certifications = [
+  {
+    title: 'Professional Cloud Architect',
+    issuer: 'Google Cloud',
+    icon: Cloud, // Use Cloud icon for Google Cloud
+    color: 'text-blue-500' // Example color, adjust as needed
+  },
+  {
+    title: 'Associate Cloud Engineer',
+    issuer: 'Google Cloud',
+    icon: Cloud, // Use Cloud icon for Google Cloud
+    color: 'text-blue-500'
+  },
+  {
+    title: 'Oracle Cloud Infrastructure Generative AI Professional',
+    issuer: 'Oracle',
+    icon: Database, // Use Database icon for Oracle
+    color: 'text-red-500' // Example color for Oracle
+  },
+  {
+    title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
+    issuer: 'Oracle (1Z0-1085-23)',
+    icon: Database, // Use Database icon for Oracle
+    color: 'text-red-500'
+  },
+  {
+    title: 'Cybersecurity Essentials',
+    issuer: 'Cisco',
+    icon: ShieldCheck, // Use ShieldCheck icon for Cisco/Security
+    color: 'text-cyan-500' // Example color for Cisco
+  },
+];
 
 
 export default function Home() {
@@ -871,52 +914,28 @@ export default function Home() {
                  </h2>
              </div>
             <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3"> {/* Increased max-width and added lg:grid-cols-3 */}
-              {/* Certification 1 */}
-              <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90"> {/* Increased padding, centered text, explicit bg */}
-                <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
-                   <Award className="h-16 w-16 text-primary mb-4" /> {/* Larger icon */}
-                   <CardTitle className="text-lg font-semibold">Professional Cloud Architect</CardTitle>
-                   <CardDescription className="text-base text-muted-foreground mt-1">Google Cloud</CardDescription> {/* Increased font size */}
-                </CardHeader>
-                 {/* <CardContent className="pt-2"> Optional content </CardContent> */}
-              </Card>
-              {/* Certification 2 */}
-               <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
-                <CardHeader className="p-0 mb-4">
-                   <Award className="h-16 w-16 text-primary mb-4" />
-                   <CardTitle className="text-lg font-semibold">Associate Cloud Engineer</CardTitle>
-                   <CardDescription className="text-base text-muted-foreground mt-1">Google Cloud</CardDescription>
-                </CardHeader>
-              </Card>
-               {/* Certification 3 */}
-               <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
-                 <CardHeader className="p-0 mb-4">
-                    <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
-                    <CardTitle className="text-lg font-semibold">Oracle Cloud Infrastructure Generative AI Professional</CardTitle>
-                    <CardDescription className="text-base text-muted-foreground mt-1">Oracle</CardDescription>
-                 </CardHeader>
-              </Card>
-               {/* Certification 4 */}
-                <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
-                  <CardHeader className="p-0 mb-4">
-                     <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
-                     <CardTitle className="text-lg font-semibold">Oracle Cloud Infrastructure 2023 Certified Foundations Associate</CardTitle>
-                     <CardDescription className="text-base text-muted-foreground mt-1">Oracle (1Z0-1085-23)</CardDescription>
-                 </CardHeader>
-              </Card>
-               {/* Certification 5 */}
-                <Card className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90">
-                  <CardHeader className="p-0 mb-4">
-                     <Award className="h-16 w-16 text-primary mb-4" /> {/* Consistent icon */}
-                     <CardTitle className="text-lg font-semibold">Cybersecurity Essentials</CardTitle>
-                     <CardDescription className="text-base text-muted-foreground mt-1">Cisco</CardDescription>
-                  </CardHeader>
-              </Card>
+              {certifications.map((cert, index) => {
+                const CertIcon = cert.icon;
+                return (
+                  <Card
+                    key={index}
+                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90"
+                  >
+                    <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
+                      <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} /> {/* Use specific icon and color */}
+                      <CardTitle className="text-lg font-semibold">{cert.title}</CardTitle>
+                      <CardDescription className="text-base text-muted-foreground mt-1">{cert.issuer}</CardDescription> {/* Increased font size */}
+                    </CardHeader>
+                    {/* <CardContent className="pt-2"> Optional content </CardContent> */}
+                  </Card>
+                );
+              })}
               {/* Add an empty div as a placeholder to push the last item to the left on lg screens if only 5 items */}
-              <div className="hidden lg:block"></div>
+              {certifications.length % 3 === 2 && <div className="hidden lg:block"></div>}
             </div>
           </div>
         </section>
+
 
         {/* Education Section */}
         <section id="education" className="py-16 bg-background"> {/* Changed bg for alternation */}
