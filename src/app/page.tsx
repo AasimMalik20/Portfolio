@@ -35,6 +35,7 @@ import {
   List,
   FolderGit2,
   Sparkles, // Added for Core Experience title
+  Lightbulb, // New icon for Expertise
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
@@ -150,17 +151,16 @@ export default function Home() {
               HOME
             </a>
             <a
-              href="#professional-summary" // This now points to the Core Experience section
+              href="#professional-summary" // Points to the Expertise section
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              SUMMARY
+              EXPERTISE {/* Updated Nav Link */}
             </a>
-             {/* Removed the separate EXPERIENCE link */}
-            <a
-              href="#work-experience" // Link to detailed experience
+             <a
+              href="#work-experience" // Link to detailed experience (Kept separate for now, can be removed if Expertise section fully replaces it)
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              EXPERIENCE {/* Link to Detailed Experience */}
+              DETAILS {/* Optionally rename this or remove */}
             </a>
             <a
               href="#skills"
@@ -260,16 +260,14 @@ export default function Home() {
            </div>
         </section>
 
-        {/* Removed the old Professional Summary Section */}
-
-        {/* Core Experience Section (Renamed ID to professional-summary) */}
-        <section id="professional-summary" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
+        {/* Expertise Section (Replaces Professional Summary) */}
+        <section id="professional-summary" className="py-16 bg-secondary"> {/* Keep ID for nav link */}
             <div className="container mx-auto px-4 md:px-6">
-                 {/* Title centered above the grid */}
+                 {/* Title centered above the grid - Updated */}
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <User className="h-6 w-6 text-primary" /> {/* Using User icon */}
+                    <Lightbulb className="h-6 w-6 text-primary" /> {/* Using Lightbulb icon */}
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
-                        Professional Summary & Experience
+                        Expertise {/* Updated Title */}
                     </h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-16 items-start">
@@ -279,15 +277,14 @@ export default function Home() {
                             variant="outline"
                             className="border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
                         >
-                            CORE EXPERIENCE
+                            PROFESSIONAL OVERVIEW
                         </Badge>
-                        <h3 className="text-4xl lg:text-5xl font-bold tracking-tight"> {/* Changed from h2 to h3 */}
+                        <h3 className="text-4xl lg:text-5xl font-bold tracking-tight">
                            I architect scalable & secure cloud solutions
                         </h3>
                         <p className="text-muted-foreground leading-relaxed max-w-md">
                             As a Google Cloud Certified Professional Cloud Architect, I specialize in designing and implementing robust cloud infrastructures. My focus is on optimizing costs, enhancing system reliability, and ensuring security and compliance, leveraging cloud-native technologies to drive innovation.
                         </p>
-                         {/* Removed "Book a Call" button */}
                     </div>
 
                     {/* Right Column */}
@@ -296,11 +293,9 @@ export default function Home() {
                             <div key={index}>
                                 <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{exp.company}</p>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
-                                    <h4 className="text-xl font-medium text-foreground">{exp.role}</h4> {/* Changed from h3 to h4 */}
+                                    <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
                                     <p className="text-sm text-muted-foreground whitespace-nowrap">({exp.date})</p>
                                 </div>
-                                 {/* Optional: Add location back if needed */}
-                                {/* <p className="text-sm text-muted-foreground mt-1">{exp.location}</p> */}
                             </div>
                         ))}
                     </div>
@@ -308,8 +303,8 @@ export default function Home() {
             </div>
         </section>
 
-        {/* Work Experience Section (Original - Kept for detailed view if needed) */}
-        <section id="work-experience" className="py-16 bg-background"> {/* Changed bg */}
+        {/* Detailed Work Experience Section */}
+        <section id="work-experience" className="py-16 bg-background">
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
                 <Briefcase className="h-6 w-6 text-primary" />
@@ -735,5 +730,3 @@ export default function Home() {
     </div>
   );
 }
-
-  
