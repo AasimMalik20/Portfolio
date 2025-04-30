@@ -1016,7 +1016,7 @@ export default function Home() {
                     {/* LinkedIn Button */}
                     <Button variant="outline" asChild>
                         {/* Correct LinkedIn URL from resume */}
-                        <a href="https://www.linkedin.com/in/aasim-malik-b6a008224/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <a href="https://www.linkedin.com/in/aasim-malik/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                         </a>
                     </Button>
