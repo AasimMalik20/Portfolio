@@ -40,10 +40,17 @@ import {
   Lightbulb,
   ChevronLeft, // Import ChevronLeft
   ChevronRight, // Import ChevronRight
+  Menu // Import Menu for mobile
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils'; // Import cn utility
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose // Import SheetClose
+} from "@/components/ui/sheet"; // Import Sheet components for mobile menu
 
 // Placeholder Logo Component
 const Logo = () => (
@@ -141,7 +148,7 @@ const coreExperiences = [
   },
 ];
 
-// Detailed Work Experience Data
+// Detailed Work Experience Data (Make sure the latest experience is first)
 const workExperiences = [
   {
     title: 'Associate Software Engineer',
@@ -183,20 +190,23 @@ const workExperiences = [
       'Created CI/CD pipelines for cloud-native applications, reducing deployment time by 50% and improving release reliability.',
     ],
   },
-  {
+    {
     title: 'SME Intern',
     company: 'Gowth Central VC',
     date: 'July 2022',
     location: 'Remote',
     points: [
-        'Details for this role were not provided in the resume.', // Placeholder if no details
+        'Focused on Subject Matter Expertise related to Venture Capital operations and analysis.', // Added placeholder detail
+        'Contributed to research and data gathering for investment evaluations.',
+        'Supported the team with market trend analysis and reporting.',
     ],
   },
 ];
 
 
 export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0); // State for carousel
+  const [currentIndex, setCurrentIndex] = useState(0); // State for carousel, starts at 0 (latest experience)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
@@ -210,12 +220,15 @@ export default function Home() {
     );
   };
 
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
           <Logo />
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <a
               href="#home"
@@ -224,16 +237,16 @@ export default function Home() {
               HOME
             </a>
             <a
-              href="#professional-summary" // Points to the Expertise section
+              href="#expertise" // Updated ID
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              EXPERTISE {/* Updated Nav Link */}
+              EXPERTISE
             </a>
              <a
               href="#work-experience" // Link to detailed experience
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
-              DETAILS {/* Updated Nav Link */}
+              DETAILS
             </a>
             <a
               href="#skills"
@@ -266,11 +279,42 @@ export default function Home() {
               CONTACT
             </a>
           </nav>
-          {/* Mobile Menu Trigger (Simplified) */}
-           <button className="md:hidden p-2 -mr-2"> {/* Adjusted padding */}
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-             <span className="sr-only">Open menu</span>
-           </button>
+          {/* Mobile Menu Trigger */}
+           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+             <SheetTrigger asChild className="md:hidden">
+               <Button variant="ghost" size="icon" aria-label="Open menu">
+                 <Menu className="h-6 w-6" />
+               </Button>
+             </SheetTrigger>
+             <SheetContent side="right" className="w-full max-w-xs p-6">
+               <nav className="flex flex-col space-y-5 mt-6">
+                  <SheetClose asChild>
+                    <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">HOME</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EXPERTISE</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">DETAILS</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">SKILLS</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <a href="#projects" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">PROJECTS</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <a href="#certifications" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CERTIFICATIONS</a>
+                  </SheetClose>
+                  <SheetClose asChild>
+                     <a href="#education" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EDUCATION</a>
+                  </SheetClose>
+                   <SheetClose asChild>
+                     <a href="#contact" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CONTACT</a>
+                   </SheetClose>
+               </nav>
+             </SheetContent>
+           </Sheet>
         </div>
       </header>
 
@@ -333,12 +377,12 @@ export default function Home() {
            </div>
         </section>
 
-        {/* Expertise Section (Replaces Professional Summary) */}
-        <section id="professional-summary" className="py-16 bg-secondary"> {/* Keep ID for nav link */}
+        {/* Expertise Section */}
+        <section id="expertise" className="py-16 bg-secondary"> {/* Updated ID */}
             <div className="container mx-auto px-4 md:px-6">
                  {/* Title centered above the grid - Updated */}
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <Lightbulb className="h-6 w-6 text-primary" /> {/* Using Lightbulb icon */}
+                    <Lightbulb className="h-6 w-6 text-primary" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
                         Expertise {/* Updated Title */}
                     </h2>
@@ -387,19 +431,26 @@ export default function Home() {
                 </div>
 
                 <div className="relative max-w-5xl mx-auto">
-                    <div className="relative h-[500px]"> {/* Set a fixed height for the container */}
+                     {/* Use a fixed height container and manage overflow internally */}
+                    <div className="relative h-[500px] overflow-visible"> {/* Allow overflow for side cards */}
                         {workExperiences.map((exp, index) => {
-                            const offset = index - currentIndex;
-                            const scale = 1 - Math.abs(offset) * 0.1;
-                            const opacity = 1 - Math.abs(offset) * 0.3;
-                            const zIndex = workExperiences.length - Math.abs(offset);
-                            const translateX = offset * 60; // Adjust spacing between cards
+                            // Calculate offset relative to the current index
+                            let offset = index - currentIndex;
+                            const totalItems = workExperiences.length;
 
-                            // Ensure the current card is fully opaque and scaled
-                            const currentCardScale = index === currentIndex ? 1 : scale;
-                            const currentCardOpacity = index === currentIndex ? 1 : opacity;
+                            // Handle wrapping for circular effect
+                            if (offset > totalItems / 2) {
+                                offset -= totalItems;
+                            } else if (offset < -totalItems / 2) {
+                                offset += totalItems;
+                            }
 
-                            // Skip rendering cards that are too far away
+                            const scale = 1 - Math.abs(offset) * 0.1; // Decrease scale for distant cards
+                            const opacity = Math.max(0, 1 - Math.abs(offset) * 0.4); // Decrease opacity more steeply
+                            const zIndex = totalItems - Math.abs(offset); // Cards closer to center are higher
+                            const translateX = offset * 75; // INCREASED spacing between cards
+
+                            // Skip rendering cards that are too far away and almost invisible
                             if (Math.abs(offset) > 2) {
                                 return null;
                             }
@@ -409,15 +460,16 @@ export default function Home() {
                                     key={index}
                                     className="absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center"
                                     style={{
-                                        transform: `translateX(${translateX}%) scale(${currentCardScale})`,
-                                        opacity: currentCardOpacity,
+                                        transform: `translateX(${translateX}%) scale(${scale})`,
+                                        opacity: opacity,
                                         zIndex: zIndex,
-                                        pointerEvents: index === currentIndex ? 'auto' : 'none', // Allow interaction only with the current card
+                                        pointerEvents: index === currentIndex ? 'auto' : 'none', // Interaction only for current card
                                     }}
                                 >
                                     <Card className={cn(
                                         "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[450px] flex flex-col", // Fixed height and flex col
-                                        "bg-gradient-to-br from-background to-secondary/30" // Subtle gradient background
+                                        "bg-gradient-to-br from-background to-secondary/30", // Subtle gradient background
+                                        index !== currentIndex && "blur-[1px]" // Slightly blur non-active cards
                                     )}>
                                         <CardHeader>
                                             <div className="flex justify-between items-start flex-wrap gap-2">
@@ -448,7 +500,7 @@ export default function Home() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full"
+                        className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
                         onClick={handlePrev}
                         aria-label="Previous Experience"
                     >
@@ -457,7 +509,7 @@ export default function Home() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full"
+                        className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
                         onClick={handleNext}
                         aria-label="Next Experience"
                     >
