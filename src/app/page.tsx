@@ -40,7 +40,8 @@ import {
   Lightbulb,
   ChevronLeft, // Import ChevronLeft
   ChevronRight, // Import ChevronRight
-  Menu // Import Menu for mobile
+  Menu, // Import Menu for mobile
+  Star, // Icon for Core Competencies
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
@@ -99,7 +100,7 @@ const technologies: { name: string; icon: LucideIcon }[] = [
   { name: 'Bash', icon: Terminal },
 ];
 
-// Categorized Skills for improved display (including Soft Skills)
+// Categorized Skills for improved display
 const categorizedSkills = {
   'Cloud Platforms': [
     'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure',
@@ -558,52 +559,56 @@ export default function Home() {
                         Skills
                     </h2>
                 </div>
-                <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm">
+                <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm mb-12"> {/* Added margin bottom */}
                     <CardContent className="p-6 md:p-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12"> {/* Main grid for technical vs core competencies */}
-                            {/* Technical Skills Area */}
-                            <div>
-                                <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-                                    <Terminal className="h-5 w-5" />
-                                    Technical Skills
-                                </h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
-                                    {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
-                                        <div key={catIndex} className="space-y-4">
-                                            <h4 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
-                                                {category}
-                                            </h4>
-                                            <ul className="space-y-2">
-                                                {skills.map((skill, skillIndex) => (
-                                                    <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
-                                                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
-                                                        {skill}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Core Competencies / Soft Skills Area */}
-                            <div>
-                                <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-                                    <Sparkles className="h-5 w-5" />
-                                    Core Competencies
-                                </h3>
-                                <ul className="space-y-3">
-                                    {coreCompetencies.map((skill, index) => (
-                                        <li key={index} className="flex items-center text-sm text-muted-foreground">
-                                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent mr-2.5 flex-shrink-0 border border-primary/30"></span>
-                                            {skill}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
+                       <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                           <Terminal className="h-5 w-5" />
+                           Technical Skills
+                       </h3>
+                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8"> {/* Changed to 3 cols on large screens */}
+                           {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
+                               <div key={catIndex} className="space-y-4">
+                                   <h4 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
+                                       {category}
+                                   </h4>
+                                   <ul className="space-y-2">
+                                       {skills.map((skill, skillIndex) => (
+                                           <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
+                                               <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
+                                               {skill}
+                                           </li>
+                                       ))}
+                                   </ul>
+                               </div>
+                           ))}
+                       </div>
                     </CardContent>
                 </Card>
+
+                {/* Core Competencies Horizontal Scroll */}
+                <div className="w-full overflow-hidden pb-4 group"> {/* Added group class */}
+                   <div className="flex justify-center items-center gap-2 mb-6">
+                      <Star className="h-5 w-5 text-primary" />
+                      <h3 className="text-xl font-semibold text-foreground text-center">
+                         Core Competencies
+                      </h3>
+                    </div>
+                   <div className="relative overflow-hidden">
+                        {/* Inner div for animation, doubled content */}
+                       <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
+                           {/* Original Competencies */}
+                           {[...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array
+                               <Badge
+                                   key={index}
+                                   variant="outline"
+                                   className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 whitespace-nowrap" // Style as pill
+                               >
+                                   {competency}
+                               </Badge>
+                           ))}
+                       </div>
+                   </div>
+               </div>
             </div>
         </section>
 
