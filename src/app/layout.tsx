@@ -1,21 +1,17 @@
 import type {Metadata} from 'next';
-import {Geist, Geist_Mono} from 'next/font/google';
+import { Inter } from 'next/font/google'; // Changed font to Inter
 import './globals.css';
+import { Toaster } from "@/components/ui/toaster"; // Import Toaster
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: '--font-inter', // Define variable for Inter font
 });
 
 export const metadata: Metadata = {
   title: 'Aasim Malik - Portfolio',
   description:
-    'A portfolio website showcasing the skills and projects of Aasim Malik, a Google Cloud Certified Professional Cloud Architect.',
+    'Portfolio of Aasim Malik, Google Cloud Certified Professional Cloud Architect.',
 };
 
 export default function RootLayout({
@@ -25,8 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {/* Use Inter font variable */}
+      <body className={`${inter.variable} font-sans antialiased`}>
         {children}
+        <Toaster /> {/* Add Toaster component */}
       </body>
     </html>
   );

@@ -9,73 +9,60 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 93%;
-    --muted-foreground: 0 0% 39%;
-    --accent: 0 0% 85%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 0 0% 9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Light Theme (Default) - Minimalist Black & White */
+    --background: 0 0% 100%; /* White */
+    --foreground: 0 0% 9%; /* Almost Black */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 0 0% 9%; /* Almost Black */
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 0 0% 9%; /* Almost Black */
+    --primary: 0 0% 9%; /* Almost Black */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 0 0% 96.1%; /* Light Gray */
+    --secondary-foreground: 0 0% 9%; /* Almost Black */
+    --muted: 0 0% 96.1%; /* Light Gray */
+    --muted-foreground: 0 0% 45.1%; /* Medium Gray */
+    --accent: 0 0% 96.1%; /* Light Gray */
+    --accent-foreground: 0 0% 9%; /* Almost Black */
+    --destructive: 0 84.2% 60.2%; /* Default Red for Errors */
+    --destructive-foreground: 0 0% 98%; /* Light Gray for contrast on Red */
+    --border: 0 0% 89.8%; /* Lighter Gray */
+    --input: 0 0% 89.8%; /* Lighter Gray */
+    --ring: 0 0% 9%; /* Almost Black for focus rings */
+    --chart-1: 0 0% 50%; /* Grayscale chart colors */
+    --chart-2: 0 0% 40%;
+    --chart-3: 0 0% 30%;
+    --chart-4: 0 0% 20%;
+    --chart-5: 0 0% 10%;
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 93%;
-    --sidebar-foreground: 0 0% 9%;
-    --sidebar-primary: 0 0% 9%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 85%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 0 0% 88%;
-    --sidebar-ring: 0 0% 9%;
   }
+
   .dark {
-    --background: 0 0% 9%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 16%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 0 0% 25%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 25%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 0 0% 100%;
+    /* Dark Theme - Minimalist Black & White (Inverted) */
+    --background: 0 0% 9%; /* Almost Black */
+    --foreground: 0 0% 98%; /* Almost White */
+    --card: 0 0% 12%; /* Dark Gray */
+    --card-foreground: 0 0% 98%; /* Almost White */
+    --popover: 0 0% 9%; /* Almost Black */
+    --popover-foreground: 0 0% 98%; /* Almost White */
+    --primary: 0 0% 98%; /* Almost White */
+    --primary-foreground: 0 0% 9%; /* Almost Black */
+    --secondary: 0 0% 14.9%; /* Darker Gray */
+    --secondary-foreground: 0 0% 98%; /* Almost White */
+    --muted: 0 0% 14.9%; /* Darker Gray */
+    --muted-foreground: 0 0% 62%; /* Lighter Gray */
+    --accent: 0 0% 14.9%; /* Darker Gray */
+    --accent-foreground: 0 0% 98%; /* Almost White */
+    --destructive: 0 72.2% 50.6%; /* Default Red for Errors (Dark mode adjusted) */
+    --destructive-foreground: 0 0% 98%; /* Light Gray */
+    --border: 0 0% 20%; /* Dark Gray Border */
+    --input: 0 0% 20%; /* Dark Gray Input */
+    --ring: 0 0% 83.1%; /* Light Gray for focus rings */
+    --chart-1: 0 0% 60%; /* Grayscale chart colors */
+    --chart-2: 0 0% 50%;
+    --chart-3: 0 0% 40%;
+    --chart-4: 0 0% 30%;
+    --chart-5: 0 0% 20%;
   }
 }
 
@@ -85,5 +72,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    scroll-behavior: smooth; /* Add smooth scrolling */
+  }
+  section {
+     @apply scroll-mt-20; /* Add margin top for scrolled sections to account for sticky header */
   }
 }
