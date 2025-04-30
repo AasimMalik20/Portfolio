@@ -28,7 +28,13 @@ import {
   Github, // Added GitHub
   School, // Added School for Education
   GraduationCap, // Added GraduationCap for Education
-} from 'lucide-react'; // Added Download and technology icons
+  Briefcase, // Added Briefcase for Work Experience
+  Award, // Added Award for Certifications
+  MessageSquare, // Added MessageSquare for Contact
+  User, // Added User for Summary
+  List, // Added List for Skills
+  FolderGit2, // Added FolderGit2 for Projects
+} from 'lucide-react'; // Added more icons
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react'; // Import LucideIcon type
 
@@ -201,40 +207,35 @@ export default function Home() {
           </div>
 
           {/* Technology Icons Slideshow */}
-          <div className="w-full max-w-4xl overflow-hidden pb-4">
+          <div className="w-full max-w-4xl overflow-hidden pb-4 group"> {/* Added group class */}
              <p className="text-sm text-muted-foreground mb-6">TECHNOLOGIES I WORK WITH</p>
-            <div
-              className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide" // scrollbar-hide is a custom utility needed or use a plugin
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Hide scrollbar standard CSS
-            >
-              {technologies.map((tech, index) => (
-                <Card
-                  key={index}
-                  className="p-4 min-w-[80px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow"
-                  title={tech.name} // Tooltip for accessibility
-                >
-                  <tech.icon className="h-8 w-8 text-muted-foreground" />
-                </Card>
-              ))}
-              {/* Add duplicates for infinite scroll illusion if needed */}
-               {technologies.map((tech, index) => (
-                <Card
-                  key={`duplicate-${index}`}
-                  className="p-4 min-w-[80px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow"
-                   aria-hidden="true" // Hide duplicates from screen readers
-                >
-                  <tech.icon className="h-8 w-8 text-muted-foreground" />
-                </Card>
-              ))}
+             {/* Outer div for overflow hiding and hover effect */}
+            <div className="relative overflow-hidden">
+                 {/* Inner div for animation, doubled content */}
+                <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
+                    {/* Original Icons */}
+                    {[...technologies, ...technologies].map((tech, index) => ( // Duplicate the array
+                    <Card
+                    key={index} // Use index as key for simplicity here
+                    className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0" // Added mx-2 and flex-shrink-0
+                    title={tech.name} // Tooltip for accessibility
+                    >
+                    <tech.icon className="h-8 w-8 text-muted-foreground" />
+                    </Card>
+                ))}
+                </div>
             </div>
           </div>
         </section>
 
         <section id="professional-summary" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Professional Summary
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-8">
+                <User className="h-6 w-6 text-primary" />
+                <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Professional Summary
+                </h2>
+            </div>
             <Card className="max-w-3xl mx-auto shadow-md border border-border">
               <CardHeader>
                 <CardTitle>About Me</CardTitle>
@@ -254,9 +255,12 @@ export default function Home() {
 
         <section id="work-experience" className="py-16 bg-background">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-12 text-center">
-              Work Experience
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-12">
+                <Briefcase className="h-6 w-6 text-primary" />
+                <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Work Experience
+                </h2>
+             </div>
             <div className="max-w-3xl mx-auto space-y-8">
               {/* Experience 1: Accenture */}
               <Card className="shadow-sm border border-border">
@@ -339,9 +343,12 @@ export default function Home() {
 
         <section id="skills" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Skills & Expertise {/* Keep title matching nav */}
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-8">
+                <List className="h-6 w-6 text-primary" />
+                <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Skills & Expertise {/* Keep title matching nav */}
+                </h2>
+            </div>
             <Card className="max-w-3xl mx-auto shadow-md border border-border">
               <CardHeader>
                 <CardTitle>Technical Skills</CardTitle>
@@ -360,9 +367,12 @@ export default function Home() {
 
         <section id="projects" className="py-16 bg-background">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-12 text-center">
-              Project Showcase
-            </h2>
+            <div className="flex justify-center items-center gap-2 mb-12">
+                 <FolderGit2 className="h-6 w-6 text-primary" />
+                 <h2 className="text-3xl font-semibold tracking-tight text-center">
+                 Project Showcase
+                 </h2>
+            </div>
             <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2"> {/* Adjusted grid for potentially fewer projects */}
               {/* Project 1 */}
               <Card className="shadow-sm border border-border flex flex-col">
@@ -470,9 +480,12 @@ export default function Home() {
 
         <section id="certifications" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-12 text-center">
-              Certifications
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-12">
+                 <Award className="h-6 w-6 text-primary" />
+                 <h2 className="text-3xl font-semibold tracking-tight text-center">
+                 Certifications
+                 </h2>
+             </div>
             <div className="max-w-3xl mx-auto grid gap-6 md:grid-cols-2">
               {/* Certification 1 */}
               <Card className="shadow-sm border border-border">
@@ -541,9 +554,12 @@ export default function Home() {
         {/* Education Section */}
         <section id="education" className="py-16 bg-background">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Education
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-8">
+                <School className="h-6 w-6 text-primary" />
+                <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Education
+                </h2>
+             </div>
             <Card className="max-w-3xl mx-auto shadow-sm border border-border">
               <CardHeader>
                  <div className="flex justify-between items-start flex-wrap gap-2">
@@ -571,9 +587,12 @@ export default function Home() {
 
         <section id="contact" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-semibold tracking-tight mb-8 text-center">
-              Contact Me
-            </h2>
+             <div className="flex justify-center items-center gap-2 mb-8">
+                <MessageSquare className="h-6 w-6 text-primary" />
+                <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Contact Me
+                </h2>
+             </div>
             <Card className="max-w-xl mx-auto shadow-md border border-border">
               <CardHeader className="text-center">
                 <CardTitle>Get in Touch</CardTitle>

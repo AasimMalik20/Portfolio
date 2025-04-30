@@ -78,11 +78,18 @@ export default {
           to: {
             height: '0'
           }
-        }
+        },
+        // Add slideLeft animation
+        slideLeft: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }, // Slide by half the total width (original + duplicate)
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        // Add slideLeft animation utility
+        slideLeft: 'slideLeft 40s linear infinite', // Adjust duration (e.g., 40s) as needed
       }
     }
   },
@@ -100,7 +107,11 @@ export default {
           '&::-webkit-scrollbar': {
             display: 'none'
           }
-        }
+        },
+         // Add pause utility for animations
+        '.pause': {
+          'animation-play-state': 'paused',
+        },
       })
     })
   ],
