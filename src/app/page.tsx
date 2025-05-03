@@ -437,17 +437,17 @@ const certifications = [
 ];
 
 
-// Function to get company-specific outline color
-const getCompanyOutlineColor = (company: string): string => {
+// Function to get company-specific pill CSS classes
+const getCompanyPillClasses = (company: string): string => {
     const normalizedCompany = company.toUpperCase();
     if (normalizedCompany.includes('ACCENTURE')) {
-        return 'border-purple-500'; // Accenture Purple
+        return 'bg-purple-500 text-purple-50'; // Accenture Purple Pill
     } else if (normalizedCompany.includes('KODE KLOUD')) {
-        return 'border-sky-500'; // Kode Kloud Sky Blue
+        return 'bg-sky-500 text-sky-50'; // Kode Kloud Sky Blue Pill
     } else if (normalizedCompany.includes('GOWTH CENTRAL VC')) {
-        return 'border-blue-600'; // Gowth Central VC Blue
+        return 'bg-blue-600 text-blue-50'; // Gowth Central VC Blue Pill
     }
-    return 'border-border'; // Default border color
+    return 'bg-muted text-muted-foreground'; // Default pill color
 };
 
 
@@ -518,10 +518,14 @@ export default function Home() {
           animation-play-state: paused;
         }
 
-        /* Add custom border colors for company outlines */
-        .border-purple-500 { border-color: #8b5cf6; } /* Example Purple */
-        .border-sky-500 { border-color: #0ea5e9; } /* Example Sky Blue */
-        .border-blue-600 { border-color: #2563eb; } /* Example Blue */
+        /* Define custom background colors for pills */
+        .bg-purple-500 { background-color: #8b5cf6; }
+        .text-purple-50 { color: #f5f3ff; }
+        .bg-sky-500 { background-color: #0ea5e9; }
+        .text-sky-50 { color: #f0f9ff; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .text-blue-50 { color: #eff6ff; }
+
 
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
@@ -726,14 +730,18 @@ export default function Home() {
                         </p>
                     </div>
 
-                    {/* Right Column */}
+                    {/* Right Column - Updated with Pills */}
                     <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-12 border-border">
                         {coreExperiences.map((exp, index) => (
-                            <div key={index} className={cn(
-                                "p-4 border-l-4", // Base styles with left border
-                                getCompanyOutlineColor(exp.company) // Apply dynamic border color
-                            )}>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{exp.company}</p>
+                            <div key={index} className="space-y-2"> {/* Add space between elements */}
+                                <Badge
+                                    className={cn(
+                                        "text-xs font-semibold uppercase tracking-wider py-1 px-3 rounded-full",
+                                        getCompanyPillClasses(exp.company) // Apply dynamic pill classes
+                                    )}
+                                >
+                                    {exp.company}
+                                </Badge>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
                                     <p className="text-sm text-muted-foreground whitespace-nowrap">({exp.date})</p>
