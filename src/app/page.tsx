@@ -437,6 +437,20 @@ const certifications = [
 ];
 
 
+// Function to get company-specific outline color
+const getCompanyOutlineColor = (company: string): string => {
+    const normalizedCompany = company.toUpperCase();
+    if (normalizedCompany.includes('ACCENTURE')) {
+        return 'border-purple-500'; // Accenture Purple
+    } else if (normalizedCompany.includes('KODE KLOUD')) {
+        return 'border-sky-500'; // Kode Kloud Sky Blue
+    } else if (normalizedCompany.includes('GOWTH CENTRAL VC')) {
+        return 'border-blue-600'; // Gowth Central VC Blue
+    }
+    return 'border-border'; // Default border color
+};
+
+
 export default function Home() {
   const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0); // State for experience carousel
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
@@ -503,6 +517,12 @@ export default function Home() {
         .group:hover .animate-slideLeft > div {
           animation-play-state: paused;
         }
+
+        /* Add custom border colors for company outlines */
+        .border-purple-500 { border-color: #8b5cf6; } /* Example Purple */
+        .border-sky-500 { border-color: #0ea5e9; } /* Example Sky Blue */
+        .border-blue-600 { border-color: #2563eb; } /* Example Blue */
+
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -709,7 +729,10 @@ export default function Home() {
                     {/* Right Column */}
                     <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-12 border-border">
                         {coreExperiences.map((exp, index) => (
-                            <div key={index}>
+                            <div key={index} className={cn(
+                                "p-4 border-l-4", // Base styles with left border
+                                getCompanyOutlineColor(exp.company) // Apply dynamic border color
+                            )}>
                                 <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{exp.company}</p>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
