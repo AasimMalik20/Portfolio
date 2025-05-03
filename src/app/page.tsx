@@ -482,6 +482,19 @@ export default function Home() {
            padding-left: 0 !important;
            padding-right: 0 !important;
         }
+        /* Animation for horizontal scrolling */
+        @keyframes slideLeft {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-100%); }
+        }
+        .animate-slideLeft {
+          animation: slideLeft 60s linear infinite;
+        }
+
+        /* Pause animation on hover */
+        .group:hover .animate-slideLeft {
+          animation-play-state: paused;
+        }
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -615,23 +628,23 @@ export default function Home() {
            </div>
 
             {/* Technology Icons Slideshow - Full Width */}
-           <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
-              <p className="text-sm text-muted-foreground mb-6 text-center">TECHNOLOGIES I WORK WITH</p> {/* Centered text */}
-             <div className="overflow-hidden">
-                 <div className="flex animate-slideLeft group-hover:pause">
-                     {/* Duplicate Icons for seamless loop */}
-                     {[...technologies, ...technologies, ...technologies, ...technologies].map((tech, index) => ( // More duplicates
-                     <Card
-                     key={`${tech.name}-${index}`} // More robust key
-                     className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
-                     title={tech.name}
-                     >
-                     <tech.icon className="h-8 w-8 text-muted-foreground" />
-                     </Card>
-                 ))}
-                 </div>
-             </div>
-           </div>
+            <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
+                <p className="text-sm text-muted-foreground mb-6 text-center">TECHNOLOGIES I WORK WITH</p> {/* Centered text */}
+                <div className="overflow-hidden whitespace-nowrap"> {/* Prevent wrapping */}
+                    <div className="flex animate-slideLeft"> {/* Apply animation */}
+                        {/* Duplicate Icons for seamless loop - enough to fill more than the screen width */}
+                        {[...technologies, ...technologies, ...technologies, ...technologies, ...technologies, ...technologies].map((tech, index) => ( // More duplicates
+                            <Card
+                                key={`${tech.name}-${index}-tech`} // Unique key for each item
+                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 inline-block" // Use inline-block
+                                title={tech.name}
+                            >
+                                <tech.icon className="h-8 w-8 text-muted-foreground" />
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </section>
 
 
@@ -813,30 +826,30 @@ export default function Home() {
                     </CardContent>
                 </Card>
 
-                {/* Core Competencies Horizontal Scroll */}
-                <div className="w-full overflow-hidden pb-4 group"> {/* Added group class */}
-                   <div className="flex justify-center items-center gap-2 mb-6">
-                      <Star className="h-5 w-5 text-primary" />
-                      <h3 className="text-xl font-semibold text-foreground text-center">
-                         Core Competencies
-                      </h3>
+                {/* Core Competencies Horizontal Scroll - Full Width */}
+                <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
+                    <div className="flex justify-center items-center gap-2 mb-6">
+                       <Star className="h-5 w-5 text-primary" />
+                       <h3 className="text-xl font-semibold text-foreground text-center">
+                          Core Competencies
+                       </h3>
+                     </div>
+                    <div className="overflow-hidden whitespace-nowrap"> {/* Prevent wrapping */}
+                         {/* Inner div for animation, doubled content */}
+                        <div className="flex animate-slideLeft"> {/* Added animation class */}
+                            {/* Duplicate Competencies for seamless loop */}
+                            {[...coreCompetencies, ...coreCompetencies, ...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array multiple times
+                                <Badge
+                                    key={`${index}-competency`} // Unique key
+                                    variant="outline"
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 inline-block" // Use inline-block
+                                >
+                                    {competency}
+                                </Badge>
+                            ))}
+                        </div>
                     </div>
-                   <div className="overflow-hidden"> {/* Removed relative */}
-                        {/* Inner div for animation, doubled content */}
-                       <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
-                           {/* Original Competencies */}
-                           {[...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array
-                               <Badge
-                                   key={index}
-                                   variant="outline"
-                                   className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 whitespace-nowrap" // Style as pill
-                               >
-                                   {competency}
-                               </Badge>
-                           ))}
-                       </div>
-                   </div>
-               </div>
+                </div>
             </div>
         </section>
 
@@ -1072,3 +1085,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
