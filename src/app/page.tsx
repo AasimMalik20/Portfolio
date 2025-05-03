@@ -1,7 +1,7 @@
 // @ts-nocheck - TODO: Fix TS errors
 'use client';
 
-import React, { useState } from 'react'; // Import useState
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect
 import {
   Card,
   CardContent,
@@ -307,7 +307,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
   };
 
   // Reset flip state if the card becomes inactive
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isActive) {
       setIsFlipped(false);
     }
@@ -592,6 +592,7 @@ export default function Home() {
                objectFit="cover"
                className="grayscale" // Ensure grayscale effect
                priority // Load image eagerly as it's above the fold
+               data-ai-hint="professional portrait grayscale"
              />
            </div>
 
@@ -610,7 +611,7 @@ export default function Home() {
            <div className="w-full max-w-4xl overflow-hidden pb-4 group"> {/* Added group class */}
               <p className="text-sm text-muted-foreground mb-6">TECHNOLOGIES I WORK WITH</p>
               {/* Outer div for overflow hiding and hover effect */}
-             <div className="relative overflow-hidden">
+             <div className="overflow-hidden"> {/* Removed relative positioning */}
                   {/* Inner div for animation, doubled content */}
                  <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
                      {/* Original Icons */}
@@ -814,7 +815,7 @@ export default function Home() {
                          Core Competencies
                       </h3>
                     </div>
-                   <div className="relative overflow-hidden">
+                   <div className="overflow-hidden"> {/* Removed relative */}
                         {/* Inner div for animation, doubled content */}
                        <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
                            {/* Original Competencies */}
@@ -1065,3 +1066,4 @@ export default function Home() {
     </div>
   );
 }
+
