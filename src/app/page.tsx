@@ -475,6 +475,13 @@ export default function Home() {
         .transform-style-preserve-3d { transform-style: preserve-3d; }
         .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Override container max-width for the slideshow section */
+        .full-width-slideshow {
+           max-width: none !important;
+           padding-left: 0 !important;
+           padding-right: 0 !important;
+        }
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -571,55 +578,53 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section
-          id="home"
-          className="pt-24 pb-16 text-center container mx-auto flex flex-col items-center px-4 md:px-6"
-        >
-           <Badge
-             variant="outline"
-             className="mb-4 border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
-           >
-             HELLO! I AM AASIM MALIK
-           </Badge>
-           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
-             Cloud Architect & Developer
-           </h1>
-           <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
-             <Image
-               src="https://picsum.photos/400/400?grayscale" // Grayscale placeholder, make it square
-               alt="Aasim Malik Portrait"
-               layout="fill"
-               objectFit="cover"
-               className="grayscale" // Ensure grayscale effect
-               priority // Load image eagerly as it's above the fold
-               data-ai-hint="professional portrait grayscale"
-             />
+        <section id="home" className="pt-24 pb-16 text-center flex flex-col items-center">
+           {/* Container for centered content */}
+           <div className="container mx-auto flex flex-col items-center px-4 md:px-6">
+               <Badge
+                 variant="outline"
+                 className="mb-4 border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
+               >
+                 HELLO! I AM AASIM MALIK
+               </Badge>
+               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
+                 Cloud Architect & Developer
+               </h1>
+               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
+                 <Image
+                   src="https://picsum.photos/400/400?grayscale" // Grayscale placeholder, make it square
+                   alt="Aasim Malik Portrait"
+                   layout="fill"
+                   objectFit="cover"
+                   className="grayscale" // Ensure grayscale effect
+                   priority // Load image eagerly as it's above the fold
+                   data-ai-hint="professional portrait grayscale"
+                 />
+               </div>
+
+               {/* Download CV Button */}
+               <div className="mb-16">
+                 <Button variant="outline" size="lg" asChild>
+                   {/* Replace '#' with the actual path to your CV file or URL */}
+                   <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_CV.pdf">
+                     DOWNLOAD CV
+                     <Download className="ml-2 h-4 w-4" />
+                   </a>
+                 </Button>
+               </div>
            </div>
 
-           {/* Download CV Button */}
-           <div className="mb-16">
-             <Button variant="outline" size="lg" asChild>
-               {/* Replace '#' with the actual path to your CV file or URL */}
-               <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_CV.pdf">
-                 DOWNLOAD CV
-                 <Download className="ml-2 h-4 w-4" />
-               </a>
-             </Button>
-           </div>
-
-           {/* Technology Icons Slideshow */}
-           <div className="w-full max-w-4xl overflow-hidden pb-4 group"> {/* Added group class */}
-              <p className="text-sm text-muted-foreground mb-6">TECHNOLOGIES I WORK WITH</p>
-              {/* Outer div for overflow hiding and hover effect */}
-             <div className="overflow-hidden"> {/* Removed relative positioning */}
-                  {/* Inner div for animation, doubled content */}
-                 <div className="flex animate-slideLeft group-hover:pause"> {/* Added animation class and hover pause */}
-                     {/* Original Icons */}
-                     {[...technologies, ...technologies].map((tech, index) => ( // Duplicate the array
+            {/* Technology Icons Slideshow - Full Width */}
+           <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
+              <p className="text-sm text-muted-foreground mb-6 text-center">TECHNOLOGIES I WORK WITH</p> {/* Centered text */}
+             <div className="overflow-hidden">
+                 <div className="flex animate-slideLeft group-hover:pause">
+                     {/* Duplicate Icons for seamless loop */}
+                     {[...technologies, ...technologies, ...technologies, ...technologies].map((tech, index) => ( // More duplicates
                      <Card
-                     key={index} // Use index as key for simplicity here
-                     className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0" // Added mx-2 and flex-shrink-0
-                     title={tech.name} // Tooltip for accessibility
+                     key={`${tech.name}-${index}`} // More robust key
+                     className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                     title={tech.name}
                      >
                      <tech.icon className="h-8 w-8 text-muted-foreground" />
                      </Card>
@@ -628,6 +633,7 @@ export default function Home() {
              </div>
            </div>
         </section>
+
 
         {/* Expertise Section */}
         <section id="expertise" className="py-16 bg-secondary"> {/* Updated ID */}
@@ -1066,4 +1072,3 @@ export default function Home() {
     </div>
   );
 }
-

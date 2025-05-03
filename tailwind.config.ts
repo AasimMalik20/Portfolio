@@ -82,14 +82,14 @@ export default {
         // Add slideLeft animation
         slideLeft: {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }, // Slide by half the total width (original + duplicate)
+          '100%': { transform: 'translateX(-100%)' }, // Slide by the total width of the *visible* duplicated content
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         // Add slideLeft animation utility
-        slideLeft: 'slideLeft 40s linear infinite', // Adjust duration (e.g., 40s) as needed
+        slideLeft: 'slideLeft 60s linear infinite', // Adjust duration (e.g., 60s) for desired speed
       }
     }
   },
