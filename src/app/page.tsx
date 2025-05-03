@@ -526,6 +526,10 @@ export default function Home() {
         .bg-blue-600 { background-color: #2563eb; }
         .text-blue-50 { color: #eff6ff; }
 
+        /* Custom class for green present date */
+        .text-present-green { color: hsl(145, 63%, 49%); } /* Example green */
+        .dark .text-present-green { color: hsl(145, 50%, 60%); } /* Lighter green for dark mode */
+
 
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
@@ -730,7 +734,7 @@ export default function Home() {
                         </p>
                     </div>
 
-                    {/* Right Column - Updated with Pills */}
+                    {/* Right Column - Updated with Pills and Date Alignment */}
                     <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-12 border-border">
                         {coreExperiences.map((exp, index) => (
                             <div key={index} className="space-y-2"> {/* Add space between elements */}
@@ -744,7 +748,13 @@ export default function Home() {
                                 </Badge>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
-                                    <p className="text-sm text-muted-foreground whitespace-nowrap">({exp.date})</p>
+                                    {/* Align date to the right and add green color if 'PRESENT' */}
+                                    <p className={cn(
+                                        "text-sm text-muted-foreground whitespace-nowrap sm:ml-auto", // Align right on small screens and up
+                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-green font-semibold' // Apply green color
+                                    )}>
+                                        ({exp.date})
+                                    </p>
                                 </div>
                             </div>
                         ))}
