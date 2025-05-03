@@ -57,6 +57,7 @@ import {
   SheetClose // Import SheetClose
 } from "@/components/ui/sheet"; // Import Sheet components for mobile menu
 import { Separator } from '@/components/ui/separator'; // Import Separator
+import { ThemeProvider } from '@/components/theme-provider'; // Import ThemeProvider
 import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import ThemeToggleButton
 
 // Placeholder Logo Component
@@ -735,9 +736,9 @@ export default function Home() {
                     </div>
 
                     {/* Right Column - Updated with Pills and Date Alignment */}
-                    <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-12 border-border">
+                    <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-border md:pl-0"> {/* Removed md:pl-12 */}
                         {coreExperiences.map((exp, index) => (
-                            <div key={index} className="space-y-2"> {/* Add space between elements */}
+                            <div key={index} className="space-y-2 md:pl-12"> {/* Added md:pl-12 here */}
                                 <Badge
                                     className={cn(
                                         "text-xs font-semibold uppercase tracking-wider py-1 px-3 rounded-full",
