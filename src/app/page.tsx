@@ -481,18 +481,25 @@ export default function Home() {
            max-width: none !important;
            padding-left: 0 !important;
            padding-right: 0 !important;
+           /* Ensure the container itself doesn't clip the animation */
+           overflow-x: clip; /* Use clip to hide overflow without scrollbars */
+           position: relative; /* Needed for absolute positioning of inner content if required */
         }
         /* Animation for horizontal scrolling */
         @keyframes slideLeft {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
+          /* Slide by the width of ONE set of items for seamless loop */
+          100% { transform: translateX(-50%); }
         }
-        .animate-slideLeft {
+
+        .animate-slideLeft > div {
+          /* Double the width to accommodate two sets of items */
+          width: 200%;
           animation: slideLeft 60s linear infinite;
         }
 
         /* Pause animation on hover */
-        .group:hover .animate-slideLeft {
+        .group:hover .animate-slideLeft > div {
           animation-play-state: paused;
         }
       `}</style>
@@ -630,13 +637,25 @@ export default function Home() {
             {/* Technology Icons Slideshow - Full Width */}
             <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
                 <p className="text-sm text-muted-foreground mb-6 text-center">TECHNOLOGIES I WORK WITH</p> {/* Centered text */}
-                <div className="overflow-hidden whitespace-nowrap"> {/* Prevent wrapping */}
-                    <div className="flex animate-slideLeft"> {/* Apply animation */}
+                {/* Removed inner overflow hidden and whitespace nowrap */}
+                <div className="animate-slideLeft"> {/* Apply animation to this inner div */}
+                    {/* Container for the flex items, doubled width */}
+                    <div className="flex">
                         {/* Duplicate Icons for seamless loop - enough to fill more than the screen width */}
-                        {[...technologies, ...technologies, ...technologies, ...technologies, ...technologies, ...technologies].map((tech, index) => ( // More duplicates
+                        {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
                             <Card
-                                key={`${tech.name}-${index}-tech`} // Unique key for each item
-                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 inline-block" // Use inline-block
+                                key={`${tech.name}-${index}-tech-1`} // Unique key part 1
+                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                title={tech.name}
+                            >
+                                <tech.icon className="h-8 w-8 text-muted-foreground" />
+                            </Card>
+                        ))}
+                         {/* Second set of icons for the loop */}
+                        {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
+                            <Card
+                                key={`${tech.name}-${index}-tech-2`} // Unique key part 2
+                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
                                 title={tech.name}
                             >
                                 <tech.icon className="h-8 w-8 text-muted-foreground" />
@@ -834,15 +853,26 @@ export default function Home() {
                           Core Competencies
                        </h3>
                      </div>
-                    <div className="overflow-hidden whitespace-nowrap"> {/* Prevent wrapping */}
+                    {/* Removed inner overflow hidden and whitespace nowrap */}
+                    <div className="animate-slideLeft"> {/* Apply animation to this inner div */}
                          {/* Inner div for animation, doubled content */}
-                        <div className="flex animate-slideLeft"> {/* Added animation class */}
+                        <div className="flex"> {/* Container for the flex items, doubled width */}
                             {/* Duplicate Competencies for seamless loop */}
-                            {[...coreCompetencies, ...coreCompetencies, ...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array multiple times
+                            {[...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array once
                                 <Badge
-                                    key={`${index}-competency`} // Unique key
+                                    key={`${index}-competency-1`} // Unique key part 1
                                     variant="outline"
-                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 inline-block" // Use inline-block
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                >
+                                    {competency}
+                                </Badge>
+                            ))}
+                             {/* Second set for loop */}
+                            {[...coreCompetencies, ...coreCompetencies].map((competency, index) => ( // Duplicate the array once
+                                <Badge
+                                    key={`${index}-competency-2`} // Unique key part 2
+                                    variant="outline"
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
                                 >
                                     {competency}
                                 </Badge>
@@ -1085,5 +1115,3 @@ export default function Home() {
     </div>
   );
 }
-
-    

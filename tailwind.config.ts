@@ -82,7 +82,7 @@ export default {
         // Add slideLeft animation
         slideLeft: {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-100%)' }, // Slide by the total width of the *visible* duplicated content
+          '100%': { transform: 'translateX(-50%)' }, // Slide by half (width of one set of items)
         },
       },
       animation: {
