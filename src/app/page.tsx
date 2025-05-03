@@ -57,6 +57,7 @@ import {
   SheetClose // Import SheetClose
 } from "@/components/ui/sheet"; // Import Sheet components for mobile menu
 import { Separator } from '@/components/ui/separator'; // Import Separator
+import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import ThemeToggleButton
 
 // Placeholder Logo Component
 const Logo = () => (
@@ -336,7 +337,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
         {/* Front of the card */}
         <Card className={cn(
           "absolute inset-0 backface-hidden overflow-hidden flex flex-col",
-          "bg-gradient-to-br from-background to-secondary/30 shadow-lg border border-border"
+          "bg-gradient-to-br from-card to-secondary/30 shadow-lg border border-border" // Use card background
         )}>
           <CardHeader>
             <div className="flex justify-between items-start flex-wrap gap-2">
@@ -381,7 +382,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
         {/* Back of the card */}
         <Card className={cn(
           "absolute inset-0 backface-hidden overflow-hidden flex flex-col items-center justify-center rotate-y-180",
-           "bg-gradient-to-br from-secondary/30 to-background shadow-lg border border-border" // Slightly different gradient for back
+           "bg-gradient-to-br from-secondary/30 to-card shadow-lg border border-border" // Slightly different gradient for back, use card bg
         )}>
            {project.githubLink && (
              // Prevent link click from propagating to the card flip
@@ -407,31 +408,31 @@ const certifications = [
     title: 'Professional Cloud Architect',
     issuer: 'Google Cloud',
     icon: Cloud, // Use Cloud icon for Google Cloud
-    color: 'text-blue-500' // Example color, adjust as needed
+    color: 'text-blue-500 dark:text-blue-400' // Adjust colors for dark mode
   },
   {
     title: 'Associate Cloud Engineer',
     issuer: 'Google Cloud',
     icon: Cloud, // Use Cloud icon for Google Cloud
-    color: 'text-blue-500'
+    color: 'text-blue-500 dark:text-blue-400'
   },
   {
     title: 'Oracle Cloud Infrastructure Generative AI Professional',
     issuer: 'Oracle',
     icon: Database, // Use Database icon for Oracle
-    color: 'text-red-500' // Example color for Oracle
+    color: 'text-red-500 dark:text-red-400' // Example color for Oracle
   },
   {
     title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
     issuer: 'Oracle (1Z0-1085-23)',
     icon: Database, // Use Database icon for Oracle
-    color: 'text-red-500'
+    color: 'text-red-500 dark:text-red-400'
   },
   {
     title: 'Cybersecurity Essentials',
     issuer: 'Cisco',
     icon: ShieldCheck, // Use ShieldCheck icon for Cisco/Security
-    color: 'text-cyan-500' // Example color for Cisco
+    color: 'text-cyan-500 dark:text-cyan-400' // Example color for Cisco
   },
 ];
 
@@ -506,93 +507,104 @@ export default function Home() {
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
           <Logo />
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <a
-              href="#home"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              HOME
-            </a>
-            <a
-              href="#expertise" // Updated ID
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              EXPERTISE
-            </a>
-             <a
-              href="#work-experience" // Link to detailed experience
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              DETAILS
-            </a>
-            <a
-              href="#skills"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              SKILLS
-            </a>
-            <a
-              href="#projects"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              PROJECTS
-            </a>
-             <a
-              href="#certifications"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              CERTIFICATIONS
-            </a>
-             <a
-              href="#education"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              EDUCATION
-            </a>
-            <a
-              href="#contact"
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-            >
-              CONTACT
-            </a>
-          </nav>
-          {/* Mobile Menu Trigger */}
-           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-             <SheetTrigger asChild className="md:hidden">
-               <Button variant="ghost" size="icon" aria-label="Open menu">
-                 <Menu className="h-6 w-6" />
-               </Button>
-             </SheetTrigger>
-             <SheetContent side="right" className="w-full max-w-xs p-6">
-               <nav className="flex flex-col space-y-5 mt-6">
-                  <SheetClose asChild>
-                    <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">HOME</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EXPERTISE</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">DETAILS</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">SKILLS</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <a href="#projects" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">PROJECTS</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <a href="#certifications" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CERTIFICATIONS</a>
-                  </SheetClose>
-                  <SheetClose asChild>
-                     <a href="#education" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EDUCATION</a>
-                  </SheetClose>
-                   <SheetClose asChild>
-                     <a href="#contact" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CONTACT</a>
-                   </SheetClose>
-               </nav>
-             </SheetContent>
-           </Sheet>
+          <div className="flex items-center gap-4"> {/* Container for nav and theme toggle */}
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-6">
+              <a
+                href="#home"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                HOME
+              </a>
+              <a
+                href="#expertise" // Updated ID
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                EXPERTISE
+              </a>
+               <a
+                href="#work-experience" // Link to detailed experience
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                DETAILS
+              </a>
+              <a
+                href="#skills"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                SKILLS
+              </a>
+              <a
+                href="#projects"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                PROJECTS
+              </a>
+               <a
+                href="#certifications"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                CERTIFICATIONS
+              </a>
+               <a
+                href="#education"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                EDUCATION
+              </a>
+              <a
+                href="#contact"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                CONTACT
+              </a>
+            </nav>
+
+             {/* Theme Toggle Button - Desktop */}
+             <div className="hidden md:block">
+                <ThemeToggleButton />
+             </div>
+
+            {/* Mobile Menu Trigger */}
+            <div className="flex items-center md:hidden"> {/* Container for mobile buttons */}
+                <ThemeToggleButton /> {/* Theme Toggle for Mobile */}
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" aria-label="Open menu">
+                      <Menu className="h-6 w-6" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="right" className="w-full max-w-xs p-6">
+                    <nav className="flex flex-col space-y-5 mt-6">
+                        <SheetClose asChild>
+                          <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">HOME</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EXPERTISE</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">DETAILS</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">SKILLS</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <a href="#projects" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">PROJECTS</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <a href="#certifications" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CERTIFICATIONS</a>
+                        </SheetClose>
+                        <SheetClose asChild>
+                           <a href="#education" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EDUCATION</a>
+                        </SheetClose>
+                         <SheetClose asChild>
+                           <a href="#contact" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CONTACT</a>
+                         </SheetClose>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -616,7 +628,7 @@ export default function Home() {
                    alt="Aasim Malik Portrait"
                    layout="fill"
                    objectFit="cover"
-                   className="grayscale" // Ensure grayscale effect
+                   className="grayscale dark:filter-none" // Remove grayscale in dark mode if desired, or adjust
                    priority // Load image eagerly as it's above the fold
                    data-ai-hint="professional portrait grayscale"
                  />
@@ -645,7 +657,7 @@ export default function Home() {
                         {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
                             <Card
                                 key={`${tech.name}-${index}-tech-1`} // Unique key part 1
-                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
                                 title={tech.name}
                             >
                                 <tech.icon className="h-8 w-8 text-muted-foreground" />
@@ -655,7 +667,7 @@ export default function Home() {
                         {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
                             <Card
                                 key={`${tech.name}-${index}-tech-2`} // Unique key part 2
-                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
                                 title={tech.name}
                             >
                                 <tech.icon className="h-8 w-8 text-muted-foreground" />
@@ -758,7 +770,7 @@ export default function Home() {
                                 >
                                     <Card className={cn(
                                         "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[450px] flex flex-col", // Fixed height and flex col
-                                        "bg-gradient-to-br from-background to-secondary/30", // Subtle gradient background
+                                        "bg-gradient-to-br from-card to-secondary/30", // Use card background
                                         index !== currentExperienceIndex && "blur-[1px]" // Slightly blur non-active cards
                                     )}>
                                         <CardHeader>
@@ -862,7 +874,7 @@ export default function Home() {
                                 <Badge
                                     key={`${index}-competency-1`} // Unique key part 1
                                     variant="outline"
-                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Added bg-card
                                 >
                                     {competency}
                                 </Badge>
@@ -872,7 +884,7 @@ export default function Home() {
                                 <Badge
                                     key={`${index}-competency-2`} // Unique key part 2
                                     variant="outline"
-                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0"
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Added bg-card
                                 >
                                     {competency}
                                 </Badge>
