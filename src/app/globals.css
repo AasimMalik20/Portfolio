@@ -4,62 +4,62 @@
 
 @layer base {
   :root {
+    /* Minimalist Light Theme (Black & White) */
     --background: 0 0% 100%;        /* White */
-    --foreground: 222.2 47.4% 11.2%; /* Dark Gray */
+    --foreground: 0 0% 0%;          /* Black */
     --card: 0 0% 100%;              /* White */
-    --card-foreground: 222.2 47.4% 11.2%; /* Dark Gray */
+    --card-foreground: 0 0% 0%;     /* Black */
     --popover: 0 0% 100%;           /* White */
-    --popover-foreground: 222.2 47.4% 11.2%; /* Dark Gray */
-    --primary: 222.2 47.4% 11.2%;    /* Dark Gray */
-    --primary-foreground: 210 40% 98%;  /* Light Gray */
-    --secondary: 210 40% 96.1%;    /* Very Light Gray */
-    --secondary-foreground: 222.2 47.4% 11.2%; /* Dark Gray */
-    --muted: 210 40% 96.1%;        /* Very Light Gray */
-    --muted-foreground: 215.4 16.3% 46.9%; /* Medium Gray */
-    --accent: 210 40% 96.1%;       /* Very Light Gray */
-    --accent-foreground: 222.2 47.4% 11.2%; /* Dark Gray */
-    --destructive: 0 84.2% 60.2%;  /* Red */
-    --destructive-foreground: 210 40% 98%; /* Light Gray */
-    --border: 214.3 31.8% 91.4%;   /* Light Gray */
-    --input: 214.3 31.8% 91.4%;    /* Light Gray */
-    --ring: 222.2 84% 4.9%;       /* Dark Blue */
+    --popover-foreground: 0 0% 0%; /* Black */
+    --primary: 0 0% 0%;            /* Black */
+    --primary-foreground: 0 0% 100%;  /* White */
+    --secondary: 0 0% 96.1%;       /* Very Light Gray */
+    --secondary-foreground: 0 0% 9%; /* Dark Gray (slightly lighter than black) */
+    --muted: 0 0% 90%;           /* Light Gray */
+    --muted-foreground: 0 0% 40%;    /* Medium Gray */
+    --accent: 0 0% 94%;            /* Lighter Gray (for subtle highlights/hovers) */
+    --accent-foreground: 0 0% 9%;  /* Dark Gray for text on accent */
+    --destructive: 0 84.2% 60.2%;  /* Red (Keep for destructive actions) */
+    --destructive-foreground: 0 0% 100%; /* White */
+    --border: 0 0% 89.8%;       /* Light Gray Border */
+    --input: 0 0% 89.8%;        /* Light Gray Input */
+    --ring: 0 0% 63.9%;         /* Gray for focus rings */
     --radius: 0.5rem;
-    --accenture-purple: #A100FF;     /* Accenture Purple */
-    --kodekloud-skyblue: #00A4EF;    /* Kode Kloud Sky Blue */
-    --gowthcentral-blue: #1E429F;   /* Gowth Central VC Blue */
-    --chart-1: 222 63% 80%;      /* Light Gray chart colors */
-    --chart-2: 222 63% 70%;
-    --chart-3: 222 63% 60%;
-    --chart-4: 222 63% 50%;
-    --chart-5: 222 63% 40%;
+    /* Chart Colors - Grayscale */
+    --chart-1: 0 0% 80%;      /* Light Gray chart colors */
+    --chart-2: 0 0% 70%;
+    --chart-3: 0 0% 60%;
+    --chart-4: 0 0% 50%;
+    --chart-5: 0 0% 40%;
   }
 
   .dark {
-    /* Dark Theme - Based on User's Style Guidelines */
-    --background: 222 84% 4.9%;   /* Dark Blue */
-    --foreground: 210 40% 98%;   /* Light Gray */
-    --card: 222 80% 7%;           /* Slightly Lighter Dark Blue */
-    --card-foreground: 210 40% 98%; /* Light Gray */
-    --popover: 222 84% 4.9%;      /* Dark Blue */
-    --popover-foreground: 210 40% 98%; /* Light Gray */
-    --primary: 170 100% 69%;      /* Teal - Accent for primary actions */
-    --primary-foreground: 222 84% 4.9%; /* Dark Blue for text on Teal */
-    --secondary: 210 40% 82.4%;  /* Light Gray - For secondary text and elements */
-    --secondary-foreground: 222 84% 4.9%; /* Dark Blue */
-    --muted: 222 70% 10%;        /* Muted Dark Blue */
-    --muted-foreground: 210 30% 70%; /* Muted Light Gray */
-    --accent: 170 100% 69%;       /* Teal - Accent */
-    --accent-foreground: 222 84% 4.9%; /* Dark Blue on Teal */
-    --destructive: 0 62.8% 30.6%; /* Adjusted Red for Dark Mode */
-    --destructive-foreground: 210 40% 98%; /* Light Gray */
-    --border: 222 70% 15%;        /* Border Dark Blue */
-    --input: 222 70% 15%;         /* Input Dark Blue */
-    --ring: 170 100% 69%;        /* Teal for focus rings */
-    --chart-1: 210 40% 70%;      /* Light Gray chart colors */
-    --chart-2: 210 40% 60%;
-    --chart-3: 210 40% 50%;
-    --chart-4: 210 40% 40%;
-    --chart-5: 210 40% 30%;
+    /* Minimalist Dark Theme (White & Black) */
+    --background: 0 0% 0%;         /* Black */
+    --foreground: 0 0% 100%;       /* White */
+    --card: 0 0% 10%;            /* Dark Gray */
+    --card-foreground: 0 0% 100%;    /* White */
+    --popover: 0 0% 5%;            /* Very Dark Gray */
+    --popover-foreground: 0 0% 100%; /* White */
+    --primary: 0 0% 100%;          /* White */
+    --primary-foreground: 0 0% 0%;   /* Black */
+    --secondary: 0 0% 14.9%;      /* Dark Gray (slightly lighter than background) */
+    --secondary-foreground: 0 0% 98%; /* Very Light Gray */
+    --muted: 0 0% 20%;           /* Medium Dark Gray */
+    --muted-foreground: 0 0% 60%;    /* Light Gray */
+    --accent: 0 0% 18%;            /* Dark Gray (for subtle highlights/hovers) */
+    --accent-foreground: 0 0% 98%; /* Very Light Gray for text on accent */
+    --destructive: 0 72.2% 50.6%; /* Adjusted Red for Dark Mode */
+    --destructive-foreground: 0 0% 100%; /* White */
+    --border: 0 0% 20%;          /* Medium Dark Gray Border */
+    --input: 0 0% 20%;           /* Medium Dark Gray Input */
+    --ring: 0 0% 83.1%;          /* Light Gray for focus rings */
+    /* Chart Colors - Grayscale (Inverted) */
+    --chart-1: 0 0% 30%;      /* Dark Gray chart colors */
+    --chart-2: 0 0% 40%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 60%;
+    --chart-5: 0 0% 70%;
   }
 }
 
