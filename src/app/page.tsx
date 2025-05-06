@@ -70,7 +70,7 @@ const Logo = () => (
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="text-primary" // Use primary color for the logo stroke
+      className="text-accent" // Use accent color for the logo stroke
     >
       <path
         d="M12 2L2 7V17L12 22L22 17V7L12 2Z"
@@ -409,46 +409,46 @@ const certifications = [
     title: 'Professional Cloud Architect',
     issuer: 'Google Cloud',
     icon: Cloud, // Use Cloud icon for Google Cloud
-    color: 'text-blue-500 dark:text-blue-400' // Adjust colors for dark mode
+    color: 'text-[#4285F4]' // Google Blue
   },
   {
     title: 'Associate Cloud Engineer',
     issuer: 'Google Cloud',
     icon: Cloud, // Use Cloud icon for Google Cloud
-    color: 'text-blue-500 dark:text-blue-400'
+    color: 'text-[#4285F4]' // Google Blue
   },
   {
     title: 'Oracle Cloud Infrastructure Generative AI Professional',
     issuer: 'Oracle',
     icon: Database, // Use Database icon for Oracle
-    color: 'text-red-500 dark:text-red-400' // Example color for Oracle
+    color: 'text-[#F80000]' // Oracle Red
   },
   {
     title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
     issuer: 'Oracle (1Z0-1085-23)',
     icon: Database, // Use Database icon for Oracle
-    color: 'text-red-500 dark:text-red-400'
+    color: 'text-[#F80000]' // Oracle Red
   },
   {
     title: 'Cybersecurity Essentials',
     issuer: 'Cisco',
     icon: ShieldCheck, // Use ShieldCheck icon for Cisco/Security
-    color: 'text-cyan-500 dark:text-cyan-400' // Example color for Cisco
+    color: 'text-[#00ADEF]' // Cisco Blue
   },
 ];
 
 
-// Function to get company-specific pill CSS classes
-const getCompanyPillClasses = (company: string): string => {
+// Function to get company-specific text color CSS classes
+const getCompanyTextClasses = (company: string): string => {
     const normalizedCompany = company.toUpperCase();
     if (normalizedCompany.includes('ACCENTURE')) {
-        return 'bg-purple-500 text-purple-50'; // Accenture Purple Pill
+        return 'text-accenture-purple dark:text-accenture-purple-dark';
     } else if (normalizedCompany.includes('KODE KLOUD')) {
-        return 'bg-sky-500 text-sky-50'; // Kode Kloud Sky Blue Pill
+        return 'text-kodekloud-skyblue dark:text-kodekloud-skyblue-dark';
     } else if (normalizedCompany.includes('GOWTH CENTRAL VC')) {
-        return 'bg-blue-600 text-blue-50'; // Gowth Central VC Blue Pill
+        return 'text-gowthcentral-blue dark:text-gowthcentral-blue-dark';
     }
-    return 'bg-muted text-muted-foreground'; // Default pill color
+    return 'text-foreground'; // Default text color
 };
 
 
@@ -519,17 +519,20 @@ export default function Home() {
           animation-play-state: paused;
         }
 
-        /* Define custom background colors for pills */
-        .bg-purple-500 { background-color: #8b5cf6; }
-        .text-purple-50 { color: #f5f3ff; }
-        .bg-sky-500 { background-color: #0ea5e9; }
-        .text-sky-50 { color: #f0f9ff; }
-        .bg-blue-600 { background-color: #2563eb; }
-        .text-blue-50 { color: #eff6ff; }
+        /* Define custom text colors for companies */
+        .text-accenture-purple { color: #A100FF; } /* Accenture Purple */
+        .dark .text-accenture-purple-dark { color: #C96DFF; } /* Lighter Purple for Dark Mode */
+
+        .text-kodekloud-skyblue { color: #00A4EF; } /* Kode Kloud Sky Blue */
+        .dark .text-kodekloud-skyblue-dark { color: #60CFFF; } /* Lighter Sky Blue for Dark Mode */
+
+        .text-gowthcentral-blue { color: #1E429F; } /* Gowth Central VC Blue */
+        .dark .text-gowthcentral-blue-dark { color: #73A2FF; } /* Lighter Blue for Dark Mode */
+
 
         /* Custom class for green present date */
-        .text-present-green { color: hsl(145, 63%, 49%); } /* Example green */
-        .dark .text-present-green { color: hsl(145, 50%, 60%); } /* Lighter green for dark mode */
+        .text-present-green { color: hsl(var(--accent)); } /* Use accent for present */
+        .dark .text-present-green { color: hsl(var(--accent)); }
 
 
       `}</style>
@@ -541,49 +544,49 @@ export default function Home() {
             <nav className="hidden md:flex items-center space-x-6">
               <a
                 href="#home"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 HOME
               </a>
               <a
                 href="#expertise" // Updated ID
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 EXPERTISE
               </a>
                <a
                 href="#work-experience" // Link to detailed experience
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 DETAILS
               </a>
               <a
                 href="#skills"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 SKILLS
               </a>
               <a
                 href="#projects"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 PROJECTS
               </a>
                <a
                 href="#certifications"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 CERTIFICATIONS
               </a>
                <a
                 href="#education"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 EDUCATION
               </a>
               <a
                 href="#contact"
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
               >
                 CONTACT
               </a>
@@ -606,28 +609,28 @@ export default function Home() {
                   <SheetContent side="right" className="w-full max-w-xs p-6">
                     <nav className="flex flex-col space-y-5 mt-6">
                         <SheetClose asChild>
-                          <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">HOME</a>
+                          <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">HOME</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EXPERTISE</a>
+                          <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">EXPERTISE</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">DETAILS</a>
+                          <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">DETAILS</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">SKILLS</a>
+                          <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">SKILLS</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#projects" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">PROJECTS</a>
+                          <a href="#projects" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">PROJECTS</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#certifications" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CERTIFICATIONS</a>
+                          <a href="#certifications" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">CERTIFICATIONS</a>
                         </SheetClose>
                         <SheetClose asChild>
-                           <a href="#education" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EDUCATION</a>
+                           <a href="#education" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">EDUCATION</a>
                         </SheetClose>
                          <SheetClose asChild>
-                           <a href="#contact" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">CONTACT</a>
+                           <a href="#contact" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-accent transition-colors">CONTACT</a>
                          </SheetClose>
                     </nav>
                   </SheetContent>
@@ -644,7 +647,7 @@ export default function Home() {
            <div className="container mx-auto flex flex-col items-center px-4 md:px-6">
                <Badge
                  variant="outline"
-                 className="mb-4 border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
+                 className="mb-4 border-accent/50 text-accent font-medium py-1 px-3 rounded-full text-xs"
                >
                  HELLO! I AM AASIM MALIK
                </Badge>
@@ -653,13 +656,12 @@ export default function Home() {
                </h1>
                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
                  <Image
-                   src="https://picsum.photos/400/400?grayscale" // Grayscale placeholder, make it square
+                   src="https://picsum.photos/400/400" // Placeholder, make it square
                    alt="Aasim Malik Portrait"
                    layout="fill"
                    objectFit="cover"
-                   className="grayscale dark:filter-none" // Remove grayscale in dark mode if desired, or adjust
                    priority // Load image eagerly as it's above the fold
-                   data-ai-hint="professional portrait grayscale"
+                   data-ai-hint="professional portrait"
                  />
                </div>
 
@@ -689,7 +691,7 @@ export default function Home() {
                                 className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
                                 title={tech.name}
                             >
-                                <tech.icon className="h-8 w-8 text-muted-foreground" />
+                                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-accent transition-colors" />
                             </Card>
                         ))}
                          {/* Second set of icons for the loop */}
@@ -699,7 +701,7 @@ export default function Home() {
                                 className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
                                 title={tech.name}
                             >
-                                <tech.icon className="h-8 w-8 text-muted-foreground" />
+                                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-accent transition-colors" />
                             </Card>
                         ))}
                     </div>
@@ -713,7 +715,7 @@ export default function Home() {
             <div className="container mx-auto px-4 md:px-6">
                  {/* Title centered above the grid - Updated */}
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <Lightbulb className="h-6 w-6 text-primary" />
+                    <Lightbulb className="h-6 w-6 text-accent" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
                         Expertise {/* Updated Title */}
                     </h2>
@@ -723,7 +725,7 @@ export default function Home() {
                     <div className="space-y-6">
                         <Badge
                             variant="outline"
-                            className="border-primary/50 text-primary font-medium py-1 px-3 rounded-full text-xs"
+                            className="border-accent/50 text-accent font-medium py-1 px-3 rounded-full text-xs"
                         >
                             PROFESSIONAL OVERVIEW
                         </Badge>
@@ -739,20 +741,20 @@ export default function Home() {
                     <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-border md:pl-0"> {/* Removed md:pl-12 */}
                         {coreExperiences.map((exp, index) => (
                             <div key={index} className="space-y-2 md:pl-12"> {/* Added md:pl-12 here */}
-                                <Badge
+                               <p
                                     className={cn(
-                                        "text-xs font-semibold uppercase tracking-wider py-1 px-3 rounded-full",
-                                        getCompanyPillClasses(exp.company) // Apply dynamic pill classes
+                                        "text-xs font-semibold uppercase tracking-wider", // Removed pill styles
+                                        getCompanyTextClasses(exp.company) // Apply dynamic text color classes
                                     )}
                                 >
                                     {exp.company}
-                                </Badge>
+                                </p>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
                                     {/* Align date to the right and add green color if 'PRESENT' */}
                                     <p className={cn(
                                         "text-sm text-muted-foreground whitespace-nowrap sm:ml-auto", // Align right on small screens and up
-                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-green font-semibold' // Apply green color
+                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-green font-semibold' // Apply accent color
                                     )}>
                                         ({exp.date})
                                     </p>
@@ -768,7 +770,7 @@ export default function Home() {
         <section id="work-experience" className="py-16 bg-background overflow-hidden">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <Briefcase className="h-6 w-6 text-primary" />
+                    <Briefcase className="h-6 w-6 text-accent" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
                         Detailed Work Experience
                     </h2>
@@ -819,7 +821,7 @@ export default function Home() {
                                             <div className="flex justify-between items-start flex-wrap gap-2">
                                                 <div>
                                                     <CardTitle>{exp.title}</CardTitle>
-                                                    <CardDescription className="text-primary font-medium">
+                                                    <CardDescription className="text-accent font-medium">
                                                         {exp.company}
                                                     </CardDescription>
                                                 </div>
@@ -844,7 +846,7 @@ export default function Home() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
+                        className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 backdrop-blur-sm"
                         onClick={handlePrevExperience}
                         aria-label="Previous Experience"
                     >
@@ -853,7 +855,7 @@ export default function Home() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80" // Added background for visibility
+                        className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 backdrop-blur-sm"
                         onClick={handleNextExperience}
                         aria-label="Next Experience"
                     >
@@ -868,7 +870,7 @@ export default function Home() {
         <section id="skills" className="py-16 bg-secondary">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <List className="h-6 w-6 text-primary" />
+                    <List className="h-6 w-6 text-accent" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
                         Skills
                     </h2>
@@ -876,7 +878,7 @@ export default function Home() {
                 <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm mb-12"> {/* Added margin bottom */}
                     <CardContent className="p-6 md:p-8">
                        <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-                           <Terminal className="h-5 w-5" />
+                           <Terminal className="h-5 w-5 text-accent" />
                            Technical Skills
                        </h3>
                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8"> {/* Changed to 3 cols on large screens */}
@@ -888,7 +890,7 @@ export default function Home() {
                                    <ul className="space-y-2">
                                        {skills.map((skill, skillIndex) => (
                                            <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
-                                               <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary mr-2 flex-shrink-0"></span>
+                                               <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent mr-2 flex-shrink-0"></span>
                                                {skill}
                                            </li>
                                        ))}
@@ -902,7 +904,7 @@ export default function Home() {
                 {/* Core Competencies Horizontal Scroll - Full Width */}
                 <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
                     <div className="flex justify-center items-center gap-2 mb-6">
-                       <Star className="h-5 w-5 text-primary" />
+                       <Star className="h-5 w-5 text-accent" />
                        <h3 className="text-xl font-semibold text-foreground text-center">
                           Core Competencies
                        </h3>
@@ -916,7 +918,7 @@ export default function Home() {
                                 <Badge
                                     key={`${index}-competency-1`} // Unique key part 1
                                     variant="outline"
-                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Added bg-card
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card hover:bg-accent hover:text-accent-foreground"
                                 >
                                     {competency}
                                 </Badge>
@@ -926,7 +928,7 @@ export default function Home() {
                                 <Badge
                                     key={`${index}-competency-2`} // Unique key part 2
                                     variant="outline"
-                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Added bg-card
+                                    className="text-sm font-medium py-2 px-4 rounded-full shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card hover:bg-accent hover:text-accent-foreground"
                                 >
                                     {competency}
                                 </Badge>
@@ -941,7 +943,7 @@ export default function Home() {
         <section id="projects" className="py-16 bg-background overflow-hidden">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex justify-center items-center gap-2 mb-12">
-              <FolderGit2 className="h-6 w-6 text-primary" />
+              <FolderGit2 className="h-6 w-6 text-accent" />
               <h2 className="text-3xl font-semibold tracking-tight text-center">
                 Project Showcase
               </h2>
@@ -992,7 +994,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                className="absolute top-1/2 left-0 md:-left-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 backdrop-blur-sm"
                 onClick={handlePrevProject}
                 aria-label="Previous Project"
               >
@@ -1001,7 +1003,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80"
+                className="absolute top-1/2 right-0 md:-right-16 transform -translate-y-1/2 z-30 rounded-full bg-background/50 hover:bg-background/80 backdrop-blur-sm"
                 onClick={handleNextProject}
                 aria-label="Next Project"
               >
@@ -1015,7 +1017,7 @@ export default function Home() {
         <section id="certifications" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-12">
-                 <Award className="h-6 w-6 text-primary" />
+                 <Award className="h-6 w-6 text-accent" />
                  <h2 className="text-3xl font-semibold tracking-tight text-center">
                   Certifications
                  </h2>
@@ -1026,7 +1028,7 @@ export default function Home() {
                 return (
                   <Card
                     key={index}
-                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90"
+                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-card/90 backdrop-blur-sm"
                   >
                     <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
                       <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} /> {/* Use specific icon and color */}
@@ -1048,19 +1050,19 @@ export default function Home() {
         <section id="education" className="py-16 bg-background"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
-                <School className="h-6 w-6 text-primary" />
+                <School className="h-6 w-6 text-accent" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
                  Education
                 </h2>
              </div>
-            <Card className="max-w-3xl mx-auto shadow-sm border border-border">
+            <Card className="max-w-3xl mx-auto shadow-sm border border-border bg-card/80 backdrop-blur-sm">
               <CardHeader>
                  <div className="flex justify-between items-start flex-wrap gap-2">
                      <div className="flex items-center gap-3">
-                         <GraduationCap className="h-6 w-6 text-primary" />
+                         <GraduationCap className="h-6 w-6 text-accent" />
                          <div>
                             <CardTitle>B.E Computer Science and Engineering</CardTitle>
-                            <CardDescription className="text-primary font-medium">
+                            <CardDescription className="text-accent font-medium">
                                 St. Joseph's College of Engineering
                             </CardDescription>
                          </div>
@@ -1081,12 +1083,12 @@ export default function Home() {
         <section id="contact" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
-                <MessageSquare className="h-6 w-6 text-primary" />
+                <MessageSquare className="h-6 w-6 text-accent" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
                  Contact Me
                 </h2>
              </div>
-            <Card className="max-w-xl mx-auto shadow-md border border-border">
+            <Card className="max-w-xl mx-auto shadow-md border border-border bg-card/80 backdrop-blur-sm">
               <CardHeader className="text-center">
                 <CardTitle>Get in Touch</CardTitle>
                 <CardDescription>
@@ -1097,12 +1099,12 @@ export default function Home() {
                  <div className="text-center text-muted-foreground space-y-1">
                     <p>Srinagar, J&K, India</p>
                     <p>
-                       <a href="mailto:aasimmalik29@gmail.com" className="hover:text-primary transition-colors">
+                       <a href="mailto:aasimmalik29@gmail.com" className="hover:text-accent transition-colors">
                           aasimmalik29@gmail.com
                        </a>
                     </p>
                     <p>
-                       <a href="tel:+919176462019" className="hover:text-primary transition-colors">
+                       <a href="tel:+919176462019" className="hover:text-accent transition-colors">
                          +91 9176462019
                        </a>
                     </p>
@@ -1169,3 +1171,4 @@ export default function Home() {
     </div>
   );
 }
+
