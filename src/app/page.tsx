@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react'; // Import useState and useEffect
@@ -630,12 +631,11 @@ export default function Home() {
                </h1>
                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
                  <Image
-                   src="https://picsum.photos/400/400" // Placeholder, make it square
+                   src="/profile-aasim-malik.png"
                    alt="Aasim Malik Portrait"
                    layout="fill"
                    objectFit="cover"
                    priority // Load image eagerly as it's above the fold
-                   data-ai-hint="professional portrait"
                  />
                </div>
 
@@ -1140,3 +1140,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
