@@ -631,7 +631,7 @@ export default function Home() {
                </h1>
                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
                  <Image
-                   src="/profile-aasim-malik.png"
+                   src="/profile-aasim-malik.png" // Updated image source
                    alt="Aasim Malik Portrait"
                    layout="fill"
                    objectFit="cover"
@@ -1141,4 +1141,3 @@ export default function Home() {
   );
 }
 
-    
