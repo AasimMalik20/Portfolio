@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { useState, useEffect } from 'react'; // Import useState and useEffect
@@ -631,10 +632,11 @@ export default function Home() {
                </h1>
                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
                  <Image
-                   src="/profile-aasim-malik.png" // Updated image source
+                   src="/profile-aasim-malik.png" // Corrected image source path
                    alt="Aasim Malik Portrait"
-                   layout="fill"
-                   objectFit="cover"
+                   fill
+                   sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px" // Provide appropriate sizes
+                   style={{ objectFit: 'cover' }} // Use style for objectFit
                    priority // Load image eagerly as it's above the fold
                  />
                </div>
@@ -643,7 +645,7 @@ export default function Home() {
                <div className="mb-16">
                  <Button variant="outline" size="lg" asChild>
                    {/* Replace '#' with the actual path to your CV file or URL */}
-                   <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_CV.pdf">
+                   <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_Resume.pdf">
                      DOWNLOAD CV
                      <Download className="ml-2 h-4 w-4" />
                    </a>
