@@ -410,31 +410,36 @@ const certifications = [
     title: 'Professional Cloud Architect',
     issuer: 'Google Cloud',
     icon: Cloud,
-    color: 'text-foreground' // Use theme color
+    color: 'text-foreground', // Use theme color
+    hoverImage: '/cert-gcp-pca.png', // Placeholder, replace with actual path
   },
   {
     title: 'Associate Cloud Engineer',
     issuer: 'Google Cloud',
     icon: Cloud,
-    color: 'text-foreground' // Use theme color
+    color: 'text-foreground', // Use theme color
+    hoverImage: '/cert-gcp-ace.png', // Placeholder
   },
   {
     title: 'Oracle Cloud Infrastructure Generative AI Professional',
     issuer: 'Oracle',
     icon: Database,
-    color: 'text-foreground' // Use theme color
+    color: 'text-foreground', // Use theme color
+    hoverImage: '/cert-oci-genai.png', // Placeholder
   },
   {
     title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
     issuer: 'Oracle (1Z0-1085-23)',
     icon: Database,
-    color: 'text-foreground' // Use theme color
+    color: 'text-foreground', // Use theme color
+    hoverImage: '/cert-oci-foundations.png', // Placeholder
   },
   {
     title: 'Cybersecurity Essentials',
     issuer: 'Cisco',
     icon: ShieldCheck,
-    color: 'text-foreground' // Use theme color
+    color: 'text-foreground', // Use theme color
+    hoverImage: '/cert-cisco-cybersec.png', // Placeholder
   },
 ];
 
@@ -443,6 +448,7 @@ export default function Home() {
   const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0); // State for experience carousel
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const [isProfileImageFlipped, setIsProfileImageFlipped] = useState(false); // State for profile image flip
 
   const handlePrevExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
@@ -507,9 +513,39 @@ export default function Home() {
         }
 
         /* Custom class for accent present date */
-        .text-present-accent { color: hsl(var(--accent-foreground)); } /* Use accent foreground for present */
+        .text-present-accent { color: hsl(var(--accent-foreground)); } 
         .dark .text-present-accent { color: hsl(var(--accent-foreground)); }
 
+        /* Profile Image Flip Container */
+        .profile-flip-container {
+          width: 100%; /* Or specific size */
+          height: 100%; /* Or specific size */
+          perspective: 1000px;
+          cursor: pointer; /* Indicate interactivity */
+        }
+        .profile-flip-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          transition: transform 0.7s;
+          transform-style: preserve-3d;
+        }
+        .profile-flip-container:hover .profile-flip-inner {
+          transform: rotateY(180deg);
+        }
+        .profile-front, .profile-back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          -webkit-backface-visibility: hidden; /* Safari */
+          backface-visibility: hidden;
+          border-radius: 50%; /* Keep it circular */
+          overflow: hidden; /* Ensure images stay within bounds */
+        }
+        .profile-back {
+          transform: rotateY(180deg);
+        }
 
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
@@ -630,16 +666,36 @@ export default function Home() {
                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
                  Cloud Architect & Developer
                </h1>
-               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg mb-12 border-4 border-secondary">
-                 <Image
-                   src="/profile-aasim-malik.png" // Corrected image source path
-                   alt="Aasim Malik Portrait"
-                   fill
-                   sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px" // Provide appropriate sizes
-                   style={{ objectFit: 'cover' }} // Use style for objectFit
-                   priority // Load image eagerly as it's above the fold
-                 />
-               </div>
+                {/* Profile Image / Logo Flip Container */}
+                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-lg mb-12 border-4 border-secondary profile-flip-container"
+                  onMouseEnter={() => setIsProfileImageFlipped(true)}
+                  onMouseLeave={() => setIsProfileImageFlipped(false)}
+                >
+                  <div className={cn("profile-flip-inner", isProfileImageFlipped && "rotate-y-180")}>
+                    <div className="profile-front">
+                      <Image
+                        src="/profile-aasim-malik.png"
+                        alt="Aasim Malik Portrait"
+                        fill
+                        sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                        style={{ objectFit: 'cover' }}
+                        priority
+                        data-ai-hint="profile picture"
+                      />
+                    </div>
+                    <div className="profile-back">
+                      <Image
+                        src="/logo-am.png" // Replace with your actual logo path
+                        alt="Aasim Malik Logo"
+                        fill
+                        sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                        style={{ objectFit: 'cover' }}
+                        data-ai-hint="monogram logo"
+                      />
+                    </div>
+                  </div>
+                </div>
+
 
                {/* Download CV Button */}
                <div className="mb-16">
@@ -999,10 +1055,24 @@ export default function Home() {
                 return (
                   <Card
                     key={index}
-                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-accent hover:text-accent-foreground backdrop-blur-sm" // Use accent for hover
+                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-accent hover:text-accent-foreground backdrop-blur-sm group relative" // Use accent for hover
                   >
                     <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
-                      <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} /> {/* Use specific icon and color */}
+                      {cert.hoverImage ? (
+                        <div className="relative h-20 w-20 mb-4">
+                          <Image
+                            src={cert.hoverImage}
+                            alt={`${cert.title} Badge`}
+                            width={80}
+                            height={80}
+                            className="object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute inset-0"
+                            data-ai-hint="certification badge"
+                          />
+                           <CertIcon className={cn("h-16 w-16 transition-opacity duration-300 opacity-100 group-hover:opacity-0", cert.color)} />
+                        </div>
+                      ) : (
+                         <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} />
+                      )}
                       <CardTitle className="text-lg font-semibold">{cert.title}</CardTitle>
                       <CardDescription className="text-base text-muted-foreground mt-1">{cert.issuer}</CardDescription> {/* Increased font size */}
                     </CardHeader>
