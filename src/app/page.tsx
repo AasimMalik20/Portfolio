@@ -453,7 +453,7 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   
   const cubeContainerRef = useRef<HTMLDivElement>(null);
-  const [cubeTranslateZ, setCubeTranslateZ] = useState('128px'); // Default for smallest size (256px / 2)
+  const [cubeTranslateZ, setCubeTranslateZ] = useState('96px'); // Updated default for w-48 (192px / 2)
 
   useEffect(() => {
     const updateCubePerspective = () => {
@@ -701,7 +701,7 @@ export default function Home() {
                 {/* 3D Rotating Cube */}
                 <div
                   ref={cubeContainerRef}
-                  className="cube-wrapper relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto mb-12 shadow-lg border-4 border-secondary rounded-lg"
+                  className="cube-wrapper relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-12 shadow-lg border-4 border-secondary rounded-lg"
                   style={
                     {
                       '--cube-translate-z': cubeTranslateZ,
