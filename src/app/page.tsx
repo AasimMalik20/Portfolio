@@ -1,8 +1,7 @@
 
-
 'use client';
 
-import React, { useState, useEffect } from 'react'; // Import useState and useEffect
+import React, { useState, useEffect, useRef } from 'react'; // Import useState, useEffect, useRef
 import {
   Card,
   CardContent,
@@ -163,25 +162,29 @@ const coreExperiences = [
     company: 'ACCENTURE',
     role: 'Associate Software Engineer',
     date: 'PRESENT',
-    location: 'Bengaluru, Karnataka'
+    location: 'Bengaluru, Karnataka',
+    colorClass: 'text-[#A020F0]', // Purple
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Sr Devops Engineer',
     date: 'JAN 2023 - JUL 2023',
-    location: 'Remote'
+    location: 'Remote',
+    colorClass: 'text-[#87CEEB]', // Sky Blue
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Devops Engineer',
     date: 'FEB 2022 - DEC 2022',
-    location: 'Remote'
+    location: 'Remote',
+    colorClass: 'text-[#87CEEB]', // Sky Blue
   },
   {
     company: 'GOWTH CENTRAL VC',
     role: 'SME Intern',
     date: 'JULY 2022',
-    location: 'Remote'
+    location: 'Remote',
+    colorClass: 'text-[#0000FF]', // Blue
   },
 ];
 
@@ -411,35 +414,35 @@ const certifications = [
     issuer: 'Google Cloud',
     icon: Cloud,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-gcp-pca.png', // Placeholder, replace with actual path
+    hoverImage: '/cert-gcp-pca.png', 
   },
   {
     title: 'Associate Cloud Engineer',
     issuer: 'Google Cloud',
     icon: Cloud,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-gcp-ace.png', // Placeholder
+    hoverImage: '/cert-gcp-ace.png', 
   },
   {
     title: 'Oracle Cloud Infrastructure Generative AI Professional',
     issuer: 'Oracle',
     icon: Database,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-oci-genai.png', // Placeholder
+    hoverImage: '/cert-oci-genai.png', 
   },
   {
     title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
     issuer: 'Oracle (1Z0-1085-23)',
     icon: Database,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-oci-foundations.png', // Placeholder
+    hoverImage: '/cert-oci-foundations.png', 
   },
   {
     title: 'Cybersecurity Essentials',
     issuer: 'Cisco',
     icon: ShieldCheck,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-cisco-cybersec.png', // Placeholder
+    hoverImage: '/cert-cisco-cybersec.png', 
   },
 ];
 
@@ -448,7 +451,23 @@ export default function Home() {
   const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0); // State for experience carousel
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
-  const [isProfileImageFlipped, setIsProfileImageFlipped] = useState(false); // State for profile image flip
+  
+  const cubeContainerRef = useRef<HTMLDivElement>(null);
+  const [cubeTranslateZ, setCubeTranslateZ] = useState('128px'); // Default for smallest size (256px / 2)
+
+  useEffect(() => {
+    const updateCubePerspective = () => {
+      if (cubeContainerRef.current) {
+        const currentWidth = cubeContainerRef.current.offsetWidth;
+        setCubeTranslateZ(`${currentWidth / 2}px`);
+      }
+    };
+
+    updateCubePerspective(); // Initial calculation
+    window.addEventListener('resize', updateCubePerspective);
+    return () => window.removeEventListener('resize', updateCubePerspective);
+  }, []);
+
 
   const handlePrevExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
@@ -513,40 +532,52 @@ export default function Home() {
         }
 
         /* Custom class for accent present date */
-        .text-present-accent { color: hsl(var(--accent-foreground)); } 
-        .dark .text-present-accent { color: hsl(var(--accent-foreground)); }
+        .text-present-accent { color: hsl(var(--accent)); } /* Use accent theme color */
+        .dark .text-present-accent { color: hsl(var(--accent)); }
 
-        /* Profile Image Flip Container */
-        .profile-flip-container {
-          width: 100%; /* Or specific size */
-          height: 100%; /* Or specific size */
-          perspective: 1000px;
-          cursor: pointer; /* Indicate interactivity */
+
+        /* 3D Cube Styles */
+        .cube-wrapper { /* This is the ref'd element with Tailwind responsive classes */
+          perspective: 1200px; /* Increased perspective */
         }
-        .profile-flip-inner {
-          position: relative;
+        
+        .cube {
           width: 100%;
           height: 100%;
-          text-align: center;
-          transition: transform 0.7s;
+          position: relative;
           transform-style: preserve-3d;
+          animation: rotateCube 30s infinite linear; /* Slower rotation */
         }
-        .profile-flip-container:hover .profile-flip-inner {
-          transform: rotateY(180deg);
-        }
-        .profile-front, .profile-back {
+
+        .cube .face {
           position: absolute;
           width: 100%;
           height: 100%;
-          -webkit-backface-visibility: hidden; /* Safari */
-          backface-visibility: hidden;
-          border-radius: 50%; /* Keep it circular */
-          overflow: hidden; /* Ensure images stay within bounds */
+          border: 1px solid hsl(var(--border));
+          background-color: hsl(var(--card));
+          overflow: hidden;
+          backface-visibility: hidden; /* Hide back of faces */
+          display: flex; /* For centering image if needed, though fill should handle */
+          align-items: center;
+          justify-content: center;
         }
-        .profile-back {
-          transform: rotateY(180deg);
-        }
+        
+        /* Dynamic translateZ will be set by --cube-translate-z variable */
+        .cube .front  { transform: rotateY(  0deg) translateZ(var(--cube-translate-z)); }
+        .cube .back   { transform: rotateY(180deg) translateZ(var(--cube-translate-z)); }
+        .cube .right  { transform: rotateY( 90deg) translateZ(var(--cube-translate-z)); }
+        .cube .left   { transform: rotateY(-90deg) translateZ(var(--cube-translate-z)); }
+        .cube .top    { transform: rotateX( 90deg) translateZ(var(--cube-translate-z)); }
+        .cube .bottom { transform: rotateX(-90deg) translateZ(var(--cube-translate-z)); }
 
+        @keyframes rotateCube {
+          0% {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+          }
+          100% {
+            transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+          }
+        }
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -666,31 +697,71 @@ export default function Home() {
                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
                  Cloud Architect & Developer
                </h1>
-                {/* Profile Image / Logo Flip Container */}
-                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full shadow-lg mb-12 border-4 border-secondary profile-flip-container"
-                  onMouseEnter={() => setIsProfileImageFlipped(true)}
-                  onMouseLeave={() => setIsProfileImageFlipped(false)}
+                
+                {/* 3D Rotating Cube */}
+                <div
+                  ref={cubeContainerRef}
+                  className="cube-wrapper relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto mb-12 shadow-lg border-4 border-secondary rounded-lg"
+                  style={
+                    {
+                      '--cube-translate-z': cubeTranslateZ,
+                    } as React.CSSProperties
+                  }
                 >
-                  <div className={cn("profile-flip-inner", isProfileImageFlipped && "rotate-y-180")}>
-                    <div className="profile-front">
+                  <div className="cube">
+                    <div className="face front">
                       <Image
                         src="/profile-aasim-malik.png"
-                        alt="Aasim Malik Portrait"
-                        fill
-                        sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
-                        style={{ objectFit: 'cover' }}
+                        alt="Aasim Malik Profile"
+                        layout="fill"
+                        objectFit="cover"
                         priority
                         data-ai-hint="profile picture"
                       />
                     </div>
-                    <div className="profile-back">
+                    <div className="face back">
                       <Image
-                        src="/logo-am.png" // Replace with your actual logo path
+                        src="/logo-am.png"
                         alt="Aasim Malik Logo"
-                        fill
-                        sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
-                        style={{ objectFit: 'cover' }}
+                        layout="fill"
+                        objectFit="cover"
                         data-ai-hint="monogram logo"
+                      />
+                    </div>
+                    <div className="face right">
+                      <Image
+                        src="/cert-gcp-pca.png"
+                        alt="Google Cloud Professional Cloud Architect Certification"
+                        layout="fill"
+                        objectFit="contain" // Use contain for cert images to see full badge
+                        data-ai-hint="certification badge"
+                      />
+                    </div>
+                    <div className="face left">
+                       <Image
+                        src="/cert-gcp-ace.png"
+                        alt="Google Cloud Associate Cloud Engineer Certification"
+                        layout="fill"
+                        objectFit="contain"
+                        data-ai-hint="certification badge"
+                      />
+                    </div>
+                    <div className="face top">
+                       <Image
+                        src="/cert-oci-genai.png"
+                        alt="Oracle Cloud Infrastructure Generative AI Professional Certification"
+                        layout="fill"
+                        objectFit="contain"
+                        data-ai-hint="certification badge"
+                      />
+                    </div>
+                    <div className="face bottom">
+                       <Image
+                        src="/cert-oci-foundations.png"
+                        alt="Oracle Cloud Infrastructure Foundations Associate Certification"
+                        layout="fill"
+                        objectFit="contain"
+                        data-ai-hint="certification badge"
                       />
                     </div>
                   </div>
@@ -752,7 +823,7 @@ export default function Home() {
                         Expertise {/* Updated Title */}
                     </h2>
                 </div>
-                <div className="grid md:grid-cols-2 gap-16 items-start">
+                <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 items-start"> {/* Increased gap-x */}
                     {/* Left Column */}
                     <div className="space-y-6">
                         <Badge
@@ -770,18 +841,17 @@ export default function Home() {
                     </div>
 
                     {/* Right Column - Updated with Pills and Date Alignment */}
-                    <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-border md:pl-0"> {/* Removed md:pl-12 */}
+                    <div className="space-y-8 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-border md:pl-0"> 
                         {coreExperiences.map((exp, index) => (
-                            <div key={index} className="space-y-2 md:pl-12"> {/* Added md:pl-12 here */}
-                               <p className="text-xs font-semibold uppercase tracking-wider text-foreground"> {/* Use foreground */}
+                            <div key={index} className="md:pl-12 space-y-2">  {/* Removed relative, added space-y-2 */}
+                                <p className={cn("text-xs font-semibold uppercase tracking-wider", exp.colorClass || 'text-foreground')}>
                                     {exp.company}
                                 </p>
                                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
-                                    {/* Align date to the right and add accent color if 'PRESENT' */}
                                     <p className={cn(
-                                        "text-sm text-muted-foreground whitespace-nowrap sm:ml-auto", // Align right on small screens and up
-                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-accent font-semibold' // Apply accent color
+                                        "text-sm text-muted-foreground whitespace-nowrap sm:ml-auto", 
+                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-accent font-semibold' 
                                     )}>
                                         ({exp.date})
                                     </p>
@@ -1212,4 +1282,3 @@ export default function Home() {
     </div>
   );
 }
-
