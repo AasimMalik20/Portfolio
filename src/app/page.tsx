@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react'; // Import useState, useEffect, useRef
+import React, { useState, useEffect } from 'react'; // Import useState, useEffect
 import {
   Card,
   CardContent,
@@ -452,22 +452,6 @@ export default function Home() {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   
-  const cubeContainerRef = useRef<HTMLDivElement>(null);
-  const [cubeTranslateZ, setCubeTranslateZ] = useState('96px'); // Updated default for w-48 (192px / 2)
-
-  useEffect(() => {
-    const updateCubePerspective = () => {
-      if (cubeContainerRef.current) {
-        const currentWidth = cubeContainerRef.current.offsetWidth;
-        setCubeTranslateZ(`${currentWidth / 2}px`);
-      }
-    };
-
-    updateCubePerspective(); // Initial calculation
-    window.addEventListener('resize', updateCubePerspective);
-    return () => window.removeEventListener('resize', updateCubePerspective);
-  }, []);
-
 
   const handlePrevExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
@@ -534,50 +518,6 @@ export default function Home() {
         /* Custom class for accent present date */
         .text-present-accent { color: hsl(var(--accent)); } /* Use accent theme color */
         .dark .text-present-accent { color: hsl(var(--accent)); }
-
-
-        /* 3D Cube Styles */
-        .cube-wrapper { /* This is the ref'd element with Tailwind responsive classes */
-          perspective: 1200px; /* Increased perspective */
-        }
-        
-        .cube {
-          width: 100%;
-          height: 100%;
-          position: relative;
-          transform-style: preserve-3d;
-          animation: rotateCube 30s infinite linear; /* Slower rotation */
-        }
-
-        .cube .face {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          border: 1px solid hsl(var(--border));
-          background-color: hsl(var(--card));
-          overflow: hidden;
-          backface-visibility: hidden; /* Hide back of faces */
-          display: flex; /* For centering image if needed, though fill should handle */
-          align-items: center;
-          justify-content: center;
-        }
-        
-        /* Dynamic translateZ will be set by --cube-translate-z variable */
-        .cube .front  { transform: rotateY(  0deg) translateZ(var(--cube-translate-z)); }
-        .cube .back   { transform: rotateY(180deg) translateZ(var(--cube-translate-z)); }
-        .cube .right  { transform: rotateY( 90deg) translateZ(var(--cube-translate-z)); }
-        .cube .left   { transform: rotateY(-90deg) translateZ(var(--cube-translate-z)); }
-        .cube .top    { transform: rotateX( 90deg) translateZ(var(--cube-translate-z)); }
-        .cube .bottom { transform: rotateX(-90deg) translateZ(var(--cube-translate-z)); }
-
-        @keyframes rotateCube {
-          0% {
-            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-          }
-          100% {
-            transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-          }
-        }
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -698,73 +638,17 @@ export default function Home() {
                  Cloud Architect & Developer
                </h1>
                 
-                {/* 3D Rotating Cube */}
-                <div
-                  ref={cubeContainerRef}
-                  className="cube-wrapper relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-12 shadow-lg border-4 border-secondary rounded-lg"
-                  style={
-                    {
-                      '--cube-translate-z': cubeTranslateZ,
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="cube">
-                    <div className="face front">
-                      <Image
-                        src="/profile-aasim-malik.png"
-                        alt="Aasim Malik Profile"
-                        layout="fill"
-                        objectFit="cover"
+                {/* Profile Image */}
+                <div className="relative w-48 h-48 mx-auto mb-12">
+                    <Image
+                        src="https://placehold.co/192x192.png"
+                        alt="Aasim Malik"
+                        width={192}
+                        height={192}
+                        className="rounded-full border-4 border-secondary shadow-lg"
                         priority
                         data-ai-hint="profile picture"
-                      />
-                    </div>
-                    <div className="face back">
-                      <Image
-                        src="/logo-am.png"
-                        alt="Aasim Malik Logo"
-                        layout="fill"
-                        objectFit="cover"
-                        data-ai-hint="monogram logo"
-                      />
-                    </div>
-                    <div className="face right">
-                      <Image
-                        src="/cert-gcp-pca.png"
-                        alt="Google Cloud Professional Cloud Architect Certification"
-                        layout="fill"
-                        objectFit="contain" // Use contain for cert images to see full badge
-                        data-ai-hint="certification badge"
-                      />
-                    </div>
-                    <div className="face left">
-                       <Image
-                        src="/cert-gcp-ace.png"
-                        alt="Google Cloud Associate Cloud Engineer Certification"
-                        layout="fill"
-                        objectFit="contain"
-                        data-ai-hint="certification badge"
-                      />
-                    </div>
-                    <div className="face top">
-                       <Image
-                        src="/cert-oci-genai.png"
-                        alt="Oracle Cloud Infrastructure Generative AI Professional Certification"
-                        layout="fill"
-                        objectFit="contain"
-                        data-ai-hint="certification badge"
-                      />
-                    </div>
-                    <div className="face bottom">
-                       <Image
-                        src="/cert-oci-foundations.png"
-                        alt="Oracle Cloud Infrastructure Foundations Associate Certification"
-                        layout="fill"
-                        objectFit="contain"
-                        data-ai-hint="certification badge"
-                      />
-                    </div>
-                  </div>
+                    />
                 </div>
 
 
