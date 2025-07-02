@@ -163,28 +163,28 @@ const coreExperiences = [
     role: 'Associate Software Engineer',
     date: 'PRESENT',
     location: 'Bengaluru, Karnataka',
-    colorClass: 'text-foreground', 
+    colorClass: 'text-accenture-purple', 
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Sr Devops Engineer',
     date: 'JAN 2023 - JUL 2023',
     location: 'Remote',
-    colorClass: 'text-foreground', 
+    colorClass: 'text-kodekloud-skyblue', 
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Devops Engineer',
     date: 'FEB 2022 - DEC 2022',
     location: 'Remote',
-    colorClass: 'text-foreground', 
+    colorClass: 'text-kodekloud-skyblue', 
   },
   {
     company: 'GOWTH CENTRAL VC',
     role: 'SME Intern',
     date: 'JULY 2022',
     location: 'Remote',
-    colorClass: 'text-foreground', 
+    colorClass: 'text-gowth-darkblue', 
   },
 ];
 
@@ -468,7 +468,7 @@ export default function Home() {
 
   const handleNextExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
-      prevIndex === workExperiences.length - 1 ? 0 : prevIndex + 1
+      prevIndex === workExperiences.length - 1 ? 0 : prevIndex - 1
     );
   };
 
@@ -525,6 +525,16 @@ export default function Home() {
         /* Custom class for accent present date */
         .text-present-accent { color: hsl(142.1 76.2% 36.3%); } /* Green color */
         .dark .text-present-accent { color: hsl(142.1 70.6% 45.3%); } /* Lighter Green for dark mode */
+
+        /* Custom Company Colors */
+        .text-accenture-purple { color: #A100FF; }
+        .dark .text-accenture-purple { color: #C77DFF; }
+
+        .text-kodekloud-skyblue { color: #00BFFF; }
+        .dark .text-kodekloud-skyblue { color: #00BFFF; }
+
+        .text-gowth-darkblue { color: #00008B; }
+        .dark .text-gowth-darkblue { color: #ADD8E6; }
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
