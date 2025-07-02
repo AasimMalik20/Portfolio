@@ -1062,20 +1062,21 @@ export default function Home() {
                      <div className="flex items-center gap-3">
                          <GraduationCap className="h-6 w-6 text-foreground" /> {/* Use foreground */}
                          <div>
-                            <CardTitle>B.E Computer Science and Engineering</CardTitle>
-                            <CardDescription className="text-foreground font-medium"> {/* Use foreground */}
+                            <CardTitle className="mb-1">B.E Computer Science and Engineering</CardTitle>
+                            <CardDescription className="text-foreground font-medium">
                                 St. Joseph's College of Engineering
                             </CardDescription>
                          </div>
                      </div>
-                     <Badge variant="outline">Graduated with 9.01/10.00 CGPA in May 2023</Badge> {/* Updated Badge Text */}
                  </div>
-                 <CardDescription className="pt-2 pl-9 text-muted-foreground"> {/* Use muted */}
+                 <CardDescription className="pt-2 pl-9 text-muted-foreground">
                     Chennai, Tamil Nadu
                  </CardDescription>
+                 <div className="flex justify-between items-center border-t pt-4 mt-4">
+                    <Badge variant="outline">9.01/10.00 CGPA</Badge>
+                    <p className="text-sm text-muted-foreground font-medium">May 2023</p>
+                 </div>
               </CardHeader>
-              {/* Optional: Add GPA or relevant coursework if desired */}
-              {/* <CardContent><p className="text-sm text-muted-foreground pl-9">Relevant Coursework: ...</p></CardContent> */}
             </Card>
           </div>
         </section>
@@ -1127,7 +1128,7 @@ export default function Home() {
                         </a>
                     </Button>
                     {/* GitHub Button */}
-                     <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90">
+                     <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-900 dark:hover:bg-neutral-900/90 dark:text-neutral-50">
                         <a href="https://github.com/AasimMalik20" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
@@ -1145,7 +1146,7 @@ export default function Home() {
                       </a>
                     </Button>
                     {/* Medium Button */}
-                    <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90">
+                    <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-900 dark:hover:bg-neutral-900/90 dark:text-neutral-50">
                       <a href="https://medium.com/@aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <BookOpen className="mr-2 h-4 w-4" /> Medium {/* Using BookOpen as proxy */}
                       </a>
