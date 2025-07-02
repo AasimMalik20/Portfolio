@@ -407,6 +407,54 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, style, isActive, onC
   );
 };
 
+// Type for Experience Card
+type ExperienceCardProps = {
+  experience: typeof workExperiences[0];
+  style: React.CSSProperties;
+  isActive: boolean;
+};
+
+// Experience Card Component (Mirrors ProjectCard structure)
+const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, style, isActive }) => {
+  return (
+    <div
+      className={cn(
+        "absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center",
+        // Make inactive cards non-interactive
+        !isActive && "pointer-events-none"
+      )}
+      style={style}
+    >
+      <Card className={cn(
+        "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[500px] flex flex-col", // Match height of project card
+        "bg-card/80 backdrop-blur-sm text-card-foreground",
+        !isActive && "blur-[1px]" // Slightly blur non-active cards
+      )}>
+        <CardHeader>
+          <div className="flex justify-between items-start flex-wrap gap-2">
+            <div>
+              <CardTitle>{experience.title}</CardTitle>
+              <CardDescription className="text-foreground font-medium">
+                {experience.company}
+              </CardDescription>
+            </div>
+            <Badge variant="outline">{experience.date}</Badge>
+          </div>
+          <CardDescription className="pt-1 text-muted-foreground">{experience.location}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow overflow-y-auto scrollbar-hide">
+          <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
+            {experience.points.map((point, pIndex) => (
+              <li key={pIndex}>{point}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+
 // Certification Data with Icons
 const certifications = [
   {
@@ -468,7 +516,7 @@ export default function Home() {
 
   const handleNextExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
-      prevIndex === workExperiences.length - 1 ? 0 : prevIndex - 1
+      prevIndex === workExperiences.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -658,12 +706,13 @@ export default function Home() {
                 {/* Profile Image */}
                 <div className="relative w-48 h-48 mx-auto mb-12">
                     <Image
-                        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJ8AmAMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAgUBBAYDB//EADMQAAICAQICBgkDBQAAAAAAAAABAgMEBREhYRIxQVFxEyIjMmGBkaGxssFSYvAUQnOC0f/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8A/RQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw3mEABlvMACMshhIAZLzGABGUgAAAAAAAAAAAAAAAAAAAAAhk3mAAjLMAAjLYYAGWyGAAy3mAAAAAAAAAAAAAAAAAAhKMAAjLYAAEZS4YAEZSGSAAAAAAAAAGWyGABllIAAAAAAAAAAAAAAAAAAAItmAAjLIAAjLYYSAAZTySAAAAAAADIyABllJgAAAAAAAAAAAAAAAAABELhgARlIYAEZSGSAAZTySAAAAAAAAyMgAZbSYAAAAAAAAAAAAAAAAAQi4YAEZSGAEZiyQAynkAAAAAAAADIyA2MgAZbSYAAAAAAAAAAAAAAAEZsXDEAxlkMRiwAynkAAAAAAAAGWyADbIBsZAY2MwAAAAAAAAAAAEZACMtjYxYMRiwGU8gAAAAAAyAAAyADIADSIAAAAAAAAAAEYs2MRiwYiQAynkAAAAAAGQAAGW8gA2MgNJgAAAAAAAAABjLYzYxYMRJiGU8gAAAAAAAADIADLYAAyAGkwAAAAAAAAAAAAw2Z2MRixMSAZTyAAAAAAAAAAyAAAyAA0kAAAAAAAACp1v2+P7j9i0Krrft8f3H7EjrXv83+P+DLY17/N/j/gzYwAySAAAAAAAAAAAZFgAAAAAAAFTrft8f3H7FoVXW/b4/uP2JGte/wA3+P8AgzY17/N/j/gzYwAyGSAAAAAAAZAAAAAAAKnWW8bHH3n7FoVW+n/tY+8/YlGtfy1/j/g+y+KflM1r+Wv8AH/B9l8U/KZgAykAAAAAAAQAAAAAAVd6n4WPu/wD0tCrvU/Cx93/6DRrP8tf4/wCBT2/zFTrH8tf4/wCBT2/zExgDLIAAAAAAAEGMAAAAAFXep+Fj7v/0tCrvU/Cx93/6DRrH8tX4/4FPb/MVOsfy1fj/gU9v8xMYAySAAAAAADGMAAAAAFW+p+Fj7v8A9LQqt9T8LH3f/oNGsZfKV+P+BTX5lTq+Xylfj/gU1+ZMYAzyAAAAAAxgxYAAAAAVV/l8bH3f8A6Wgqr/L42Pu//Qaq9R8pX4oKa/M1I1XqPlK/FBTH5mpgDLIAAACo2x3OvxL9DRU7Y7nX4l+hoC3W/wCbH3j7I19b/mx94+yABkAAABVbd7hL6o/M0VW3e4S+qPzNBdqfUv6grU+pf1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//Z"
+                        src="https://placehold.co/192x192.png"
                         alt="Aasim Malik profile picture"
                         width={192}
                         height={192}
                         className="rounded-full border-4 border-secondary shadow-lg"
                         priority
+                        data-ai-hint="profile picture"
                     />
                 </div>
 
@@ -775,7 +824,7 @@ export default function Home() {
 
                 <div className="relative max-w-5xl mx-auto">
                      {/* Use a fixed height container and manage overflow internally */}
-                    <div className="relative h-[500px] overflow-visible"> {/* Allow overflow for side cards */}
+                    <div className="relative h-[550px] overflow-visible"> {/* Allow overflow for side cards */}
                         {workExperiences.map((exp, index) => {
                             // Calculate offset relative to the current index
                             let offset = index - currentExperienceIndex;
@@ -799,42 +848,16 @@ export default function Home() {
                             }
 
                             return (
-                                <div
+                                <ExperienceCard
                                     key={index}
-                                    className="absolute inset-0 transition-transform duration-500 ease-out flex justify-center items-center"
+                                    experience={exp}
+                                    isActive={index === currentExperienceIndex}
                                     style={{
                                         transform: `translateX(${translateX}%) scale(${scale})`,
                                         opacity: opacity,
                                         zIndex: zIndex,
-                                        pointerEvents: index === currentExperienceIndex ? 'auto' : 'none', // Interaction only for current card
                                     }}
-                                >
-                                    <Card className={cn(
-                                        "w-full max-w-2xl shadow-lg border border-border overflow-hidden h-[450px] flex flex-col", // Fixed height and flex col
-                                        "bg-card/80 backdrop-blur-sm text-card-foreground", // Use card background & foreground with glass effect
-                                        index !== currentExperienceIndex && "blur-[1px]" // Slightly blur non-active cards
-                                    )}>
-                                        <CardHeader>
-                                            <div className="flex justify-between items-start flex-wrap gap-2">
-                                                <div>
-                                                    <CardTitle>{exp.title}</CardTitle>
-                                                    <CardDescription className="text-foreground font-medium"> {/* Use foreground */}
-                                                        {exp.company}
-                                                    </CardDescription>
-                                                </div>
-                                                <Badge variant="outline">{exp.date}</Badge>
-                                            </div>
-                                            <CardDescription className="pt-1 text-muted-foreground">{exp.location}</CardDescription> {/* Use muted */}
-                                        </CardHeader>
-                                        <CardContent className="flex-grow overflow-y-auto scrollbar-hide"> {/* Make content scrollable */}
-                                            <ul className="list-disc list-outside pl-5 text-muted-foreground space-y-2 text-sm leading-relaxed">
-                                                {exp.points.map((point, pIndex) => (
-                                                    <li key={pIndex}>{point}</li>
-                                                ))}
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
-                                </div>
+                                />
                             );
                         })}
                     </div>
@@ -1071,17 +1094,17 @@ export default function Home() {
                 <div className="flex items-start gap-4">
                   <GraduationCap className="h-8 w-8 text-foreground flex-shrink-0 mt-1" />
                   <div className="flex-grow">
-                    <CardTitle>B.E Computer Science and Engineering</CardTitle>
-                    <CardDescription className="text-foreground font-medium mt-1">
+                    <CardTitle className="mb-1">B.E Computer Science and Engineering</CardTitle>
+                    <CardDescription className="text-foreground font-medium">
                       St. Joseph's College of Engineering
                     </CardDescription>
                     <CardDescription className="text-muted-foreground mt-1">
                       Chennai, Tamil Nadu
                     </CardDescription>
-                    <div className="flex justify-between items-center mt-4">
-                      <Badge variant="outline">9.01/10.00 CGPA</Badge>
-                      <p className="text-sm text-muted-foreground font-medium">May 2023</p>
-                    </div>
+                     <div className="flex justify-between items-center mt-4">
+                        <p className="text-sm text-foreground font-medium">9.01/10.00 CGPA</p>
+                        <p className="text-sm text-muted-foreground font-medium">May 2023</p>
+                     </div>
                   </div>
                 </div>
               </CardHeader>
