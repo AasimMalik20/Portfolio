@@ -1127,7 +1127,7 @@ export default function Home() {
                         </a>
                     </Button>
                     {/* GitHub Button */}
-                     <Button asChild className="bg-neutral-900 text-primary-foreground hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-secondary-foreground dark:hover:bg-neutral-50/90">
+                     <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90">
                         <a href="https://github.com/AasimMalik20" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
@@ -1145,7 +1145,7 @@ export default function Home() {
                       </a>
                     </Button>
                     {/* Medium Button */}
-                    <Button asChild className="bg-neutral-900 text-primary-foreground hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-secondary-foreground dark:hover:bg-neutral-50/90">
+                    <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90">
                       <a href="https://medium.com/@aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <BookOpen className="mr-2 h-4 w-4" /> Medium {/* Using BookOpen as proxy */}
                       </a>
