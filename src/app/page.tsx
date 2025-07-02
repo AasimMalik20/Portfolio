@@ -523,8 +523,8 @@ export default function Home() {
         }
 
         /* Custom class for accent present date */
-        .text-present-accent { color: hsl(var(--primary)); } /* Use primary color for accent */
-        .dark .text-present-accent { color: hsl(var(--primary)); }
+        .text-present-accent { color: hsl(142.1 76.2% 36.3%); } /* Green color */
+        .dark .text-present-accent { color: hsl(142.1 70.6% 45.3%); } /* Lighter Green for dark mode */
       `}</style>
       <header className="sticky top-0 bg-background/95 backdrop-blur z-50 py-4 border-b border-border">
         <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
@@ -1121,33 +1121,31 @@ export default function Home() {
                       </a>
                     </Button>
                     {/* LinkedIn Button */}
-                    <Button variant="outline" asChild>
-                        {/* Correct LinkedIn URL from resume */}
+                    <Button asChild className="bg-[#0077b5] text-primary-foreground hover:bg-[#0077b5]/90">
                         <a href="https://www.linkedin.com/in/aasim-malik/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                         </a>
                     </Button>
                     {/* GitHub Button */}
-                     <Button variant="outline" asChild>
-                         {/* Correct GitHub URL */}
+                     <Button asChild className="bg-neutral-900 text-primary-foreground hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-secondary-foreground dark:hover:bg-neutral-50/90">
                         <a href="https://github.com/AasimMalik20" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
                     </Button>
                     {/* WhatsApp Button */}
-                    <Button variant="outline" asChild>
+                    <Button asChild className="bg-[#25D366] text-primary-foreground hover:bg-[#25D366]/90">
                       <a href="https://wa.me/919176462019" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <Phone className="mr-2 h-4 w-4" /> WhatsApp {/* Using Phone icon as proxy */}
                       </a>
                     </Button>
                     {/* Twitter Button */}
-                    <Button variant="outline" asChild>
+                    <Button asChild className="bg-[#1DA1F2] text-primary-foreground hover:bg-[#1DA1F2]/90">
                       <a href="https://x.com/AasimMalik4957?t=b-o3zb-2ZiYHZe2s5AYnLQ&s=09" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <Twitter className="mr-2 h-4 w-4" /> Twitter
                       </a>
                     </Button>
                     {/* Medium Button */}
-                    <Button variant="outline" asChild>
+                    <Button asChild className="bg-neutral-900 text-primary-foreground hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-secondary-foreground dark:hover:bg-neutral-50/90">
                       <a href="https://medium.com/@aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <BookOpen className="mr-2 h-4 w-4" /> Medium {/* Using BookOpen as proxy */}
                       </a>
