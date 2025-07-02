@@ -1048,34 +1048,32 @@ export default function Home() {
 
 
         {/* Education Section */}
-        <section id="education" className="py-16 bg-background"> {/* Changed bg for alternation */}
+        <section id="education" className="py-16 bg-background">
           <div className="container mx-auto px-4 md:px-6">
              <div className="flex justify-center items-center gap-2 mb-8">
-                <School className="h-6 w-6 text-foreground" /> {/* Use foreground */}
+                <School className="h-6 w-6 text-foreground" />
                 <h2 className="text-3xl font-semibold tracking-tight text-center">
                  Education
                 </h2>
              </div>
             <Card className="max-w-3xl mx-auto shadow-sm border border-border bg-card/80 backdrop-blur-sm">
               <CardHeader>
-                 <div className="flex justify-between items-start flex-wrap gap-2">
-                     <div className="flex items-center gap-3">
-                         <GraduationCap className="h-6 w-6 text-foreground" /> {/* Use foreground */}
-                         <div>
-                            <CardTitle className="mb-1">B.E Computer Science and Engineering</CardTitle>
-                            <CardDescription className="text-foreground font-medium">
-                                St. Joseph's College of Engineering
-                            </CardDescription>
-                         </div>
-                     </div>
-                 </div>
-                 <CardDescription className="pt-2 pl-9 text-muted-foreground">
-                    Chennai, Tamil Nadu
-                 </CardDescription>
-                 <div className="flex justify-between items-center border-t pt-4 mt-4">
-                    <Badge variant="outline">9.01/10.00 CGPA</Badge>
-                    <p className="text-sm text-muted-foreground font-medium">May 2023</p>
-                 </div>
+                <div className="flex items-start gap-4">
+                  <GraduationCap className="h-8 w-8 text-foreground flex-shrink-0 mt-1" />
+                  <div className="flex-grow">
+                    <CardTitle>B.E Computer Science and Engineering</CardTitle>
+                    <CardDescription className="text-foreground font-medium mt-1">
+                      St. Joseph's College of Engineering
+                    </CardDescription>
+                    <CardDescription className="text-muted-foreground mt-1">
+                      Chennai, Tamil Nadu
+                    </CardDescription>
+                    <div className="flex justify-between items-center mt-4">
+                      <Badge variant="outline">9.01/10.00 CGPA</Badge>
+                      <p className="text-sm text-muted-foreground font-medium">May 2023</p>
+                    </div>
+                  </div>
+                </div>
               </CardHeader>
             </Card>
           </div>
