@@ -63,29 +63,22 @@ import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import 
 // Placeholder Logo Component
 const Logo = () => (
   <div className="flex items-center gap-2">
-    {/* Simple SVG Placeholder - Replace with actual logo if available */}
+    {/* AM Logo with diagonal line */}
     <svg
-      width="24"
+      width="28"
       height="24"
-      viewBox="0 0 24 24"
+      viewBox="0 0 28 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="text-foreground" // Use foreground color for the logo stroke in minimalist theme
+      className="text-foreground"
     >
-      <path
-        d="M12 2L2 7V17L12 22L22 17V7L12 2Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2 7L12 12M12 12L22 7M12 12V22M12 12L6 9.5M12 12L18 9.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+        {/* Stylized 'A' */}
+        <path d="M2 22L7 2L12 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M4.5 15H9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* Diagonal Separator */}
+        <path d="M13 2L15 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Stylized 'M' */}
+        <path d="M16 22V2L21 16L26 2V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
     <span className="text-xl font-semibold text-foreground">Aasim Malik</span>
   </div>
@@ -1200,3 +1193,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
