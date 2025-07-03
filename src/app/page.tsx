@@ -65,20 +65,22 @@ const Logo = () => (
   <div className="flex items-center gap-2">
     {/* AM Logo with diagonal line */}
     <svg
-      width="28"
+      width="30"
       height="24"
-      viewBox="0 0 28 24"
+      viewBox="0 0 30 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="text-foreground"
     >
-        {/* Stylized 'A' */}
-        <path d="M2 22L7 2L12 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M4.5 15H9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        {/* Diagonal Separator */}
-        <path d="M13 2L15 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        {/* Stylized 'M' */}
-        <path d="M16 22V2L21 16L26 2V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* A */}
+      <path d="M0 22L6 2L12 22" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M3 15H9" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+      
+      {/* Separator */}
+      <path d="M14 2L16 22" stroke="currentColor" strokeWidth="1.5" />
+      
+      {/* M */}
+      <path d="M18 22V2L24 16L30 2V22" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
     </svg>
     <span className="text-xl font-semibold text-foreground">Aasim Malik</span>
   </div>
@@ -699,7 +701,7 @@ export default function Home() {
                 {/* Profile Image */}
                 <div className="relative w-48 h-48 mx-auto mb-12">
                     <Image
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
+                        src="/profile-aasim-malik.jpg"
                         width={192}
                         height={192}
                         alt="Aasim Malik Profile Picture"
