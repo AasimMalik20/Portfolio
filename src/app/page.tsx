@@ -62,11 +62,11 @@ import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import 
 
 // Placeholder Logo Component
 const Logo = () => (
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-3">
     {/* AM Logo with diagonal line */}
     <svg
-      width="30"
-      height="24"
+      width="40"
+      height="32"
       viewBox="0 0 30 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
