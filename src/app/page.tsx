@@ -733,20 +733,20 @@ export default function Home() {
                         {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
                             <Card
                                 key={`${tech.name}-${index}-tech-1`} // Unique key part 1
-                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
-                                title={tech.name}
+                                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
                             >
                                 <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
                             </Card>
                         ))}
                          {/* Second set of icons for the loop */}
                         {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
                             <Card
                                 key={`${tech.name}-${index}-tech-2`} // Unique key part 2
-                                className="p-4 min-w-[100px] min-h-[80px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card" // Ensure card background
-                                title={tech.name}
+                                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
                             >
                                 <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
                             </Card>
                         ))}
                     </div>
@@ -1195,5 +1195,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
