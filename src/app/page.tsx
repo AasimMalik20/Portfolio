@@ -706,74 +706,83 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section id="home" className="pt-24 pb-16 text-center flex flex-col items-center">
-           {/* Container for centered content */}
-           <div className="container mx-auto flex flex-col items-center px-4 md:px-6">
-               <Badge
-                 variant="outline"
-                 className="mb-4 border-foreground/30 text-foreground font-medium py-1 px-3 rounded-full text-xs"
-               >
-                 HELLO! I AM AASIM MALIK
-               </Badge>
-               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
-                 Cloud Architect & AI Optimist
-               </h1>
-                
-                {/* Profile Image */}
-                <div className="relative w-48 h-48 mx-auto mb-12">
-                    <Image
-                        src="https://placehold.co/192x192.png"
-                        width={192}
-                        height={192}
-                        alt="Aasim Malik Profile Picture"
-                        className="rounded-full object-cover border-4 border-background shadow-lg"
-                        data-ai-hint="profile picture"
-                    />
+        <section id="home" className="pt-24 pb-16">
+          {/* Hero Grid */}
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-24 items-center">
+              {/* Left Column: Text Content */}
+              <div className="space-y-6 text-center lg:text-left">
+                <Badge
+                  variant="outline"
+                  className="border-foreground/30 text-foreground font-medium py-1 px-3 rounded-full text-sm"
+                >
+                  HELLO! I AM AASIM MALIK
+                </Badge>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
+                  Cloud Architect &<br className="hidden md:block" /> AI Optimist
+                </h1>
+                <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:mx-0">
+                  A Google Cloud Certified Professional Cloud Architect, passionate about designing scalable, secure cloud solutions and leveraging cloud-native tech for innovation.
+                </p>
+                <div className="flex flex-col gap-4 min-[400px]:flex-row justify-center lg:justify-start pt-4">
+                  <Button size="lg" asChild>
+                    <a href="#contact">
+                      Get In Touch
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button variant="outline" size="lg" asChild>
+                    <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_Resume.pdf">
+                      Download CV
+                      <Download className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
                 </div>
+              </div>
 
-
-               {/* Download CV Button */}
-               <div className="mb-16">
-                 <Button variant="outline" size="lg" asChild>
-                   {/* Replace '#' with the actual path to your CV file or URL */}
-                   <a href="/Aasim_Malik_Resume.pdf" download="Aasim_Malik_Resume.pdf">
-                     DOWNLOAD CV
-                     <Download className="ml-2 h-4 w-4" />
-                   </a>
-                 </Button>
-               </div>
-           </div>
-
-            {/* Technology Icons Slideshow - Full Width */}
-            <div className="w-full overflow-hidden pb-4 group full-width-slideshow"> {/* Added full-width class */}
-                <p className="text-sm text-muted-foreground mb-6 text-center">TECHNOLOGIES I WORK WITH</p> {/* Centered text */}
-                {/* Removed inner overflow hidden and whitespace nowrap */}
-                <div className="animate-slideLeft"> {/* Apply animation to this inner div */}
-                    {/* Container for the flex items, doubled width */}
-                    <div className="flex">
-                        {/* Duplicate Icons for seamless loop - enough to fill more than the screen width */}
-                        {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
-                            <Card
-                                key={`${tech.name}-${index}-tech-1`} // Unique key part 1
-                                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
-                            >
-                                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
-                            </Card>
-                        ))}
-                         {/* Second set of icons for the loop */}
-                        {[...technologies, ...technologies].map((tech, index) => ( // Only duplicate once
-                            <Card
-                                key={`${tech.name}-${index}-tech-2`} // Unique key part 2
-                                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
-                            >
-                                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
-                            </Card>
-                        ))}
-                    </div>
+              {/* Right Column: Image */}
+              <div className="flex items-center justify-center">
+                <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                  <Image
+                    src="https://placehold.co/384x384.png"
+                    width={384}
+                    height={384}
+                    alt="Aasim Malik Profile Picture"
+                    className="rounded-full object-cover border-8 border-background shadow-2xl"
+                    data-ai-hint="profile picture"
+                  />
                 </div>
+              </div>
             </div>
+          </div>
+          
+          {/* Technology Icons Slideshow */}
+          <div className="w-full overflow-hidden pt-24 group full-width-slideshow">
+            <p className="text-sm text-muted-foreground mb-6 text-center uppercase tracking-widest">TECHNOLOGIES I WORK WITH</p>
+            <div className="animate-slideLeft">
+              <div className="flex">
+                  {/* Duplicate Icons for seamless loop */}
+                  {[...technologies, ...technologies].map((tech, index) => (
+                      <Card
+                          key={`${tech.name}-${index}-tech-1`}
+                          className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
+                      >
+                          <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                          <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
+                      </Card>
+                  ))}
+                  {[...technologies, ...technologies].map((tech, index) => (
+                      <Card
+                          key={`${tech.name}-${index}-tech-2`}
+                          className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
+                      >
+                          <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                          <p className="mt-2 text-xs font-medium text-center text-muted-foreground">{tech.name}</p>
+                      </Card>
+                  ))}
+              </div>
+            </div>
+          </div>
         </section>
 
 
@@ -1238,13 +1247,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
-
-    
-
-
-
-
-
-
