@@ -63,29 +63,30 @@ import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import 
 
 // Placeholder Logo Component
 const Logo = () => (
-  <div className="flex items-center gap-4">
+  <div className="flex items-center gap-5">
     {/* AM Logo with diagonal line */}
     <svg
-      width="44"
-      height="35"
+      width="50"
+      height="40"
       viewBox="0 0 30 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="text-foreground"
     >
       {/* A */}
-      <path d="M0 22L6 2L12 22" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M3 15H9" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M0 22L6 2L12 22" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
+      <path d="M3 15H9" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
       
       {/* Separator */}
-      <path d="M14 2L16 22" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M14 2L16 22" stroke="currentColor" strokeWidth="2" />
       
       {/* M */}
-      <path d="M18 22V2L24 16L30 2V22" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M18 22V2L24 16L30 2V22" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
     </svg>
-    <span className="text-xl font-semibold text-foreground">Aasim Malik</span>
+    <span className="text-2xl font-semibold text-foreground">Aasim Malik</span>
   </div>
 );
+
 
 // Define Technology Icons based on resume
 const technologies: { name: string; icon: LucideIcon }[] = [
