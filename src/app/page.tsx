@@ -488,7 +488,8 @@ const certifications = [
     issuer: 'Cisco',
     icon: ShieldCheck,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-cisco-cybersec.png',
+    hoverImage: null,
+    link: 'https://www.credly.com/badges/be946124-75c1-44cb-9b1a-26b89c9fc87d/public_url'
   },
   {
     title: 'GitHub Copilot',
@@ -1220,4 +1221,5 @@ export default function Home() {
     
 
     
+
 
