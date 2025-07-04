@@ -152,7 +152,7 @@ const coreCompetencies = [
 ];
 
 
-// Core Experience Data (For Expertise Section)
+// Core Experience Data (For WHO AM I Section)
 const coreExperiences = [
    {
     company: 'ACCENTURE',
@@ -475,7 +475,8 @@ const certifications = [
     issuer: 'Oracle',
     icon: Database,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-oci-genai.png',
+    hoverImage: null,
+    link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=E0E9C4E9ACA5E90D8DBB5A343A2FBBD316A7DC87357BEA55F5B07D4E32073F9F',
   },
   {
     title: 'Oracle Cloud Infrastructure 2023 Certified Foundations Associate',
@@ -612,16 +613,16 @@ export default function Home() {
                 HOME
               </a>
               <a
-                href="#expertise" // Updated ID
+                href="#WHO AM I" // Updated ID
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                EXPERTISE
+                WHO AM I
               </a>
                <a
                 href="#work-experience" // Link to detailed experience
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                DETAILS
+                WORK EXPERIENCE
               </a>
               <a
                 href="#skills"
@@ -675,10 +676,10 @@ export default function Home() {
                           <a href="#home" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">HOME</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#expertise" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">EXPERTISE</a>
+                          <a href="#WHO AM I" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">WHO AM I</a>
                         </SheetClose>
                         <SheetClose asChild>
-                          <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">DETAILS</a>
+                          <a href="#work-experience" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">WORK EXPERIENCE</a>
                         </SheetClose>
                         <SheetClose asChild>
                           <a href="#skills" onClick={closeMobileMenu} className="text-lg font-medium text-foreground hover:text-primary transition-colors">SKILLS</a>
@@ -715,17 +716,18 @@ export default function Home() {
                  HELLO! I AM AASIM MALIK
                </Badge>
                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-8 max-w-3xl">
-                 Cloud Architect & Developer
+                 Cloud Architect & AI Optimist
                </h1>
                 
                 {/* Profile Image */}
                 <div className="relative w-48 h-48 mx-auto mb-12">
                     <Image
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
+                        src="https://placehold.co/192x192.png"
                         width={192}
                         height={192}
                         alt="Aasim Malik Profile Picture"
                         className="rounded-full object-cover border-4 border-background shadow-lg"
+                        data-ai-hint="profile picture"
                     />
                 </div>
 
@@ -775,14 +777,14 @@ export default function Home() {
         </section>
 
 
-        {/* Expertise Section */}
-        <section id="expertise" className="py-16 bg-secondary"> {/* Updated ID */}
+        {/* WHO AM I Section */}
+        <section id="WHO AM I" className="py-16 bg-secondary"> {/* Updated ID */}
             <div className="container mx-auto px-4 md:px-6">
                  {/* Title centered above the grid - Updated */}
                 <div className="flex justify-center items-center gap-2 mb-12">
                     <Lightbulb className="h-6 w-6 text-foreground" /> {/* Use foreground */}
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
-                        Expertise {/* Updated Title */}
+                        WHO AM I {/* Updated Title */}
                     </h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 items-start"> {/* Increased gap-x */}
@@ -831,7 +833,7 @@ export default function Home() {
                 <div className="flex justify-center items-center gap-2 mb-12">
                     <Briefcase className="h-6 w-6 text-foreground" /> {/* Use foreground */}
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
-                        Detailed Work Experience
+                        Work Experience
                     </h2>
                 </div>
 
@@ -1240,6 +1242,7 @@ export default function Home() {
     
 
     
+
 
 
 
