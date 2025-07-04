@@ -46,6 +46,7 @@ import {
   Phone, // Added for WhatsApp
   Twitter, // Added for Twitter
   BookOpen, // Added for Medium
+  CloudCog, // Added for skills section
 } from 'lucide-react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
@@ -508,6 +509,19 @@ export default function Home() {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0); // State for project carousel
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   
+  // Icon mapping for technical skills
+  const skillIcons: { [key: string]: LucideIcon } = {
+    'Cloud Platforms': Cloud,
+    'Cloud Services': CloudCog,
+    'Infrastructure as Code': Layers,
+    'Containerization': Container,
+    'Security & Compliance': ShieldCheck,
+    'Networking': Network,
+    'Database Systems': DatabaseZap,
+    'Monitoring & Analytics': Activity,
+    'Scripting & Programming': Code,
+  };
+
 
   const handlePrevExperience = () => {
     setCurrentExperienceIndex((prevIndex) =>
@@ -889,33 +903,36 @@ export default function Home() {
         <section id="skills" className="py-16 bg-secondary">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex justify-center items-center gap-2 mb-12">
-                    <List className="h-6 w-6 text-foreground" /> {/* Use foreground */}
+                    <List className="h-6 w-6 text-foreground" />
                     <h2 className="text-3xl font-semibold tracking-tight text-center">
                         Skills
                     </h2>
                 </div>
-                <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm mb-12"> {/* Added margin bottom */}
+                <Card className="shadow-md border border-border bg-card/80 backdrop-blur-sm mb-12">
                     <CardContent className="p-6 md:p-8">
                        <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-                           <Terminal className="h-5 w-5 text-foreground" /> {/* Use foreground */}
+                           <Terminal className="h-5 w-5 text-primary" />
                            Technical Skills
                        </h3>
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8"> {/* Changed to 3 cols on large screens */}
-                           {Object.entries(categorizedSkills).map(([category, skills], catIndex) => (
-                               <div key={catIndex} className="space-y-4">
-                                   <h4 className="text-lg font-medium text-foreground border-b border-border pb-2 mb-3">
-                                       {category}
-                                   </h4>
-                                   <ul className="space-y-2">
-                                       {skills.map((skill, skillIndex) => (
-                                           <li key={skillIndex} className="flex items-center text-sm text-muted-foreground">
-                                               <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground mr-2 flex-shrink-0"></span> {/* Use foreground */}
-                                               {skill}
-                                           </li>
-                                       ))}
-                                   </ul>
-                               </div>
-                           ))}
+                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                           {Object.entries(categorizedSkills).map(([category, skills], catIndex) => {
+                               const Icon = skillIcons[category] || Star; // Fallback to a default icon
+                               return (
+                                   <div key={catIndex} className="space-y-4">
+                                       <h4 className="flex items-center gap-3 text-lg font-medium text-foreground">
+                                           <Icon className="h-5 w-5 text-primary" />
+                                           {category}
+                                       </h4>
+                                       <div className="flex flex-wrap gap-2 pt-2">
+                                           {skills.map((skill, skillIndex) => (
+                                               <Badge key={skillIndex} variant="secondary" className="text-sm font-light">
+                                                   {skill}
+                                               </Badge>
+                                           ))}
+                                       </div>
+                                   </div>
+                               );
+                           })}
                        </div>
                     </CardContent>
                 </Card>
@@ -1223,6 +1240,7 @@ export default function Home() {
     
 
     
+
 
 
 
