@@ -481,7 +481,8 @@ const certifications = [
     issuer: 'Oracle (1Z0-1085-23)',
     icon: Database,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-oci-foundations.png',
+    hoverImage: null,
+    link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=9239C29B8DE6F49583D2C113905F445A744579EB91D6C9AAD39C6FD009240CDA',
   },
   {
     title: 'Cybersecurity Essentials',
@@ -1222,6 +1223,7 @@ export default function Home() {
     
 
     
+
 
 
 
