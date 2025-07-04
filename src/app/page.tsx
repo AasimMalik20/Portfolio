@@ -195,7 +195,6 @@ const workExperiences = [
       'With that foundation set, I dove into the world of cloud technology. Using Google Cloud services, I crafted applications that could scale and adapt as needed. It was a playground of innovation combining tools like Compute Engine, Cloud Storage, and Cloud SQL felt like assembling a high tech puzzle, each piece unlocking new potential.',
       'But power comes with responsibility, and I quickly learned that managing costs was just as critical. I spotted systems running round the clock when they didn\'t need to be, so I set up automatic schedules to switch them off during quiet hours. The result? A hefty chunk of savings without a single dip in performance a small tweak with a big payoff.',
       'Keeping things running smoothly was another passion of mine. I used Google Cloud\'s monitoring tools to build alerts and dashboards that acted like an early warning system. One time, an alert caught a potential issue before it even hit us fixing it felt like I\'d gained a superpower, keeping the team one step ahead.',
-      'Took charge of our database systems, ensuring they were always available, performant, and humming along perfectly.',
       'Databases became my next frontier. I managed our data systems to ensure they were always available and lightning fast, diving deep into the details to keep everything humming along perfectly.',
       'Security was non negotiable. I set up controls to decide who could access what, and locked down our data with encryption, making sure our systems were as safe as they were strong.',
       'Along the way, I documented every step sketching out cloud diagrams and writing guides so my teammates could pick up where I left off. Sharing knowledge became my way of building a stronger, faster team.',
@@ -467,7 +466,8 @@ const certifications = [
     issuer: 'Google Cloud',
     icon: Cloud,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-gcp-ace.png',
+    hoverImage: null,
+    link: 'https://www.credly.com/badges/25be3a65-4448-43c7-904c-de0d7f2a3575/public_url',
   },
   {
     title: 'Oracle Cloud Infrastructure Generative AI Professional',
@@ -704,7 +704,7 @@ export default function Home() {
                 {/* Profile Image */}
                 <div className="relative w-48 h-48 mx-auto mb-12">
                     <Image
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]...data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
                         width={192}
                         height={192}
                         alt="Aasim Malik Profile Picture"
@@ -1173,7 +1173,7 @@ export default function Home() {
                         </a>
                     </Button>
                     {/* GitHub Button */}
-                     <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-900 dark:hover:bg-neutral-900/90 dark:text-neutral-50">
+                     <Button asChild className="bg-black text-white hover:bg-black/90">
                         <a href="https://github.com/AasimMalik20" target="_blank" rel="noopener noreferrer" className="flex items-center">
                             <Github className="mr-2 h-4 w-4" /> GitHub
                         </a>
@@ -1191,7 +1191,7 @@ export default function Home() {
                       </a>
                     </Button>
                     {/* Medium Button */}
-                    <Button asChild className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-900 dark:hover:bg-neutral-900/90 dark:text-neutral-50">
+                    <Button asChild className="bg-black text-white hover:bg-black/90">
                       <a href="https://medium.com/@aasimmalik29" target="_blank" rel="noopener noreferrer" className="flex items-center">
                         <BookOpen className="mr-2 h-4 w-4" /> Medium {/* Using BookOpen as proxy */}
                       </a>
@@ -1220,3 +1220,4 @@ export default function Home() {
     
 
     
+
