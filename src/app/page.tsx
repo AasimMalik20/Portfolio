@@ -193,7 +193,7 @@ const workExperiences = [
     points: [
       'Stepping into my role as an Associate Software Engineer at Accenture felt like entering a new universe one filled with the endless possibilities of cloud architecture. My first mission? To design a system that could operate seamlessly across the globe, staying online nearly 100% of the time. I turned to a tool called Terraform, which let me automate the creation of our cloud resources. I\'ll never forget the thrill of my first big win: watching resources spring to life in multiple regions, perfectly in sync, like conducting a digital orchestra.',
       'With that foundation set, I dove into the world of cloud technology. Using Google Cloud services, I crafted applications that could scale and adapt as needed. It was a playground of innovation combining tools like Compute Engine, Cloud Storage, and Cloud SQL felt like assembling a high tech puzzle, each piece unlocking new potential.',
-      'But power comes with responsibility, and I quickly learned that managing costs was just as critical. I spotted systems running round the clock when they didn\'t need to be, so I set up automatic schedules to switch them off during quiet hours. The result? A hefty chunk of savings without a single dip in performance a small tweak with a big payoff.',
+      'But power comes with responsibility, and I quickly learned that managing costs was just as critical. I spotted systems running round the clock when they didn’t need to be, so I set up automatic schedules to switch them off during quiet hours. The result? A hefty chunk of savings without a single dip in performance a small tweak with a big payoff.',
       'Keeping things running smoothly was another passion of mine. I used Google Cloud\'s monitoring tools to build alerts and dashboards that acted like an early warning system. One time, an alert caught a potential issue before it even hit us fixing it felt like I\'d gained a superpower, keeping the team one step ahead.',
       'Databases became my next frontier. I managed our data systems to ensure they were always available and lightning fast, diving deep into the details to keep everything humming along perfectly.',
       'Security was non negotiable. I set up controls to decide who could access what, and locked down our data with encryption, making sure our systems were as safe as they were strong.',
@@ -497,6 +497,7 @@ const certifications = [
     icon: Github,
     color: 'text-foreground',
     hoverImage: null,
+    link: 'https://www.credly.com/badges/7037903a-d802-4c1b-afd1-20f07a6e7cee/public_url',
   },
 ];
 
@@ -1221,5 +1222,6 @@ export default function Home() {
     
 
     
+
 
 
