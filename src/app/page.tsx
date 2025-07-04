@@ -191,13 +191,15 @@ const workExperiences = [
     date: 'Jul 2023 - Present',
     location: 'Bengaluru, Karnataka',
     points: [
-      'Architected multi-region GCP systems for near-100% uptime, using Terraform to automate the creation of cloud resources.',
-      'Designed and built scalable cloud-native solutions with Google Cloud services like Compute Engine and Cloud Storage, treating it like a high-tech puzzle.',
-      'Achieved significant cost savings by implementing automated schedules for resources, turning a small tweak into a big payoff.',
-      'Built an early-warning system using Google Cloud\'s monitoring tools, allowing me to catch and fix potential issues before they impacted users.',
+      'Stepping into my role as an Associate Software Engineer at Accenture felt like entering a new universe one filled with the endless possibilities of cloud architecture. My first mission? To design a system that could operate seamlessly across the globe, staying online nearly 100% of the time. I turned to a tool called Terraform, which let me automate the creation of our cloud resources. I\'ll never forget the thrill of my first big win: watching resources spring to life in multiple regions, perfectly in sync, like conducting a digital orchestra.',
+      'With that foundation set, I dove into the world of cloud technology. Using Google Cloud services, I crafted applications that could scale and adapt as needed. It was a playground of innovation combining tools like Compute Engine, Cloud Storage, and Cloud SQL felt like assembling a high tech puzzle, each piece unlocking new potential.',
+      'But power comes with responsibility, and I quickly learned that managing costs was just as critical. I spotted systems running round the clock when they didn\'t need to be, so I set up automatic schedules to switch them off during quiet hours. The result? A hefty chunk of savings without a single dip in performance a small tweak with a big payoff.',
+      'Keeping things running smoothly was another passion of mine. I used Google Cloud\'s monitoring tools to build alerts and dashboards that acted like an early warning system. One time, an alert caught a potential issue before it even hit us fixing it felt like I\'d gained a superpower, keeping the team one step ahead.',
       'Took charge of our database systems, ensuring they were always available, performant, and humming along perfectly.',
-      'Established non-negotiable security controls, including access management and data encryption, to keep our systems as safe as they were strong.',
-      'Documented every step with diagrams and guides, sharing knowledge to build a stronger, faster team.',
+      'Databases became my next frontier. I managed our data systems to ensure they were always available and lightning fast, diving deep into the details to keep everything humming along perfectly.',
+      'Security was non negotiable. I set up controls to decide who could access what, and locked down our data with encryption, making sure our systems were as safe as they were strong.',
+      'Along the way, I documented every step sketching out cloud diagrams and writing guides so my teammates could pick up where I left off. Sharing knowledge became my way of building a stronger, faster team.',
+      'My time at Accenture has been a wild ride of growth and discovery. I\'ve built resilient cloud solutions, slashed costs, boosted reliability, and kept security front and center all while thriving in a fast paced, creative environment. I can\'t wait to see what\'s next.',
     ],
   },
   {
@@ -206,11 +208,11 @@ const workExperiences = [
     date: 'Jan 2023 - Jul 2023',
     location: 'Remote',
     points: [
-      'Designed and implemented cloud-native architectures on GCP, improving scalability and reducing operational costs by 20%.',
-      'Migrated on-premises applications to Google Cloud Platform, resulting in 35% cost savings and 40% improved performance.',
-      'Implemented disaster recovery solutions with automated failover capabilities, reducing recovery time objectives (RTO) from hours to minutes.',
-      'Designed secure cloud networking architectures using VPC, Cloud Load Balancing, and Cloud Interconnect for enterprise applications.',
-      'Optimized BigQuery data warehousing solutions, reducing query times by 45% and storage costs by 30%.',
+      'I got to play architect in the cloud, designing systems on Google Cloud Platform that could grow and shrink like magic. The best part? We saved 20% on costs while making everything run smoother. It was like building a city that could expand instantly during rush hour and cozy up when things got quiet all without breaking the bank.',
+      'I took our old school apps and gave them a new home in the cloud. It was like moving from a clunky old car to a sleek, fast electric one 35% cheaper to run and 40% faster. Watching those apps come to life in their new environment, zipping along without a hitch, was a proud moment.',
+      'I set up a safety net for our systems so that if anything went wrong, we could bounce back in minutes, not hours. It was like having a superhero on speed dial ready to save the day at a moment\'s notice. Knowing our systems could recover that fast gave the whole team peace of mind.',
+      'I built a fortress in the cloud, using tools like VPC and Cloud Load Balancing to keep our apps safe and running smoothly, no matter how many people were using them. It was like creating a VIP lounge for our applications exclusive, secure, and always open for business.',
+      'I turned our data warehouse into a speed demon, making queries 45% faster and cutting storage costs by 30%. It was like giving our data a turbo boost suddenly, everything was quicker, cheaper, and way more efficient. The team could get insights in a flash, and I loved seeing the impact.',
     ],
   },
   {
@@ -219,10 +221,10 @@ const workExperiences = [
     date: 'Feb 2022 - Dec 2022',
     location: 'Remote',
     points: [
-      'Orchestrated migration of legacy infrastructure to Google Cloud Platform, reducing operational costs by 40% and enhancing system scalability.',
-      'Implemented serverless architectures using Cloud Functions and Cloud Run, reducing infrastructure management overhead by 60%.',
-      'Designed and deployed data analytics pipelines using BigQuery, Dataflow, and Data Studio, enabling real-time business insights.',
-      'Created CI/CD pipelines for cloud-native applications, reducing deployment time by 50% and improving release reliability.',
+    'Led the charge in moving our old school systems to the cloud, which not only cut our costs by 40% but also made our systems way more flexible and ready to grow.',
+    'Set up serverless systems that run like magic, cutting down the time we spent babysitting servers by 60%. It\'s like having an invisible team handling the heavy lifting.',
+    'Built a data superhighway that lets us see what\'s happening in our business right now, not yesterday. It\'s like having a crystal ball for our data.',
+    'Set up a conveyor belt for our code that gets new features out the door twice as fast and with fewer hiccups. It\'s like upgrading from a bicycle to a sports car for our deployments.',
     ],
   },
     {
@@ -231,9 +233,10 @@ const workExperiences = [
     date: 'July 2022',
     location: 'Remote',
     points: [
-        'Focused on Subject Matter Expertise related to Venture Capital operations and analysis.', // Added placeholder detail
-        'Contributed to research and data gathering for investment evaluations.',
-        'Supported the team with market trend analysis and reporting.',
+    'As a Linux SME intern, I teamed up with different departments to streamline how we work, cutting down the time to finish daily tasks by 20%.',
+    'Dug deep into research and used my analytical chops to help the team hit their goals, boosting productivity by 15%.',
+    'Knocked out my tasks in record time less than a week and got a shout out with a Letter of Recommendation.',
+
     ],
   },
 ];
@@ -245,11 +248,10 @@ const projects = [
     date: 'Apr 2024 - May 2024',
     description: 'Built a production-ready RAG application leveraging serverless GCP services and Vertex AI for efficient, scalable, and secure AI-powered functionality.',
     points: [
-      'Built a production-ready RAG application using Google Cloud Run, Cloud Storage, and Vertex AI.',
-      'Implemented serverless architecture with automatic scaling to handle variable workloads efficiently.',
-      'Designed secure API endpoints with Cloud IAM authentication and authorization.',
-      'Optimized cloud resource usage to minimize costs while maintaining high performance.',
-      'Utilized Google Cloud Monitoring for comprehensive application observability.',
+    'I assembled a rock solid RAG app with Google Cloud Run driving the engine, Cloud Storage holding the goods, and Vertex AI bringing the brains.',
+    'Went serverless with a setup that scales on its own, adapting to traffic spikes or lulls like a pro, keeping things smooth and efficient.',
+    'Locked in the APIs with Google\'s IAM security, ensuring only the right crew gets through the door.',
+    'Fine tuned the cloud resources to keep costs low while still delivering top notch speed and dependability.',
     ],
     tags: ['GCP', 'Cloud Run', 'Cloud Storage', 'Vertex AI', 'Serverless', 'Python', 'Llama Index', 'RAG'],
     githubLink: "https://github.com/AasimMalik20/JavaScript-RAG-Web-Apps-with-LlamaIndex", // Added GitHub link
@@ -260,11 +262,11 @@ const projects = [
     date: 'Dec 2022 - Feb 2023',
     description: 'Architected a secure and compliant data platform on GCP, implementing robust security measures and optimizing data processing workflows.',
     points: [
-      'Architected a secure data platform on GCP using BigQuery, Cloud Storage, and Data Catalog.',
-      'Implemented column-level security and data masking for sensitive information.',
-      'Designed data pipelines using Cloud Dataflow for efficient ETL processes.',
-      'Created comprehensive data governance framework compliant with industry regulations.',
-      'Reduced data processing costs by 35% through query optimization and storage tiering.',
+    'Crafted a bulletproof data platform on GCP, weaving together BigQuery, Cloud Storage, and Data Catalog for a seamless data powerhouse.',
+    'Locked down sensitive data with column level security and clever masking, keeping prying eyes at bay.',
+    'Engineered slick data pipelines with Cloud Dataflow, turning raw data into gold with lightning fast ETL processes.',
+    'Set up a robust data governance system that plays by the rules, ensuring compliance without breaking a sweat.',
+    'Slashed data processing costs by 35% with smart query tweaks and storage tiering, proving you can save big without skimping on performance.',
     ],
     tags: ['GCP', 'BigQuery', 'Cloud Storage', 'Data Catalog', 'Dataflow', 'Security', 'Governance', 'ETL'],
     githubLink: null,
@@ -275,11 +277,11 @@ const projects = [
     date: 'Jul 2022 - Nov 2022',
     description: 'Designed and deployed a highly available multi-region cloud infrastructure for a critical IBM application, ensuring business continuity and optimized performance.',
     points: [
-      'Designed and implemented a multi-region cloud architecture for high availability.',
-      'Created disaster recovery procedures with RPO/RTO targets aligned to business requirements.',
-      'Implemented global load balancing and CDN for optimized content delivery.',
-      'Established monitoring and alerting across regions with centralized logging.',
-      'Achieved 99.99% uptime for critical business applications.',
+    'Crafted a multi region cloud blueprint that stays up and running, come rain or shine, ensuring the app never skips a beat.',
+    'Built disaster recovery plans with pinpoint recovery goals, tailored to keep the business humming even in the worst case scenarios.',
+    'Set up global load balancing and a content delivery network to serve data fast, no matter where users are on the planet.',
+    'Rolled out monitoring and alerts across all regions with a central hub for logs, giving us eagle eye visibility into the system.',
+    'Delivered a jaw dropping 99.99% uptime for mission critical apps, keeping the business running like a well oiled machine.',
     ],
     tags: ['Cloud Architecture', 'High Availability', 'Disaster Recovery', 'Load Balancing', 'CDN', 'Monitoring', 'GCP'], // Added GCP tag based on context
     githubLink: null,
@@ -457,7 +459,8 @@ const certifications = [
     issuer: 'Google Cloud',
     icon: Cloud,
     color: 'text-foreground', // Use theme color
-    hoverImage: '/cert-gcp-pca.png',
+    hoverImage: null, // Removed per request
+    link: 'https://www.credly.com/badges/a0aa0637-f948-4ca6-afeb-e4f0822855af/public_url', // Added link per request
   },
   {
     title: 'Associate Cloud Engineer',
@@ -701,7 +704,7 @@ export default function Home() {
                 {/* Profile Image */}
                 <div className="relative w-48 h-48 mx-auto mb-12">
                     <Image
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]...data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]...data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]...data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGWCAYAAAD15LqLAAAAAXNSR0IArs4c6Q4AARxISURBVHgB7N0HuFVVmr/vJ4nU3t3d3d17d/fS3d3d3d3dJIRAAgkkkAACSSCAQHAvkEDun917b2pSktzcD4bF/P+5z+fOOfc7d+acc865p/23p+f19Vv27NkTbNu2DaZPn44pU6YgPT0de/fuxalTp/DWW2/h7bffxubNm/HII4/g3LlzePDBB3H69GlcvHgRe/fuxaZNm7B+/Xo8++yzWLt2LaZNm4Z58+Zh1qxdmDRpEpKSkpCUlIQZM2ZgwoQJyM7OVoA/cOAALl26hKlTp2LevHmYNWsWpk+fjoSEBKSlpWHixIkICgrC2bNncezYMVy8eBEHDhzAnj17UFZWBkAYhggICMDChQuRlJSEmTNnIiUlBWfOnMH+/fuRm5uLoUOHIiYmBn5+fgAYNmwYVqxYAYCkpCTExsYC4NatW5g/fz6WL18OwLp167BkyRLMnz8f8fHxEBERAYCkpCRkZWVh/PjxAICRI0fiv//9L/bu3YuDBw/i6tWr+Otf/4qEhARcvHgRAwcOhK+vb00/ceJErFq1CgEBAYiLi8Po0aMxZcoUDBkyBHv27MHcuXNRVFSElStXAgD279+PhQsXAjB+/HisX78eGzZsgFmzZmH+/PkoLy9HQUEBpkyZgnXr1gEATp8+jWPHjuHGjRsAAgICMHfuXGRnZ2Pw4MEIDAxEdnY2pkyZgnPnzmHu3LmYNm0aVq5cCYCcnBxMnToVmzdvxoQJEwCQk5OD48eP49y5c5g4cSJWrFiBefPmYf369UhKSoIPP/wQgLlz52L+/PmIjY1FyZIlERERgbi4OISEhGD8+PF47LHHMHz4cGRkZCAvLw/37t3DoUOH8OKLL2Lx4sVITEyEu7s7AIyMjKCurg5JSUkICgrC1KlTERAQgJiYGGzcuBGjR4/G5s2bMX36dBiG4Zp+5cqVWLlyJTIyMjBmzBgsXrwYzzzzDPbu3YsPP/wQO3bsAPDJJ59g4cKF6NChAyIjIxETEwOAY8eOYeLEiZg1axZ27dqFQ4cOYc+ePZg5cyYmTJgAgLfeeguPPvooZs6ciaCgIAwYMABbtmwhKysLERERWLt2LX744Qe4desWfvzxR8ydOxdz584FACUlJUhJSQHgxIkTuHTpEsLCwjBixAjs3r0bV69exRtvvIGUlBQkJSWhsbERGzduxPbt2wEICwvD4MGDsWvXLly5cgV//vOfWbx4MbZt24aIiAiMHz8eQ4cOhYWFBSQkJGDmzJmIiIjAlClTkJCQgJUrVyIvLw/x8fEAgLGxMWRlZWHPnj3Izs7GwoULsXjxYgDAzZs38c477yAzM5OQkBCMHj0as2fPxsqVK/Huu+/i8OHDWLBgAWRkZODevXswMjKCgIAAHDhwAMnJyZg+fTqcnZ2xd+9elJaWAoAQCoVITU2FiYkJu3btQkpKCoKCghAaGoqpU6fC0dERVqxYgaVLlyIuLg5xcXEAgNnZWej1]"
                         width={192}
                         height={192}
                         alt="Aasim Malik Profile Picture"
@@ -1027,25 +1030,25 @@ export default function Home() {
         </section>
 
         {/* Certifications Section */}
-        <section id="certifications" className="py-16 bg-secondary"> {/* Changed bg for alternation */}
+        <section id="certifications" className="py-16 bg-secondary">
           <div className="container mx-auto px-4 md:px-6">
-             <div className="flex justify-center items-center gap-2 mb-12">
-                 <Award className="h-6 w-6 text-foreground" /> {/* Use foreground */}
-                 <h2 className="text-3xl font-semibold tracking-tight text-center">
-                  Certifications
-                 </h2>
-             </div>
-            <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3"> {/* Increased max-width and added lg:grid-cols-3 */}
+            <div className="flex justify-center items-center gap-2 mb-12">
+              <Award className="h-6 w-6 text-foreground" />
+              <h2 className="text-3xl font-semibold tracking-tight text-center">
+                Certifications
+              </h2>
+            </div>
+            <div className="max-w-4xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {certifications.map((cert, index) => {
                 const CertIcon = cert.icon;
-                return (
+                
+                const cardInnerContent = (
                   <Card
-                    key={index}
-                    className="shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center p-6 bg-card hover:bg-accent hover:text-accent-foreground backdrop-blur-sm group relative" // Use accent for hover
+                    className="h-full w-full shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out flex flex-col items-center justify-center text-center p-6 bg-card hover:bg-accent hover:text-accent-foreground backdrop-blur-sm group relative"
                   >
-                    <CardHeader className="p-0 mb-4"> {/* Removed default padding, added margin */}
+                    <CardHeader className="p-0">
                       {cert.hoverImage ? (
-                        <div className="relative h-20 w-20 mb-4">
+                        <div className="relative h-20 w-20 mb-4 mx-auto">
                           <Image
                             src={cert.hoverImage}
                             alt={`${cert.title} Badge`}
@@ -1054,19 +1057,37 @@ export default function Home() {
                             className="object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute inset-0"
                             data-ai-hint="certification badge"
                           />
-                           <CertIcon className={cn("h-16 w-16 transition-opacity duration-300 opacity-100 group-hover:opacity-0", cert.color)} />
+                          <CertIcon className={cn("h-16 w-16 transition-opacity duration-300 opacity-100 group-hover:opacity-0", cert.color)} />
                         </div>
                       ) : (
-                         <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} />
+                        <CertIcon className={cn("h-16 w-16 mb-4", cert.color)} />
                       )}
                       <CardTitle className="text-lg font-semibold">{cert.title}</CardTitle>
-                      <CardDescription className="text-base text-muted-foreground mt-1">{cert.issuer}</CardDescription> {/* Increased font size */}
+                      <CardDescription className="text-base text-muted-foreground mt-1">{cert.issuer}</CardDescription>
                     </CardHeader>
-                    {/* <CardContent className="pt-2"> Optional content </CardContent> */}
                   </Card>
                 );
+
+                if (cert.link) {
+                  return (
+                    <a
+                      key={index}
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full"
+                    >
+                      {cardInnerContent}
+                    </a>
+                  );
+                }
+
+                return (
+                  <div key={index} className="h-full">
+                    {cardInnerContent}
+                  </div>
+                );
               })}
-              {/* Add an empty div as a placeholder to push the last item to the left on lg screens if only 5 items */}
               {certifications.length % 3 === 2 && <div className="hidden lg:block"></div>}
             </div>
           </div>
