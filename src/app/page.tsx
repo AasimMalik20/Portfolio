@@ -739,12 +739,11 @@ export default function Home() {
               <div className="flex items-center justify-center">
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
                   <Image
-                    src="https://placehold.co/384x384.png"
+                    src="/profile.png"
                     width={384}
                     height={384}
                     alt="Aasim Malik Profile Picture"
                     className="rounded-full object-cover border-8 border-background shadow-2xl"
-                    data-ai-hint="profile picture"
                   />
                 </div>
               </div>
