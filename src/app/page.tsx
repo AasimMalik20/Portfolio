@@ -63,28 +63,22 @@ import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import 
 
 // Placeholder Logo Component
 const Logo = () => (
-  <div className="flex items-center gap-5">
-    {/* AM Logo with diagonal line */}
-    <svg
-      width="50"
-      height="40"
-      viewBox="0 0 30 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="text-foreground"
-    >
-      {/* A */}
-      <path d="M0 22L6 2L12 22" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M3 15H9" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
-      
-      {/* Separator */}
-      <path d="M14 2L16 22" stroke="currentColor" strokeWidth="2" />
-      
-      {/* M */}
-      <path d="M18 22V2L24 16L30 2V22" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
-    </svg>
-    <span className="text-2xl font-semibold text-foreground">Aasim Malik</span>
-  </div>
+    <div className="flex items-center gap-4">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 100 100"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-foreground"
+        style={{ fontFamily: 'serif', fontWeight: 300 }}
+      >
+        <text x="10" y="45" fontSize="48" fill="currentColor">A</text>
+        <text x="50" y="90" fontSize="48" fill="currentColor">M</text>
+        <path d="M8 92 L92 8" stroke="currentColor" strokeWidth="3" />
+      </svg>
+      <span className="text-2xl font-semibold text-foreground">Aasim Malik</span>
+    </div>
 );
 
 
