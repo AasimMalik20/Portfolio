@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { useState, useEffect } from 'react'; // Import useState, useEffect
@@ -151,40 +152,59 @@ const coreCompetencies = [
 const coreExperiences = [
    {
     company: 'ACCENTURE',
-    role: 'Associate Software Engineer',
-    date: 'PRESENT',
+    role: 'Software Engineer',
+    date: 'SEPT 2025 - PRESENT',
     location: 'Bengaluru, Karnataka',
-    colorClass: 'text-accenture-purple', 
+    colorClass: 'text-accenture-purple',
+  },
+  {
+    company: 'ACCENTURE',
+    role: 'Associate Software Engineer',
+    date: 'JUL 2023 - AUG 2025',
+    location: 'Bengaluru, Karnataka',
+    colorClass: 'text-accenture-purple',
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Sr Devops Engineer',
     date: 'JAN 2023 - JUL 2023',
     location: 'Remote',
-    colorClass: 'text-kodekloud-skyblue', 
+    colorClass: 'text-kodekloud-skyblue',
   },
   {
     company: 'KODE KLOUD ENGINEER (PLATFORM)',
     role: 'Devops Engineer',
     date: 'FEB 2022 - DEC 2022',
     location: 'Remote',
-    colorClass: 'text-kodekloud-skyblue', 
+    colorClass: 'text-kodekloud-skyblue',
   },
   {
     company: 'GOWTH CENTRAL VC',
     role: 'SME Intern',
     date: 'JULY 2022',
     location: 'Remote',
-    colorClass: 'text-gowth-darkblue', 
+    colorClass: 'text-gowth-darkblue',
   },
 ];
 
 // Detailed Work Experience Data (Make sure the latest experience is first)
 const workExperiences = [
   {
+    title: 'Software Engineer',
+    company: 'Accenture',
+    date: 'Sept 2025 - Present',
+    location: 'Bengaluru, Karnataka',
+    points: [
+      'As a Software Engineer, I continue to build upon my cloud architecture expertise, taking on more complex design and implementation challenges. My focus remains on creating globally resilient, scalable, and cost-effective solutions using cutting-edge cloud technologies.',
+      'I lead initiatives to further optimize cloud spending, identifying and implementing advanced cost-saving measures across multiple projects.',
+      'I take a proactive role in mentoring junior engineers, sharing my knowledge of Terraform, GCP, and security best practices to foster team growth and upskill our capabilities.',
+      'My responsibilities have expanded to include more in-depth security architecture, ensuring our systems are not just strong, but are designed with a security-first mindset from the ground up.',
+    ],
+  },
+  {
     title: 'Associate Software Engineer',
     company: 'Accenture',
-    date: 'Jul 2023 - Present',
+    date: 'Jul 2023 - Aug 2025',
     location: 'Bengaluru, Karnataka',
     points: [
       'Stepping into my role as an Associate Software Engineer at Accenture felt like entering a new universe one filled with the endless possibilities of cloud architecture. My first mission? To design a system that could operate seamlessly across the globe, staying online nearly 100% of the time. I turned to a tool called Terraform, which let me automate the creation of our cloud resources. I\'ll never forget the thrill of my first big win: watching resources spring to life in multiple regions, perfectly in sync, like conducting a digital orchestra.',
@@ -194,7 +214,7 @@ const workExperiences = [
       'Databases became my next frontier. I managed our data systems to ensure they were always available and lightning fast, diving deep into the details to keep everything humming along perfectly.',
       'Security was non negotiable. I set up controls to decide who could access what, and locked down our data with encryption, making sure our systems were as safe as they were strong.',
       'Along the way, I documented every step sketching out cloud diagrams and writing guides so my teammates could pick up where I left off. Sharing knowledge became my way of building a stronger, faster team.',
-      'My time at Accenture has been a wild ride of growth and discovery. I\'ve built resilient cloud solutions, slashed costs, boosted reliability, and kept security front and center all while thriving in a fast paced, creative environment. I can\'t wait to see what\'s next.',
+      'My time at Accenture has been a wild ride of growth and discovery. I’ve built resilient cloud solutions, slashed costs, boosted reliability, and kept security front and center all while thriving in a fast paced, creative environment. I can’t wait to see what’s next.',
     ],
   },
   {
@@ -818,7 +838,7 @@ export default function Home() {
                                     <h4 className="text-xl font-medium text-foreground">{exp.role}</h4>
                                     <p className={cn(
                                         "text-sm text-muted-foreground whitespace-nowrap sm:ml-auto", 
-                                        exp.date.toUpperCase() === 'PRESENT' && 'text-present-accent font-semibold' 
+                                        exp.date.toUpperCase().includes('PRESENT') && 'text-present-accent font-semibold' 
                                     )}>
                                         ({exp.date})
                                     </p>
@@ -1241,3 +1261,4 @@ export default function Home() {
     </div>
   );
 }
+
