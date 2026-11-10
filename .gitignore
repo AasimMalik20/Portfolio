@@ -38,3 +38,17 @@ yarn-error.log*
 next-env.d.ts
 
 .genkit/*
+
+# Service account key files (never commit)
+service-account*.json
+*-service-account.json
+credentials.json
+key.json
+
+# Env files
+.env.local
+.env.production
+.env*.local
+
+# SDD workspace (scratch, git-ignored)
+.superpowers/
