@@ -7,9 +7,12 @@
  * - Returns empty AllSheetData on any fetch error
  */
 
+import 'server-only'
+
 import { google } from 'googleapis'
 import { z } from 'zod'
 import { unstable_cache } from 'next/cache'
+import { parseFlexDate } from './date-utils'
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -186,6 +189,13 @@ export type Post = {
 export type ContactData = Record<string, string>
 export type SettingsData = Record<string, string>
 
+export type HeroStats = {
+  shipped?: number
+  live?: number
+  years?: string
+  certs?: number
+}
+
 export type AllSheetData = {
   projects: Project[]
   experience: Experience[]
@@ -195,6 +205,7 @@ export type AllSheetData = {
   posts: Post[]
   contact: ContactData
   settings: SettingsData
+  stats: HeroStats
 }
 
 const EMPTY_DATA: AllSheetData = {
@@ -206,157 +217,197 @@ const EMPTY_DATA: AllSheetData = {
   posts: [],
   contact: {},
   settings: {},
+  stats: {},
 }
 
 // ─── Row Parsers ──────────────────────────────────────────────────────────────
 
 function parseProjects(rows: Record<string, string>[]): Project[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = ProjectRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid project row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        name: d.name ?? '',
-        description: d.description ?? '',
-        status: d.status,
-        progress: d.progress,
-        start_date: d.start_date || undefined,
-        end_date: d.end_date || undefined,
-        target_date: d.target_date || undefined,
-        live_url: d.live_url || undefined,
-        repo_url: d.repo_url || undefined,
-        demo_url: d.demo_url || undefined,
-        tech: splitComma(d.tech),
-        image: d.image || undefined,
-        featured: d.featured?.toUpperCase() === 'TRUE',
-      } satisfies Project
+  const result: Project[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = ProjectRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid project row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      name: d.name ?? '',
+      description: d.description ?? '',
+      status: d.status,
+      progress: d.progress,
+      start_date: d.start_date || undefined,
+      end_date: d.end_date || undefined,
+      target_date: d.target_date || undefined,
+      live_url: d.live_url || undefined,
+      repo_url: d.repo_url || undefined,
+      demo_url: d.demo_url || undefined,
+      tech: splitComma(d.tech),
+      image: d.image || undefined,
+      featured: d.featured?.toUpperCase() === 'TRUE',
     })
-    .filter((p): p is Project => p !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
 }
 
 function parseExperience(rows: Record<string, string>[]): Experience[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = ExperienceRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid experience row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        company: d.company ?? '',
-        role: d.role ?? '',
-        start: d.start || undefined,
-        end: d.end || undefined,
-        location: d.location || undefined,
-        bullets: splitNewline(d.bullets),
-        tech: splitComma(d.tech),
-        logo_url: d.logo_url || undefined,
-      } satisfies Experience
+  const result: Experience[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = ExperienceRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid experience row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      company: d.company ?? '',
+      role: d.role ?? '',
+      start: d.start || undefined,
+      end: d.end || undefined,
+      location: d.location || undefined,
+      bullets: splitNewline(d.bullets),
+      tech: splitComma(d.tech),
+      logo_url: d.logo_url || undefined,
     })
-    .filter((e): e is Experience => e !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
 }
 
 function parseSkills(rows: Record<string, string>[]): Skill[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = SkillRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid skill row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        name: d.name ?? '',
-        category: d.category ?? '',
-        icon_slug: d.icon_slug || undefined,
-        level: d.level || undefined,
-        years: d.years,
-      } satisfies Skill
+  const result: Skill[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = SkillRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid skill row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      name: d.name ?? '',
+      category: d.category ?? '',
+      icon_slug: d.icon_slug || undefined,
+      level: d.level || undefined,
+      years: d.years,
     })
-    .filter((s): s is Skill => s !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
 }
 
 function parseCertifications(rows: Record<string, string>[]): Certification[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = CertificationRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid cert row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        name: d.name ?? '',
-        issuer: d.issuer ?? '',
-        date: d.date || undefined,
-        credential_url: d.credential_url || undefined,
-        badge_url: d.badge_url || undefined,
-      } satisfies Certification
+  const result: Certification[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = CertificationRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid cert row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      name: d.name ?? '',
+      issuer: d.issuer ?? '',
+      date: d.date || undefined,
+      credential_url: d.credential_url || undefined,
+      badge_url: d.badge_url || undefined,
     })
-    .filter((c): c is Certification => c !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
 }
 
 function parseEducation(rows: Record<string, string>[]): Education[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = EducationRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid education row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        school: d.school ?? '',
-        degree: d.degree || undefined,
-        start: d.start || undefined,
-        end: d.end || undefined,
-        gpa: d.gpa || undefined,
-        logo_url: d.logo_url || undefined,
-      } satisfies Education
+  const result: Education[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = EducationRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid education row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      school: d.school ?? '',
+      degree: d.degree || undefined,
+      start: d.start || undefined,
+      end: d.end || undefined,
+      gpa: d.gpa || undefined,
+      logo_url: d.logo_url || undefined,
     })
-    .filter((e): e is Education => e !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
 }
 
 function parsePosts(rows: Record<string, string>[]): Post[] {
-  return rows
-    .filter(r => isVisible(r.visible))
-    .map(r => {
-      const parsed = PostRowSchema.safeParse(r)
-      if (!parsed.success) {
-        console.error('[sheets] Invalid post row:', r, parsed.error.format())
-        return null
-      }
-      const d = parsed.data
-      return {
-        order: d.order ?? 0,
-        platform: d.platform,
-        url: d.url || undefined,
-        date: d.date || undefined,
-        pinned: d.pinned?.toUpperCase() === 'TRUE',
-      } satisfies Post
+  const result: Post[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = PostRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid post row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      platform: d.platform,
+      url: d.url || undefined,
+      date: d.date || undefined,
+      pinned: d.pinned?.toUpperCase() === 'TRUE',
     })
-    .filter((p): p is Post => p !== null)
-    .sort((a, b) => a.order - b.order)
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+/** Compute Hero stats from visible rows with Settings overrides */
+export function computeHeroStats(
+  projects: Project[],
+  experience: Experience[],
+  certifications: Certification[],
+  settings: SettingsData,
+): HeroStats {
+  // 1. Shipped: status === 'Live' OR has end_date
+  const autoShipped = projects.filter(p => p.status === 'Live' || !!p.end_date).length
+  const shippedOverride = settings['stats_shipped']?.trim()
+  const shipped = shippedOverride ? parseInt(shippedOverride, 10) : autoShipped
+
+  // 2. Live: status === 'Live'
+  const autoLive = projects.filter(p => p.status === 'Live').length
+  const liveOverride = settings['stats_live']?.trim()
+  const live = liveOverride ? parseInt(liveOverride, 10) : autoLive
+
+  // 3. Years: earliest Experience start date -> today (format like "2+")
+  let autoYears = ''
+  const validDates = experience
+    .map(e => parseFlexDate(e.start))
+    .filter((d): d is Date => d !== null)
+  if (validDates.length > 0) {
+    const earliest = new Date(Math.min(...validDates.map(d => d.getTime())))
+    const diffYears = (Date.now() - earliest.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
+    autoYears = `${Math.max(1, Math.floor(diffYears))}+`
+  }
+  const yearsOverride = settings['stats_years']?.trim()
+  const years = yearsOverride || autoYears
+
+  // 4. Certs: visible Certifications count
+  const autoCerts = certifications.length
+  const certsOverride = settings['stats_certs']?.trim()
+  const certs = certsOverride ? parseInt(certsOverride, 10) : autoCerts
+
+  const stats: HeroStats = {}
+  // Hide any stat that is 0 or empty
+  if (shipped && !isNaN(shipped) && shipped > 0) stats.shipped = shipped
+  if (live && !isNaN(live) && live > 0) stats.live = live
+  if (years && years !== '0' && years !== '0+') stats.years = years
+  if (certs && !isNaN(certs) && certs > 0) stats.certs = certs
+
+  return stats
 }
 
 /** Parse Contact and Settings: key/value rows → Record */
@@ -410,15 +461,26 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       return (valueRanges[idx]?.values as string[][] | undefined) ?? []
     }
 
+    const projects = parseProjects(parseRange(getRange('Projects')))
+    const experience = parseExperience(parseRange(getRange('Experience')))
+    const skills = parseSkills(parseRange(getRange('Skills')))
+    const certifications = parseCertifications(parseRange(getRange('Certifications')))
+    const education = parseEducation(parseRange(getRange('Education')))
+    const posts = parsePosts(parseRange(getRange('Posts')))
+    const contact = parseKeyValue(parseRange(getRange('Contact')))
+    const settings = parseKeyValue(parseRange(getRange('Settings')))
+    const stats = computeHeroStats(projects, experience, certifications, settings)
+
     return {
-      projects: parseProjects(parseRange(getRange('Projects'))),
-      experience: parseExperience(parseRange(getRange('Experience'))),
-      skills: parseSkills(parseRange(getRange('Skills'))),
-      certifications: parseCertifications(parseRange(getRange('Certifications'))),
-      education: parseEducation(parseRange(getRange('Education'))),
-      posts: parsePosts(parseRange(getRange('Posts'))),
-      contact: parseKeyValue(parseRange(getRange('Contact'))),
-      settings: parseKeyValue(parseRange(getRange('Settings'))),
+      projects,
+      experience,
+      skills,
+      certifications,
+      education,
+      posts,
+      contact,
+      settings,
+      stats,
     }
   } catch (err) {
     console.error('[sheets] Failed to fetch sheet data:', err)
