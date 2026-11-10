@@ -64,7 +64,15 @@ import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Import 
 
 interface HomeClientProps {
   hero: React.ReactNode;
+  services: React.ReactNode;
+  projects: React.ReactNode;
+  stack: React.ReactNode;
+  process: React.ReactNode;
+  testimonials: React.ReactNode;
   posts: React.ReactNode;
+  experience: React.ReactNode;
+  certifications: React.ReactNode;
+  education: React.ReactNode;
 }
 
 // Placeholder Logo Component

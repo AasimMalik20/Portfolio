@@ -64,6 +64,68 @@ const ProjectRowSchema = z.object({
   tech: z.string().optional(),
   image: z.string().optional(),
   featured: z.string().optional(),
+  // New columns
+  milestones: z.string().optional(),
+  problem: z.string().optional(),
+  result_metric: z.string().optional(),
+  tools: z.string().optional(),
+  demo_video_url: z.string().optional(),
+  case_study_slug: z.string().optional(),
+  client_type: z.string().optional(),
+})
+
+const ServiceRowSchema = z.object({
+  visible: z.string().optional(),
+  order: z.coerce.number().optional().default(0),
+  name: z.string().optional().default(''),
+  description: z.string().optional().default(''),
+  icon_slug: z.string().optional(),
+  cta_text: z.string().optional(),
+  cta_url: z.string().optional(),
+})
+
+const CaseStudyRowSchema = z.object({
+  visible: z.string().optional(),
+  order: z.coerce.number().optional().default(0),
+  slug: z.string().optional().default(''),
+  title: z.string().optional().default(''),
+  client: z.string().optional().default(''),
+  summary: z.string().optional().default(''),
+  problem: z.string().optional(),
+  solution: z.string().optional(),
+  result: z.string().optional(),
+  image: z.string().optional(),
+  tags: z.string().optional(),
+  url: z.string().optional(),
+})
+
+const StackRowSchema = z.object({
+  visible: z.string().optional(),
+  order: z.coerce.number().optional().default(0),
+  name: z.string().optional().default(''),
+  category: z.string().optional().default(''),
+  icon_slug: z.string().optional(),
+  url: z.string().optional(),
+})
+
+const TestimonialRowSchema = z.object({
+  visible: z.string().optional(),
+  order: z.coerce.number().optional().default(0),
+  author: z.string().optional().default(''),
+  role: z.string().optional().default(''),
+  company: z.string().optional().default(''),
+  quote: z.string().optional().default(''),
+  avatar_url: z.string().optional(),
+  url: z.string().optional(),
+})
+
+const ProcessRowSchema = z.object({
+  visible: z.string().optional(),
+  order: z.coerce.number().optional().default(0),
+  step: z.coerce.number().optional().default(0),
+  title: z.string().optional().default(''),
+  description: z.string().optional().default(''),
+  icon_slug: z.string().optional(),
 })
 
 const ExperienceRowSchema = z.object({
@@ -136,6 +198,64 @@ export type Project = {
   tech: string[]       // parsed from comma-separated
   image?: string
   featured: boolean
+  // New columns
+  milestones?: string  // raw "A:done; B:todo" string
+  computed_progress?: number // derived from milestones unless progress overrides
+  problem?: string
+  result_metric?: string
+  tools: string[]      // parsed from comma-separated
+  demo_video_url?: string
+  case_study_slug?: string
+  client_type?: string
+}
+
+export type Service = {
+  order: number
+  name: string
+  description: string
+  icon_slug?: string
+  cta_text?: string
+  cta_url?: string
+}
+
+export type CaseStudy = {
+  order: number
+  slug: string
+  title: string
+  client: string
+  summary: string
+  problem?: string
+  solution?: string
+  result?: string
+  image?: string
+  tags: string[]
+  url?: string
+}
+
+export type StackItem = {
+  order: number
+  name: string
+  category: string
+  icon_slug?: string
+  url?: string
+}
+
+export type Testimonial = {
+  order: number
+  author: string
+  role: string
+  company: string
+  quote: string
+  avatar_url?: string
+  url?: string
+}
+
+export type ProcessStep = {
+  order: number
+  step: number
+  title: string
+  description: string
+  icon_slug?: string
 }
 
 export type Experience = {
@@ -203,6 +323,11 @@ export type AllSheetData = {
   certifications: Certification[]
   education: Education[]
   posts: Post[]
+  services: Service[]
+  caseStudies: CaseStudy[]
+  stack: StackItem[]
+  testimonials: Testimonial[]
+  process: ProcessStep[]
   contact: ContactData
   settings: SettingsData
   stats: HeroStats
@@ -215,12 +340,26 @@ const EMPTY_DATA: AllSheetData = {
   certifications: [],
   education: [],
   posts: [],
+  services: [],
+  caseStudies: [],
+  stack: [],
+  testimonials: [],
+  process: [],
   contact: {},
   settings: {},
   stats: {},
 }
 
 // ─── Row Parsers ──────────────────────────────────────────────────────────────
+
+/** Parse "A:done; B:todo; C:done" → fraction done */
+function parseMilestoneProgress(raw: string | undefined): number | undefined {
+  if (!raw?.trim()) return undefined
+  const steps = raw.split(';').map(s => s.trim()).filter(Boolean)
+  if (steps.length === 0) return undefined
+  const done = steps.filter(s => s.toLowerCase().endsWith(':done')).length
+  return Math.round((done / steps.length) * 100)
+}
 
 function parseProjects(rows: Record<string, string>[]): Project[] {
   const result: Project[] = []
@@ -232,12 +371,15 @@ function parseProjects(rows: Record<string, string>[]): Project[] {
       continue
     }
     const d = parsed.data
+    // Progress: manual override wins; else derive from milestones
+    const milestoneProgress = parseMilestoneProgress(d.milestones)
+    const effectiveProgress = d.progress !== undefined ? d.progress : milestoneProgress
     result.push({
       order: d.order ?? 0,
       name: d.name ?? '',
       description: d.description ?? '',
       status: d.status,
-      progress: d.progress,
+      progress: effectiveProgress,
       start_date: d.start_date || undefined,
       end_date: d.end_date || undefined,
       target_date: d.target_date || undefined,
@@ -247,6 +389,128 @@ function parseProjects(rows: Record<string, string>[]): Project[] {
       tech: splitComma(d.tech),
       image: d.image || undefined,
       featured: d.featured?.toUpperCase() === 'TRUE',
+      milestones: d.milestones || undefined,
+      computed_progress: milestoneProgress,
+      problem: d.problem || undefined,
+      result_metric: d.result_metric || undefined,
+      tools: splitComma(d.tools),
+      demo_video_url: d.demo_video_url || undefined,
+      case_study_slug: d.case_study_slug || undefined,
+      client_type: d.client_type || undefined,
+    })
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+function parseServices(rows: Record<string, string>[]): Service[] {
+  const result: Service[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = ServiceRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid service row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      name: d.name ?? '',
+      description: d.description ?? '',
+      icon_slug: d.icon_slug || undefined,
+      cta_text: d.cta_text || undefined,
+      cta_url: d.cta_url || undefined,
+    })
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+function parseCaseStudies(rows: Record<string, string>[]): CaseStudy[] {
+  const result: CaseStudy[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = CaseStudyRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid case study row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      slug: d.slug ?? '',
+      title: d.title ?? '',
+      client: d.client ?? '',
+      summary: d.summary ?? '',
+      problem: d.problem || undefined,
+      solution: d.solution || undefined,
+      result: d.result || undefined,
+      image: d.image || undefined,
+      tags: splitComma(d.tags),
+      url: d.url || undefined,
+    })
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+function parseStack(rows: Record<string, string>[]): StackItem[] {
+  const result: StackItem[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = StackRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid stack row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      name: d.name ?? '',
+      category: d.category ?? '',
+      icon_slug: d.icon_slug || undefined,
+      url: d.url || undefined,
+    })
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+function parseTestimonials(rows: Record<string, string>[]): Testimonial[] {
+  const result: Testimonial[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = TestimonialRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid testimonial row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      author: d.author ?? '',
+      role: d.role ?? '',
+      company: d.company ?? '',
+      quote: d.quote ?? '',
+      avatar_url: d.avatar_url || undefined,
+      url: d.url || undefined,
+    })
+  }
+  return result.sort((a, b) => a.order - b.order)
+}
+
+function parseProcess(rows: Record<string, string>[]): ProcessStep[] {
+  const result: ProcessStep[] = []
+  for (const r of rows) {
+    if (!isVisible(r.visible)) continue
+    const parsed = ProcessRowSchema.safeParse(r)
+    if (!parsed.success) {
+      console.error('[sheets] Invalid process row:', r, parsed.error.format())
+      continue
+    }
+    const d = parsed.data
+    result.push({
+      order: d.order ?? 0,
+      step: d.step ?? 0,
+      title: d.title ?? '',
+      description: d.description ?? '',
+      icon_slug: d.icon_slug || undefined,
     })
   }
   return result.sort((a, b) => a.order - b.order)
@@ -447,7 +711,11 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
 
     const sheets = google.sheets({ version: 'v4', auth })
 
-    const TABS = ['Projects', 'Experience', 'Skills', 'Certifications', 'Education', 'Posts', 'Contact', 'Settings']
+    const TABS = [
+      'Projects', 'Experience', 'Skills', 'Certifications', 'Education', 'Posts',
+      'Services', 'CaseStudies', 'Stack', 'Testimonials', 'Process',
+      'Contact', 'Settings',
+    ]
 
     const response = await sheets.spreadsheets.values.batchGet({
       spreadsheetId: sheetId,
@@ -467,6 +735,11 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const certifications = parseCertifications(parseRange(getRange('Certifications')))
     const education = parseEducation(parseRange(getRange('Education')))
     const posts = parsePosts(parseRange(getRange('Posts')))
+    const services = parseServices(parseRange(getRange('Services')))
+    const caseStudies = parseCaseStudies(parseRange(getRange('CaseStudies')))
+    const stack = parseStack(parseRange(getRange('Stack')))
+    const testimonials = parseTestimonials(parseRange(getRange('Testimonials')))
+    const process = parseProcess(parseRange(getRange('Process')))
     const contact = parseKeyValue(parseRange(getRange('Contact')))
     const settings = parseKeyValue(parseRange(getRange('Settings')))
     const stats = computeHeroStats(projects, experience, certifications, settings)
@@ -478,6 +751,11 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       certifications,
       education,
       posts,
+      services,
+      caseStudies,
+      stack,
+      testimonials,
+      process,
       contact,
       settings,
       stats,
