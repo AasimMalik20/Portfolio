@@ -1,28 +1,20 @@
-# Welcome to Antigravity!
+# Aasim Malik Portfolio
 
-Welcome to your new developer home! Your Firebase Studio project has been successfully migrated to Antigravity.
+Next.js portfolio content is read server-side from a private Google Sheet.
 
-Antigravity is our next-generation, agent-first IDE designed for high-velocity, autonomous development. Because Antigravity runs locally on your machine, you now have access to powerful local workflows and fully integrated AI editing capabilities that go beyond a cloud-based web IDE.
+## Google Sheets setup
 
-## Getting Started
-- **Run Locally**: Use the **Run and Debug** menu on the left sidebar to start your local development server.
-  - Or in a terminal run `npm run dev` and visit `http://localhost:9002`.
-- **Deploy**: You can deploy your changes to Firebase App Hosting by using the integrated terminal and standard Firebase CLI commands, just as you did in Firebase Studio.
-- **Cleanup**: Cleanup unused artifacts with the @cleanup workflow.
+1. Enable the Google Sheets API in a Google Cloud project and create a service account.
+2. Share the spreadsheet with the service-account email as a Viewer.
+3. Copy the required values from `.env.example` to `.env.local`. Keep the private key secret; do not commit `.env.local` or service-account key files.
+4. For Firebase App Hosting, configure `GOOGLE_SHEET_ID`, `GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY` as runtime secrets/environment variables. Configure `REVALIDATE_SECRET` as well if using the on-edit webhook.
 
-Enjoy the next era of AI-driven development!
+The page reads the Projects, Experience, Skills, Certifications, Education, Posts, Services, Stack, Testimonials, Process, Contact, and Settings tabs. Data is cached for five minutes. See the [Sheets design](./docs/superpowers/specs/2026-11-10-sheets-portfolio-design.md) for tab columns and the [Apps Script webhook](./apps-script/onEdit.js) for optional on-edit revalidation.
 
-File any bugs at https://github.com/firebase/firebase-tools/issues
+## Development
 
-**Firebase Studio Export Date:** 2026-06-23
-
-
----
-
-## Previous README.md contents:
-
-# Firebase Studio
-
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+```sh
+npm run dev
+npm run typecheck
+npm run build
+```

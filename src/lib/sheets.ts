@@ -53,7 +53,10 @@ const ProjectRowSchema = z.object({
   order: z.coerce.number().optional().default(0),
   name: z.string().optional().default(''),
   description: z.string().optional().default(''),
-  status: z.enum(['Live', 'In Progress', 'Upcoming', 'Paused']).optional(),
+  status: z.preprocess(
+    value => typeof value === 'string' ? value.trim() || undefined : value,
+    z.enum(['Live', 'In Progress', 'Upcoming', 'Paused']).optional(),
+  ),
   progress: z.coerce.number().min(0).max(100).optional(),
   start_date: z.string().optional(),
   end_date: z.string().optional(),
@@ -175,7 +178,10 @@ const EducationRowSchema = z.object({
 const PostRowSchema = z.object({
   visible: z.string().optional(),
   order: z.coerce.number().optional().default(0),
-  platform: z.enum(['linkedin', 'x', 'reddit']).optional(),
+  platform: z.preprocess(
+    value => typeof value === 'string' ? value.trim() || undefined : value,
+    z.enum(['linkedin', 'x', 'reddit']).optional(),
+  ),
   url: z.string().optional(),
   date: z.string().optional(),
   pinned: z.string().optional(),
@@ -701,11 +707,9 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
   const privateKey = rawKey.replace(/\\n/g, '\n')
 
   try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: email,
-        private_key: privateKey,
-      },
+    const auth = new google.auth.JWT({
+      email,
+      key: privateKey,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     })
 
