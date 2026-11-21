@@ -13,6 +13,7 @@ import { google } from 'googleapis'
 import { z } from 'zod'
 import { unstable_cache } from 'next/cache'
 import { parseFlexDate } from './date-utils'
+import { filterUsableTestimonials } from './portfolio-content'
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -498,7 +499,7 @@ function parseTestimonials(rows: Record<string, string>[]): Testimonial[] {
       url: d.url || undefined,
     })
   }
-  return result.sort((a, b) => a.order - b.order)
+  return filterUsableTestimonials(result).sort((a, b) => a.order - b.order)
 }
 
 function parseProcess(rows: Record<string, string>[]): ProcessStep[] {

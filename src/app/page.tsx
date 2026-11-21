@@ -1,28 +1,57 @@
 import { HomeClient, type HomeSection } from '@/components/HomeClient'
 import { CertificationsSection } from '@/components/sections/CertificationsSection'
+import { CaseStudiesSection } from '@/components/sections/CaseStudiesSection'
 import { ContactSection } from '@/components/sections/ContactSection'
-import { EducationSection } from '@/components/sections/EducationSection'
 import { ExperienceSection } from '@/components/sections/ExperienceSection'
 import { HeroSection } from '@/components/sections/HeroSection'
-import { PostsSection } from '@/components/sections/PostsSection'
-import { ProcessSection } from '@/components/sections/ProcessSection'
 import { ProjectsSection } from '@/components/sections/ProjectsSection'
 import { ServicesSection } from '@/components/sections/ServicesSection'
 import { SkillsSection } from '@/components/sections/SkillsSection'
-import { StackSection } from '@/components/sections/StackSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { fetchGitHubMeta } from '@/lib/github'
+import {
+  excludeCaseStudyProjects,
+  selectCaseStudies,
+  selectTopRows,
+} from '@/lib/portfolio-content'
 import { fetchAllSheetData } from '@/lib/sheets'
 
 export const revalidate = 300
 
 export default async function Home() {
   const data = await fetchAllSheetData()
+  const caseStudies = selectCaseStudies(data.caseStudies)
+  const selectedExperience = selectTopRows(
+    data.experience.filter(entry => entry.company.trim() && entry.role.trim()),
+    4,
+  )
+  const selectedSkills = selectTopRows(
+    data.skills.filter(skill => skill.name.trim()),
+    8,
+  )
+  const selectedCertifications = selectTopRows(
+    data.certifications.filter(certification => certification.name.trim()),
+    3,
+  )
   const projects = await Promise.all(
-    data.projects.map(async project => ({
-      ...project,
-      github: project.repo_url ? await fetchGitHubMeta(project.repo_url) : undefined,
-    })),
+    selectTopRows(
+      excludeCaseStudyProjects(
+        data.projects.filter(project => project.name.trim()),
+        caseStudies,
+      ),
+      3,
+    )
+      .map(async project => ({
+        ...project,
+        github: project.repo_url ? await fetchGitHubMeta(project.repo_url) : undefined,
+      })),
+  )
+  const services = selectTopRows(
+    data.services.filter(service =>
+      service.name.trim() &&
+      (service.description.trim() || (service.cta_text && service.cta_url)),
+    ),
+    3,
   )
 
   const sections: HomeSection[] = [
@@ -31,38 +60,27 @@ export default async function Home() {
       label: 'Home',
       content: <HeroSection settings={data.settings} contact={data.contact} stats={data.stats} />,
     },
-    ...(data.services.length > 0
-      ? [{ id: 'services', label: 'Services', content: <ServicesSection services={data.services} /> }]
+    ...(services.length > 0
+      ? [{ id: 'services', label: 'Services', content: <ServicesSection services={services} /> }]
       : []),
-    ...(data.experience.length > 0
-      ? [{ id: 'work-experience', label: 'Experience', content: <ExperienceSection experience={data.experience} /> }]
-      : []),
-    ...(data.skills.length > 0
-      ? [{ id: 'skills', label: 'Skills', content: <SkillsSection skills={data.skills} /> }]
+    ...(caseStudies.length > 0
+      ? [{ id: 'case-studies', label: 'Case Studies', content: <CaseStudiesSection caseStudies={caseStudies} /> }]
       : []),
     ...(projects.length > 0
       ? [{ id: 'projects', label: 'Projects', content: <ProjectsSection projects={projects} /> }]
       : []),
-    ...(data.stack.length > 0
-      ? [{ id: 'stack', label: 'Tech Stack', content: <StackSection stack={data.stack} /> }]
+    ...(selectedExperience.length > 0
+      ? [{ id: 'work-experience', label: 'Experience', content: <ExperienceSection experience={selectedExperience} /> }]
       : []),
-    ...(data.process.length > 0
-      ? [{ id: 'process', label: 'Process', content: <ProcessSection process={data.process} /> }]
+    ...(selectedSkills.length > 0
+      ? [{ id: 'skills', label: 'Skills', content: <SkillsSection skills={selectedSkills} /> }]
       : []),
     ...(data.testimonials.length > 0
-      ? [{ id: 'testimonials', label: 'Testimonials', content: <TestimonialsSection testimonials={data.testimonials} /> }]
+      ? [{ id: 'testimonials', label: 'Testimonials', content: <TestimonialsSection testimonials={selectTopRows(data.testimonials, 3)} /> }]
       : []),
-    ...(data.certifications.length > 0
-      ? [{ id: 'certifications', label: 'Certifications', content: <CertificationsSection certifications={data.certifications} /> }]
+    ...(selectedCertifications.length > 0
+      ? [{ id: 'certifications', label: 'Certifications', content: <CertificationsSection certifications={selectedCertifications} /> }]
       : []),
-    ...(data.education.length > 0
-      ? [{ id: 'education', label: 'Education', content: <EducationSection education={data.education} /> }]
-      : []),
-    {
-      id: 'posts',
-      label: 'Posts',
-      content: <PostsSection posts={data.posts} settings={data.settings} />,
-    },
     ...(Object.values(data.contact).some(value => value.trim())
       ? [{ id: 'contact', label: 'Contact', content: <ContactSection contact={data.contact} /> }]
       : []),

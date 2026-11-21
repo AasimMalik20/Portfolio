@@ -9,7 +9,7 @@ Next.js portfolio content is read server-side from a private Google Sheet.
 3. Copy the required values from `.env.example` to `.env.local`. Keep the private key secret; do not commit `.env.local` or service-account key files.
 4. For Firebase App Hosting, configure `GOOGLE_SHEET_ID`, `GOOGLE_SERVICE_ACCOUNT_EMAIL`, and `GOOGLE_PRIVATE_KEY` as runtime secrets/environment variables. Configure `REVALIDATE_SECRET` as well if using the on-edit webhook.
 
-The page reads the Projects, Experience, Skills, Certifications, Education, Posts, Services, Stack, Testimonials, Process, Contact, and Settings tabs. Data is cached for five minutes. See the [Sheets design](./docs/superpowers/specs/2026-11-10-sheets-portfolio-design.md) for tab columns and the [Apps Script webhook](./apps-script/onEdit.js) for optional on-edit revalidation.
+The homepage curates visible content from the Projects, CaseStudies, Experience, Skills, Certifications, Services, Testimonials, Contact, and Settings tabs. It prioritizes case studies, avoids repeating projects represented by a case study, and omits empty sections. Data is cached for five minutes. See the [Sheets design](./docs/superpowers/specs/2026-11-10-sheets-portfolio-design.md) for tab columns and the [Apps Script webhook](./apps-script/onEdit.js) for optional on-edit revalidation.
 
 ## Development
 
