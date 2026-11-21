@@ -13,14 +13,9 @@ import { google } from 'googleapis'
 import { z } from 'zod'
 import { unstable_cache } from 'next/cache'
 import { parseFlexDate } from './date-utils'
-import { filterUsableTestimonials } from './portfolio-content'
+import { filterUsableTestimonials, isVisible } from './portfolio-content'
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
-
-function isVisible(val: string | undefined | null): boolean {
-  if (!val || val.trim() === '') return true
-  return val.trim().toUpperCase() !== 'FALSE'
-}
 
 function splitComma(s: string | undefined): string[] {
   if (!s) return []

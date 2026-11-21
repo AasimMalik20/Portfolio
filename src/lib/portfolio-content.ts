@@ -1,5 +1,10 @@
 import type { CaseStudy, Project, Testimonial } from './sheets'
 
+export function isVisible(value: string | undefined | null): boolean {
+  if (!value || value.trim() === '') return true
+  return value.trim().toUpperCase() !== 'FALSE'
+}
+
 export function filterUsableTestimonials(
   testimonials: readonly Testimonial[],
 ): Testimonial[] {
@@ -18,32 +23,12 @@ export function isMeaningfulCaseStudy(
   )
 }
 
-export function selectTopRows<T extends { order: number }>(
-  rows: readonly T[],
-  limit: number,
-): T[] {
-  return [...rows]
-    .sort((a, b) => a.order - b.order)
-    .slice(0, Math.max(0, limit))
+export function selectProjects(projects: readonly Project[]): Project[] {
+  return projects.filter(project => project.name.trim())
 }
 
 export function selectCaseStudies(rows: readonly CaseStudy[]): CaseStudy[] {
-  const meaningful = rows.filter(isMeaningfulCaseStudy)
-  return selectTopRows(meaningful, 3)
-}
-
-export function excludeCaseStudyProjects(
-  projects: readonly Project[],
-  caseStudies: readonly CaseStudy[],
-): Project[] {
-  const caseStudySlugs = new Set(
-    caseStudies
-      .map(caseStudy => caseStudy.slug.trim().toLowerCase())
-      .filter(Boolean),
-  )
-
-  return projects.filter(project =>
-    !project.case_study_slug ||
-    !caseStudySlugs.has(project.case_study_slug.trim().toLowerCase()),
-  )
+  return rows
+    .filter(isMeaningfulCaseStudy)
+    .sort((a, b) => a.order - b.order)
 }

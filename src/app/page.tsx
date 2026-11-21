@@ -5,14 +5,16 @@ import { ContactSection } from '@/components/sections/ContactSection'
 import { ExperienceSection } from '@/components/sections/ExperienceSection'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { ProjectsSection } from '@/components/sections/ProjectsSection'
+import { PostsSection } from '@/components/sections/PostsSection'
+import { ProcessSection } from '@/components/sections/ProcessSection'
 import { ServicesSection } from '@/components/sections/ServicesSection'
 import { SkillsSection } from '@/components/sections/SkillsSection'
+import { StackSection } from '@/components/sections/StackSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { fetchGitHubMeta } from '@/lib/github'
 import {
-  excludeCaseStudyProjects,
   selectCaseStudies,
-  selectTopRows,
+  selectProjects,
 } from '@/lib/portfolio-content'
 import { fetchAllSheetData } from '@/lib/sheets'
 
@@ -21,38 +23,27 @@ export const revalidate = 300
 export default async function Home() {
   const data = await fetchAllSheetData()
   const caseStudies = selectCaseStudies(data.caseStudies)
-  const selectedExperience = selectTopRows(
-    data.experience.filter(entry => entry.company.trim() && entry.role.trim()),
-    4,
+  const selectedExperience = data.experience.filter(
+    entry => entry.company.trim() && entry.role.trim(),
   )
-  const selectedSkills = selectTopRows(
-    data.skills.filter(skill => skill.name.trim()),
-    8,
-  )
-  const selectedCertifications = selectTopRows(
-    data.certifications.filter(certification => certification.name.trim()),
-    3,
+  const selectedSkills = data.skills.filter(skill => skill.name.trim())
+  const selectedCertifications = data.certifications.filter(
+    certification => certification.name.trim(),
   )
   const projects = await Promise.all(
-    selectTopRows(
-      excludeCaseStudyProjects(
-        data.projects.filter(project => project.name.trim()),
-        caseStudies,
-      ),
-      3,
-    )
+    selectProjects(data.projects)
       .map(async project => ({
         ...project,
         github: project.repo_url ? await fetchGitHubMeta(project.repo_url) : undefined,
       })),
   )
-  const services = selectTopRows(
-    data.services.filter(service =>
+  const services = data.services.filter(service =>
       service.name.trim() &&
       (service.description.trim() || (service.cta_text && service.cta_url)),
-    ),
-    3,
   )
+  const stack = data.stack.filter(item => item.name.trim())
+  const process = data.process.filter(step => step.title.trim())
+  const showPosts = data.posts.length > 0 || !!data.settings.reddit_username?.trim()
 
   const sections: HomeSection[] = [
     {
@@ -76,13 +67,22 @@ export default async function Home() {
       ? [{ id: 'skills', label: 'Skills', content: <SkillsSection skills={selectedSkills} /> }]
       : []),
     ...(data.testimonials.length > 0
-      ? [{ id: 'testimonials', label: 'Testimonials', content: <TestimonialsSection testimonials={selectTopRows(data.testimonials, 3)} /> }]
+      ? [{ id: 'testimonials', label: 'Testimonials', content: <TestimonialsSection testimonials={data.testimonials} /> }]
       : []),
     ...(selectedCertifications.length > 0
       ? [{ id: 'certifications', label: 'Certifications', content: <CertificationsSection certifications={selectedCertifications} /> }]
       : []),
     ...(Object.values(data.contact).some(value => value.trim())
       ? [{ id: 'contact', label: 'Contact', content: <ContactSection contact={data.contact} /> }]
+      : []),
+    ...(showPosts
+      ? [{ id: 'posts', label: 'Posts', content: <PostsSection posts={data.posts} settings={data.settings} /> }]
+      : []),
+    ...(stack.length > 0
+      ? [{ id: 'stack', label: 'Tech Stack', content: <StackSection stack={stack} /> }]
+      : []),
+    ...(process.length > 0
+      ? [{ id: 'process', label: 'Process', content: <ProcessSection process={process} /> }]
       : []),
   ]
 

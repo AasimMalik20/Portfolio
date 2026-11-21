@@ -1,32 +1,41 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {
-  excludeCaseStudyProjects,
-  filterUsableTestimonials,
-  isMeaningfulCaseStudy,
-  selectTopRows,
-} from './portfolio-content.ts'
+import * as portfolioContent from './portfolio-content.ts'
 
-test('selectTopRows returns highest-priority rows without mutating input', () => {
-  const rows = [{ order: 4 }, { order: 1 }, { order: 3 }, { order: 2 }]
-
-  assert.deepEqual(selectTopRows(rows, 2), [{ order: 1 }, { order: 2 }])
-  assert.deepEqual(rows, [{ order: 4 }, { order: 1 }, { order: 3 }, { order: 2 }])
+test('isVisible handles true, false, and blank values', () => {
+  assert.equal(portfolioContent.isVisible?.('TRUE'), true)
+  assert.equal(portfolioContent.isVisible?.(' false '), false)
+  assert.equal(portfolioContent.isVisible?.(''), true)
+  assert.equal(portfolioContent.isVisible?.('  '), true)
+  assert.equal(portfolioContent.isVisible?.(undefined), true)
+  assert.equal(portfolioContent.isVisible?.(null), true)
 })
 
-test('excludeCaseStudyProjects removes projects represented by selected case studies', () => {
+test('selectProjects keeps projects linked to case studies', () => {
   const projects = [
-    { case_study_slug: 'case-one' },
-    { case_study_slug: ' CASE-TWO ' },
-    { case_study_slug: 'other-case' },
-    {},
+    { name: 'Project Alpha', case_study_slug: 'case-one' },
+    { name: 'Project Beta', case_study_slug: 'case-two' },
+    { name: 'Project Gamma' },
+    { name: '  ', case_study_slug: 'case-three' },
   ]
-  const caseStudies = [{ slug: 'case-one' }, { slug: 'case-two' }]
 
-  assert.deepEqual(excludeCaseStudyProjects(projects, caseStudies), [
-    { case_study_slug: 'other-case' },
-    {},
-  ])
+  assert.deepEqual(portfolioContent.selectProjects?.(projects), projects.slice(0, 3))
+})
+
+test('selectCaseStudies returns all meaningful rows ordered by priority', () => {
+  const rows = [
+    { order: 5, title: 'Release Automation', summary: 'Reduced deployment time.' },
+    { order: 2, title: 'Data Platform', problem: 'Fragmented reporting.' },
+    { order: 4, title: 'Customer Portal', result: 'Improved self-service.' },
+    { order: 1, title: '  ', summary: 'Incomplete without a title.' },
+    { order: 3, title: 'Cloud Migration', solution: 'Moved to managed services.' },
+    { order: 6, title: 'Observability', summary: 'Reduced incident response time.' },
+  ]
+
+  assert.deepEqual(
+    portfolioContent.selectCaseStudies(rows),
+    [rows[1], rows[4], rows[2], rows[0], rows[5]],
+  )
 })
 
 test('filterUsableTestimonials requires both an author and a quote', () => {
@@ -36,11 +45,11 @@ test('filterUsableTestimonials requires both an author and a quote', () => {
     { author: '  ', quote: 'A quote without an author.' },
   ]
 
-  assert.deepEqual(filterUsableTestimonials(testimonials), [testimonials[0]])
+  assert.deepEqual(portfolioContent.filterUsableTestimonials(testimonials), [testimonials[0]])
 })
 
 test('isMeaningfulCaseStudy requires a title and supporting detail', () => {
-  assert.equal(isMeaningfulCaseStudy({ title: 'Migration', summary: 'Reduced cost.' }), true)
-  assert.equal(isMeaningfulCaseStudy({ title: '  ', summary: 'Reduced cost.' }), false)
-  assert.equal(isMeaningfulCaseStudy({ title: 'Migration', summary: '  ' }), false)
+  assert.equal(portfolioContent.isMeaningfulCaseStudy({ title: 'Migration', summary: 'Reduced cost.' }), true)
+  assert.equal(portfolioContent.isMeaningfulCaseStudy({ title: '  ', summary: 'Reduced cost.' }), false)
+  assert.equal(portfolioContent.isMeaningfulCaseStudy({ title: 'Migration', summary: '  ' }), false)
 })
