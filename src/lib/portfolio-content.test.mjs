@@ -38,6 +38,25 @@ test('selectCaseStudies returns all meaningful rows ordered by priority', () => 
   )
 })
 
+test('shouldShowPosts ignores rows without usable URLs unless Reddit is configured', () => {
+  const posts = [{}, { url: '' }, { url: '   ' }]
+
+  assert.equal(portfolioContent.shouldShowPosts?.(posts), false)
+  assert.equal(portfolioContent.shouldShowPosts?.(posts, 'portfolio-user'), true)
+})
+
+test('mergePosts keeps more than three Sheet posts', () => {
+  const posts = [
+    { url: 'https://example.com/1', timestamp: 1 },
+    { url: 'https://example.com/2', timestamp: 2 },
+    { url: 'https://example.com/3', timestamp: 3 },
+    { url: 'https://example.com/4', timestamp: 4 },
+    { url: 'https://example.com/5', timestamp: 5 },
+  ]
+
+  assert.deepEqual(portfolioContent.mergePosts?.(posts), [...posts].reverse())
+})
+
 test('filterUsableTestimonials requires both an author and a quote', () => {
   const testimonials = [
     { author: 'A. Client', quote: 'Clear outcomes and excellent delivery.' },

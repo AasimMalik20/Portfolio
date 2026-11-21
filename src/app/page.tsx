@@ -15,6 +15,7 @@ import { fetchGitHubMeta } from '@/lib/github'
 import {
   selectCaseStudies,
   selectProjects,
+  shouldShowPosts,
 } from '@/lib/portfolio-content'
 import { fetchAllSheetData } from '@/lib/sheets'
 
@@ -43,7 +44,7 @@ export default async function Home() {
   )
   const stack = data.stack.filter(item => item.name.trim())
   const process = data.process.filter(step => step.title.trim())
-  const showPosts = data.posts.length > 0 || !!data.settings.reddit_username?.trim()
+  const showPosts = shouldShowPosts(data.posts, data.settings.reddit_username)
 
   const sections: HomeSection[] = [
     {

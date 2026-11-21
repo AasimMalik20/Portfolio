@@ -1,4 +1,5 @@
 import { fetchAllSheetData, Post, SettingsData } from '@/lib/sheets'
+import { mergePosts } from '@/lib/portfolio-content'
 import { fetchPostPreview, fetchRedditPosts, PostPreview } from '@/lib/social-preview'
 import { parseFlexDate, relativeDays } from '@/lib/date-utils'
 import { PostsClient, DisplayPost } from './PostsClient'
@@ -42,7 +43,7 @@ export async function PostsSection(props: PostsSectionProps = {}) {
   // Fetch previews for sheet posts (skip re-fetching if reddit)
   const sheetPostsWithPreviews: DisplayPost[] = await Promise.all(
     (posts || [])
-      .filter(p => !!p.url)
+      .filter(p => !!p.url?.trim())
       .map(async p => {
         const platform = (p.platform ?? 'linkedin') as 'linkedin' | 'x' | 'reddit'
         let preview: PostPreview | null = null
@@ -69,19 +70,7 @@ export async function PostsSection(props: PostsSectionProps = {}) {
       })
   )
 
-  // Merge and deduplicate by URL
-  const seenUrls = new Set<string>()
-  const mergedPosts: DisplayPost[] = []
-
-  for (const post of [...sheetPostsWithPreviews, ...redditPosts]) {
-    if (!seenUrls.has(post.url)) {
-      seenUrls.add(post.url)
-      mergedPosts.push(post)
-    }
-  }
-
-  // Sort descending by date
-  mergedPosts.sort((a, b) => b.timestamp - a.timestamp)
+  const mergedPosts = mergePosts([...sheetPostsWithPreviews, ...redditPosts])
 
   // Check if no posts or newest is older than 30 days
   const now = Date.now()
@@ -95,7 +84,7 @@ export async function PostsSection(props: PostsSectionProps = {}) {
 
   return (
     <PostsClient
-      posts={mergedPosts.slice(0, 3)}
+      posts={mergedPosts}
       showFallback={showFallback}
       fallbackMessage={fallbackMessage}
     />
