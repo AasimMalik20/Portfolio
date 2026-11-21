@@ -717,15 +717,39 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       'Contact', 'Settings',
     ]
 
+    // Ask Google which tabs exist; request only those (case/space tolerant)
+    const meta = await sheets.spreadsheets.get({
+      spreadsheetId: sheetId,
+      fields: 'sheets.properties.title',
+    })
+    const actual = new Map<string, string>()
+    for (const s of meta.data.sheets ?? []) {
+      const t = s.properties?.title ?? ''
+      actual.set(t.trim().toLowerCase(), t)
+    }
+
+    const ranges: string[] = []
+    const rangeIndex: Record<string, number> = {}
+    for (const tab of TABS) {
+      const real = actual.get(tab.toLowerCase())
+      if (real) {
+        rangeIndex[tab] = ranges.length
+        ranges.push(`'${real.replace(/'/g, "''")}'`)
+      } else {
+        console.warn(`[sheets] Tab not found, skipped: ${tab}`)
+      }
+    }
+    if (ranges.length === 0) return EMPTY_DATA
+
     const response = await sheets.spreadsheets.values.batchGet({
       spreadsheetId: sheetId,
-      ranges: TABS,
+      ranges,
     })
-
     const valueRanges = response.data.valueRanges ?? []
 
     const getRange = (tabName: string): string[][] => {
-      const idx = TABS.indexOf(tabName)
+      const idx = rangeIndex[tabName]
+      if (idx === undefined) return []
       return (valueRanges[idx]?.values as string[][] | undefined) ?? []
     }
 
