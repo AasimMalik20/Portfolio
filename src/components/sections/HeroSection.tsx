@@ -75,7 +75,7 @@ export async function HeroSection(props: HeroSectionProps = {}) {
   }
 
   if (stats.shipped && stats.shipped > 0) {
-    statItems.push({ label: 'Projects Shipped', num: stats.shipped })
+    statItems.push({ label: 'Projects Shipped', num: stats.shipped, suffix: '+' })
   }
 
   if (stats.live && stats.live > 0) {
