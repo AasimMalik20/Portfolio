@@ -1,11 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageSquare, ExternalLink, Sparkles, ArrowRight, Linkedin } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { MessageSquare, ExternalLink, Linkedin } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 export interface DisplayPost {
-  platform: 'linkedin' | 'x' | 'reddit'
+  platform?: 'linkedin' | 'x' | 'reddit'
   url: string
   title?: string
   description?: string
@@ -17,8 +17,7 @@ export interface DisplayPost {
 
 export interface PostsClientProps {
   posts: DisplayPost[]
-  showFallback: boolean
-  fallbackMessage: string
+  copy: SiteCopy
 }
 
 function XIcon({ className }: { className?: string }) {
@@ -37,61 +36,50 @@ function RedditIcon({ className }: { className?: string }) {
   )
 }
 
-function PlatformBadge({ platform }: { platform: 'linkedin' | 'x' | 'reddit' }) {
+function PlatformBadge({ platform, copy }: { platform?: 'linkedin' | 'x' | 'reddit'; copy: SiteCopy }) {
+  if (!platform) return null
   if (platform === 'linkedin') {
+    const label = getSiteCopyValue(copy, 'post_linkedin_label')
+    if (!label) return null
     return (
       <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#0A66C2]">
         <Linkedin className="h-4 w-4" />
-        LinkedIn
+        {label}
       </span>
     )
   }
   if (platform === 'x') {
+    const label = getSiteCopyValue(copy, 'post_x_label')
+    if (!label) return null
     return (
       <span className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground">
         <XIcon className="h-3.5 w-3.5" />
-        X
+        {label}
       </span>
     )
   }
+  const label = getSiteCopyValue(copy, 'post_reddit_label')
+  if (!label) return null
   return (
     <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FF4500]">
       <RedditIcon className="h-4 w-4" />
-      Reddit
+      {label}
     </span>
   )
 }
 
-export function PostsClient({ posts, showFallback, fallbackMessage }: PostsClientProps) {
+export function PostsClient({ posts, copy }: PostsClientProps) {
+  if (posts.length === 0) return null
   return (
     <section id="posts" className="py-16 bg-secondary/50 scroll-mt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <MessageSquare className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Recent Posts</h2>
+          {getSiteCopyValue(copy, 'posts_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'posts_heading')}</h2>
+          )}
         </div>
 
-        {showFallback ? (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="max-w-xl mx-auto p-8 rounded-2xl border border-border bg-card/90 backdrop-blur-sm text-center shadow-sm motion-reduce:transform-none motion-reduce:transition-none"
-          >
-            <div className="inline-flex p-3 rounded-full bg-primary/10 text-primary mb-4">
-              <Sparkles className="h-6 w-6" />
-            </div>
-            <p className="text-base text-foreground font-medium mb-6 leading-relaxed">
-              {fallbackMessage}
-            </p>
-            <Button asChild variant="outline" size="sm">
-              <a href="#projects">
-                Check the projects instead <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          </motion.div>
-        ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {posts.map((post, index) => {
               return (
@@ -124,7 +112,7 @@ export function PostsClient({ posts, showFallback, fallbackMessage }: PostsClien
                       <div className="p-5 space-y-3">
                         {/* Header: Platform & Date */}
                         <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <PlatformBadge platform={post.platform} />
+                          <PlatformBadge platform={post.platform} copy={copy} />
                           {post.relativeTime && <span>{post.relativeTime}</span>}
                         </div>
 
@@ -147,7 +135,11 @@ export function PostsClient({ posts, showFallback, fallbackMessage }: PostsClien
                     {/* Footer link indicator */}
                     <div className="p-5 pt-0 flex items-center justify-end text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors">
                       <span className="flex items-center gap-1">
-                        View post <ExternalLink className="h-3 w-3" />
+                        {getSiteCopyValue(copy, 'view_post_label') && (
+                          <>
+                            {getSiteCopyValue(copy, 'view_post_label')} <ExternalLink className="h-3 w-3" />
+                          </>
+                        )}
                       </span>
                     </div>
                   </a>
@@ -155,7 +147,6 @@ export function PostsClient({ posts, showFallback, fallbackMessage }: PostsClien
               )
             })}
           </div>
-        )}
       </div>
     </section>
   )

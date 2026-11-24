@@ -5,12 +5,14 @@ import type { Education } from '@/lib/sheets'
 import { LogoBadge } from '@/components/LogoBadge'
 import { parseFlexDate, formatMonthYear } from '@/lib/date-utils'
 import { GraduationCap } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface EducationSectionProps {
   education: Education[]
+  copy: SiteCopy
 }
 
-export function EducationSection({ education }: EducationSectionProps) {
+export function EducationSection({ education, copy }: EducationSectionProps) {
   if (education.length === 0) return null
 
   return (
@@ -18,7 +20,9 @@ export function EducationSection({ education }: EducationSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-8">
           <GraduationCap className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Education</h2>
+          {getSiteCopyValue(copy, 'education_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'education_heading')}</h2>
+          )}
         </div>
 
         <div className="max-w-2xl mx-auto space-y-4">
@@ -46,8 +50,8 @@ export function EducationSection({ education }: EducationSectionProps) {
                     {dateRange && (
                       <span className="text-xs text-muted-foreground">{dateRange}</span>
                     )}
-                    {edu.gpa && (
-                      <span className="text-xs text-muted-foreground">GPA: {edu.gpa}</span>
+                    {edu.gpa && getSiteCopyValue(copy, 'gpa_label') && (
+                      <span className="text-xs text-muted-foreground">{getSiteCopyValue(copy, 'gpa_label')} {edu.gpa}</span>
                     )}
                   </div>
                 </div>

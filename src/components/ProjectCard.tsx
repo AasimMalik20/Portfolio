@@ -10,20 +10,23 @@ import { Github, ExternalLink, Play, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 export type EnrichedProject = Project & { github?: GitHubMeta | null }
 
-function computeTimeline(start?: string, end?: string): string | null {
+function computeTimeline(start?: string, end?: string, copy?: SiteCopy): string | null {
   const startDate = parseFlexDate(start)
   const endDate = parseFlexDate(end)
 
   if (startDate && endDate) {
-    const dur = formatDuration(startDate, endDate)
-    return `Shipped in ${dur}`
+    const dur = formatDuration(startDate, endDate, copy)
+    const label = getSiteCopyValue(copy ?? {}, 'project_timeline_shipped')
+    return label ? label.replace('{duration}', dur) : null
   }
   if (startDate && !endDate) {
-    const dur = formatDuration(startDate, new Date())
-    return `Building for ${dur}`
+    const dur = formatDuration(startDate, new Date(), copy)
+    const label = getSiteCopyValue(copy ?? {}, 'project_timeline_building')
+    return label ? label.replace('{duration}', dur) : null
   }
   return null
 }
@@ -32,10 +35,11 @@ interface ProjectCardProps {
   project: EnrichedProject
   index?: number
   featured?: boolean
+  copy: SiteCopy
 }
 
-export function ProjectCard({ project, index = 0, featured = false }: ProjectCardProps) {
-  const timeline = computeTimeline(project.start_date, project.end_date)
+export function ProjectCard({ project, index = 0, featured = false, copy }: ProjectCardProps) {
+  const timeline = computeTimeline(project.start_date, project.end_date, copy)
   const topLanguages = project.github?.languages
     ? Object.entries(project.github.languages)
         .sort(([, a], [, b]) => b - a)
@@ -68,7 +72,7 @@ export function ProjectCard({ project, index = 0, featured = false }: ProjectCar
         {/* Header */}
         <div className="flex items-start justify-between gap-2 flex-wrap">
           <h3 className="font-semibold text-base text-foreground leading-snug">{project.name}</h3>
-          {project.status && <StatusBadge status={project.status} />}
+          {project.status && <StatusBadge status={project.status} copy={copy} />}
         </div>
 
         {/* Description */}
@@ -85,7 +89,7 @@ export function ProjectCard({ project, index = 0, featured = false }: ProjectCar
 
         {/* Progress */}
         {typeof project.progress === 'number' && (
-          <ProgressBar value={project.progress} />
+          <ProgressBar value={project.progress} copy={copy} />
         )}
 
         {/* GitHub meta */}
@@ -99,7 +103,9 @@ export function ProjectCard({ project, index = 0, featured = false }: ProjectCar
             )}
             {project.github.lastCommit && (
               <span>
-                Last commit {relativeDays(new Date(project.github.lastCommit))}
+                {getSiteCopyValue(copy, 'project_last_commit')
+                  ? `${getSiteCopyValue(copy, 'project_last_commit')} ${relativeDays(new Date(project.github.lastCommit), copy)}`
+                  : null}
               </span>
             )}
           </div>
@@ -130,24 +136,24 @@ export function ProjectCard({ project, index = 0, featured = false }: ProjectCar
         {/* Links */}
         {(project.live_url || project.repo_url || project.demo_url) && (
           <div className="flex flex-wrap gap-2 pt-1 mt-auto">
-            {project.live_url && (
+            {project.live_url && getSiteCopyValue(copy, 'live_label') && (
               <Button variant="default" size="sm" asChild>
                 <a href={project.live_url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3 w-3 mr-1" /> Live
+                  <ExternalLink className="h-3 w-3 mr-1" /> {getSiteCopyValue(copy, 'live_label')}
                 </a>
               </Button>
             )}
-            {project.repo_url && (
+            {project.repo_url && getSiteCopyValue(copy, 'github_label') && (
               <Button variant="outline" size="sm" asChild>
                 <a href={project.repo_url} target="_blank" rel="noopener noreferrer">
-                  <Github className="h-3 w-3 mr-1" /> GitHub
+                  <Github className="h-3 w-3 mr-1" /> {getSiteCopyValue(copy, 'github_label')}
                 </a>
               </Button>
             )}
-            {project.demo_url && (
+            {project.demo_url && getSiteCopyValue(copy, 'demo_label') && (
               <Button variant="outline" size="sm" asChild>
                 <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
-                  <Play className="h-3 w-3 mr-1" /> Demo
+                  <Play className="h-3 w-3 mr-1" /> {getSiteCopyValue(copy, 'demo_label')}
                 </a>
               </Button>
             )}

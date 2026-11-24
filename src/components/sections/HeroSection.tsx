@@ -2,51 +2,24 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import {
-  ArrowRight,
-  Download,
-  MapPin,
-  Cloud,
-  Database,
-  Layers,
-  Container,
-  ShipWheel,
-  ShieldCheck,
-  Network,
-  DatabaseZap,
-  Activity,
-  Code,
-  Terminal,
-  type LucideIcon,
-} from 'lucide-react'
+import { ArrowRight, Download, MapPin } from 'lucide-react'
 import { CountUp } from '@/components/CountUp'
 import { fetchAllSheetData, HeroStats, SettingsData, ContactData } from '@/lib/sheets'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface HeroSectionProps {
   settings?: SettingsData
   contact?: ContactData
   stats?: HeroStats
+  copy?: SiteCopy
+  marqueeNames?: string[]
 }
-
-// Preserved technologies list from existing codebase hero
-const technologies: { name: string; icon: LucideIcon }[] = [
-  { name: 'GCP', icon: Cloud },
-  { name: 'OCI', icon: Database },
-  { name: 'Terraform', icon: Layers },
-  { name: 'Docker', icon: Container },
-  { name: 'Kubernetes/GKE', icon: ShipWheel },
-  { name: 'Security', icon: ShieldCheck },
-  { name: 'Networking', icon: Network },
-  { name: 'Databases', icon: DatabaseZap },
-  { name: 'Monitoring', icon: Activity },
-  { name: 'Python', icon: Code },
-  { name: 'Bash', icon: Terminal },
-]
 
 export async function HeroSection(props: HeroSectionProps = {}) {
   let settings = props.settings
   let contact = props.contact
   let stats = props.stats
+  const copy = props.copy ?? {}
 
   if (!settings || !stats) {
     const data = await fetchAllSheetData()
@@ -59,7 +32,7 @@ export async function HeroSection(props: HeroSectionProps = {}) {
   const tagline = settings.tagline?.trim()
   const heroText = settings.hero_text?.trim()
   const location = settings.location?.trim()
-  const resumeUrl = contact?.resume_url?.trim() || settings.resume_url?.trim() || '/Aasim_Malik_Resume.pdf'
+  const resumeUrl = contact?.resume_url?.trim() || settings.resume_url?.trim()
 
   // Build stat items (hide any stat that is 0 or empty)
   const statItems: { label: string; num?: number; suffix?: string; text?: string }[] = []
@@ -68,25 +41,26 @@ export async function HeroSection(props: HeroSectionProps = {}) {
     const parsed = parseInt(stats.years, 10)
     if (!isNaN(parsed) && parsed > 0) {
       const suffix = stats.years.replace(String(parsed), '') || '+'
-      statItems.push({ label: 'Years Experience', num: parsed, suffix })
+      statItems.push({ label: getSiteCopyValue(copy, 'hero_stat_years') ?? '', num: parsed, suffix })
     } else {
-      statItems.push({ label: 'Years Experience', text: stats.years })
+      statItems.push({ label: getSiteCopyValue(copy, 'hero_stat_years') ?? '', text: stats.years })
     }
   }
 
   if (stats.shipped && stats.shipped > 0) {
-    statItems.push({ label: 'Projects Shipped', num: stats.shipped, suffix: '+' })
+    statItems.push({ label: getSiteCopyValue(copy, 'hero_stat_projects') ?? '', num: stats.shipped, suffix: '+' })
   }
 
   if (stats.live && stats.live > 0) {
-    statItems.push({ label: 'Live Systems', num: stats.live })
+    statItems.push({ label: getSiteCopyValue(copy, 'hero_stat_live') ?? '', num: stats.live })
   }
 
   if (stats.certs && stats.certs > 0) {
-    statItems.push({ label: 'Certifications', num: stats.certs })
+    statItems.push({ label: getSiteCopyValue(copy, 'hero_stat_certs') ?? '', num: stats.certs })
   }
 
-  const showStatsRow = statItems.length > 0
+  const visibleStatItems = statItems.filter(item => item.label)
+  const showStatsRow = visibleStatItems.length > 0
 
   return (
     <section id="home" className="pt-24 pb-16">
@@ -103,7 +77,9 @@ export async function HeroSection(props: HeroSectionProps = {}) {
                     variant="outline"
                     className="border-foreground/30 text-foreground font-medium py-1 px-3 rounded-full text-sm"
                   >
-                    HELLO! I AM {name.toUpperCase()}
+                    {getSiteCopyValue(copy, 'hero_hello')
+                      ? `${getSiteCopyValue(copy, 'hero_hello')} ${name}`
+                      : null}
                   </Badge>
                 )}
                 {location && (
@@ -134,16 +110,18 @@ export async function HeroSection(props: HeroSectionProps = {}) {
 
             {/* Buttons */}
             <div className="flex flex-col gap-4 min-[400px]:flex-row justify-center lg:justify-start pt-4">
-              <Button size="lg" asChild>
-                <a href="#contact">
-                  Get In Touch
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              {resumeUrl && (
+              {getSiteCopyValue(copy, 'hero_get_in_touch') && (
+                <Button size="lg" asChild>
+                  <a href="#contact">
+                    {getSiteCopyValue(copy, 'hero_get_in_touch')}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              )}
+              {resumeUrl && getSiteCopyValue(copy, 'hero_download_cv') && (
                 <Button variant="outline" size="lg" asChild>
-                  <a href={resumeUrl} download="Aasim_Malik_Resume.pdf" target="_blank" rel="noopener noreferrer">
-                    Download CV
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                    {getSiteCopyValue(copy, 'hero_download_cv')}
                     <Download className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
@@ -154,7 +132,7 @@ export async function HeroSection(props: HeroSectionProps = {}) {
             {showStatsRow && (
               <div className="pt-6 border-t border-border/60">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center lg:text-left">
-                  {statItems.map((item, index) => (
+                  {visibleStatItems.map((item, index) => (
                     <div key={item.label + index} className="space-y-1">
                       <div className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
                         {item.num !== undefined ? (
@@ -180,7 +158,7 @@ export async function HeroSection(props: HeroSectionProps = {}) {
                 src="/profile.png"
                 width={384}
                 height={384}
-                alt={`${name || 'Aasim Malik'} Profile Picture`}
+                alt={getSiteCopyValue(copy, 'hero_profile_alt')?.replace('{name}', name ?? '') || ''}
                 className="rounded-full object-cover border-8 border-background shadow-2xl"
                 priority
               />
@@ -190,37 +168,33 @@ export async function HeroSection(props: HeroSectionProps = {}) {
       </div>
 
       {/* Technology Icons Slideshow (Existing design preserved) */}
-      <div className="w-full overflow-hidden pt-24 group full-width-slideshow">
-        <p className="text-sm text-muted-foreground mb-6 text-center uppercase tracking-widest">
-          TECHNOLOGIES I WORK WITH
-        </p>
-        <div className="animate-slideLeft">
-          <div className="flex">
-            {[...technologies, ...technologies].map((tech, index) => (
-              <Card
-                key={`${tech.name}-${index}-tech-1`}
-                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
-              >
-                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">
-                  {tech.name}
-                </p>
-              </Card>
-            ))}
-            {[...technologies, ...technologies].map((tech, index) => (
-              <Card
-                key={`${tech.name}-${index}-tech-2`}
-                className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border hover:shadow-md transition-shadow mx-2 flex-shrink-0 bg-card"
-              >
-                <tech.icon className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                <p className="mt-2 text-xs font-medium text-center text-muted-foreground">
-                  {tech.name}
-                </p>
-              </Card>
-            ))}
+      {props.marqueeNames && props.marqueeNames.length > 0 && getSiteCopyValue(copy, 'hero_marquee_heading') && (
+        <div className="w-full overflow-hidden pt-24 group full-width-slideshow">
+          <p className="text-sm text-muted-foreground mb-6 text-center uppercase tracking-widest">
+            {getSiteCopyValue(copy, 'hero_marquee_heading')}
+          </p>
+          <div className="animate-slideLeft">
+            <div className="flex">
+              {[...props.marqueeNames, ...props.marqueeNames].map((name, index) => (
+                <Card
+                  key={`${name}-${index}-tech-1`}
+                  className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border mx-2 flex-shrink-0 bg-card"
+                >
+                  <p className="text-xs font-medium text-center text-muted-foreground">{name}</p>
+                </Card>
+              ))}
+              {[...props.marqueeNames, ...props.marqueeNames].map((name, index) => (
+                <Card
+                  key={`${name}-${index}-tech-2`}
+                  className="p-4 min-w-[120px] flex flex-col items-center justify-center shadow-sm border border-border mx-2 flex-shrink-0 bg-card"
+                >
+                  <p className="text-xs font-medium text-center text-muted-foreground">{name}</p>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   )
 }

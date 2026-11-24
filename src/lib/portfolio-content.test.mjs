@@ -38,11 +38,11 @@ test('selectCaseStudies returns all meaningful rows ordered by priority', () => 
   )
 })
 
-test('shouldShowPosts ignores rows without usable URLs unless Reddit is configured', () => {
+test('shouldShowPosts ignores rows without usable URLs and never creates posts from Reddit', () => {
   const posts = [{}, { url: '' }, { url: '   ' }]
 
   assert.equal(portfolioContent.shouldShowPosts?.(posts), false)
-  assert.equal(portfolioContent.shouldShowPosts?.(posts, 'portfolio-user'), true)
+  assert.equal(portfolioContent.shouldShowPosts?.(posts, 'portfolio-user'), false)
 })
 
 test('mergePosts keeps more than three Sheet posts', () => {
@@ -139,4 +139,18 @@ test('parseVisibleKeyValueRows omits and logs visible rows with missing values',
   assert.match(warnings[0], /missing_value/)
   assert.match(warnings[1], /blank_value/)
   assert.doesNotMatch(warnings[0], /TRUE/)
+})
+
+test('missing SiteCopy keys are reported without replacement text', async () => {
+  const siteCopy = await import('./site-copy.ts')
+  assert.equal(siteCopy.getSiteCopyValue({ hero_title: 'Sheet title' }, 'hero_title'), 'Sheet title')
+  assert.equal(siteCopy.getSiteCopyValue({ hero_title: 'Sheet title' }, 'missing_key'), undefined)
+  assert.equal(siteCopy.getMissingSiteCopyKeys({ hero_title: 'Sheet title' }).length > 0, true)
+})
+
+test('in-page and relative URLs are not classified as external', () => {
+  assert.equal(portfolioContent.isExternalLink?.('#contact'), false)
+  assert.equal(portfolioContent.isExternalLink?.('/case-studies/example'), false)
+  assert.equal(portfolioContent.isExternalLink?.('https://example.com'), true)
+  assert.equal(portfolioContent.isExternalLink?.('mailto:hello@example.com'), true)
 })

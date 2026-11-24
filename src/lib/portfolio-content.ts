@@ -64,21 +64,24 @@ export function selectProjects(projects: readonly Project[]): Project[] {
 }
 
 export function shouldShowPosts(posts: readonly Post[], redditUsername?: string): boolean {
-  return posts.some(post => post.url?.trim()) || !!redditUsername?.trim()
+  return posts.some(post => post.url?.trim())
 }
 
 export function mergePosts<T extends { url: string; timestamp: number }>(
   posts: readonly T[],
 ): T[] {
-  const seenUrls = new Set<string>()
-  return posts
-    .filter(post => {
-      if (seenUrls.has(post.url)) return false
-      seenUrls.add(post.url)
-      return true
-    })
-    .sort((a, b) => b.timestamp - a.timestamp)
+  return [...posts].sort((a, b) => b.timestamp - a.timestamp)
 }
+
+export function isExternalLink(url: string): boolean {
+  const trimmed = url.trim()
+  if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('/') || trimmed.startsWith('?')) {
+    return false
+  }
+  return /^https?:\/\//i.test(trimmed) || /^mailto:/i.test(trimmed) || /^tel:/i.test(trimmed)
+}
+
+export const isExternalUrl = isExternalLink
 
 export function selectCaseStudies(rows: readonly CaseStudy[]): CaseStudy[] {
   return rows

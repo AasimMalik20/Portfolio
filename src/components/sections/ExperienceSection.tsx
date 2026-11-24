@@ -1,12 +1,14 @@
 import type { Experience } from '@/lib/sheets'
 import { TimelineEntry } from '@/components/TimelineEntry'
 import { Briefcase } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface ExperienceSectionProps {
   experience: Experience[]
+  copy: SiteCopy
 }
 
-export function ExperienceSection({ experience }: ExperienceSectionProps) {
+export function ExperienceSection({ experience, copy }: ExperienceSectionProps) {
   if (experience.length === 0) return null
 
   return (
@@ -14,7 +16,9 @@ export function ExperienceSection({ experience }: ExperienceSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <Briefcase className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Work Experience</h2>
+          {getSiteCopyValue(copy, 'experience_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'experience_heading')}</h2>
+          )}
         </div>
 
         <div className="max-w-2xl mx-auto">
@@ -24,6 +28,7 @@ export function ExperienceSection({ experience }: ExperienceSectionProps) {
               entry={entry}
               isLast={i === experience.length - 1}
               isFirst={i === 0}
+              copy={copy}
             />
           ))}
         </div>

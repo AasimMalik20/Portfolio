@@ -11,6 +11,7 @@ import { ServicesSection } from '@/components/sections/ServicesSection'
 import { SkillsSection } from '@/components/sections/SkillsSection'
 import { StackSection } from '@/components/sections/StackSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
+import { EducationSection } from '@/components/sections/EducationSection'
 import { fetchGitHubMeta } from '@/lib/github'
 import {
   selectCaseStudies,
@@ -18,6 +19,7 @@ import {
   shouldShowPosts,
 } from '@/lib/portfolio-content'
 import { fetchAllSheetData } from '@/lib/sheets'
+import { getSiteCopyValue } from '@/lib/site-copy'
 
 export const revalidate = 300
 
@@ -44,46 +46,52 @@ export default async function Home() {
   )
   const stack = data.stack.filter(item => item.name.trim())
   const process = data.process.filter(step => step.title.trim())
-  const showPosts = shouldShowPosts(data.posts, data.settings.reddit_username)
+  const showPosts = shouldShowPosts(data.posts)
+  const copy = data.siteCopy
+  const nav = (key: string, fallbackKey: string) =>
+    getSiteCopyValue(copy, key) ?? getSiteCopyValue(copy, fallbackKey)
 
   const sections: HomeSection[] = [
     {
       id: 'home',
-      label: 'Home',
-      content: <HeroSection settings={data.settings} contact={data.contact} stats={data.stats} />,
+      label: nav('nav_home', 'nav_home') ?? '',
+      content: <HeroSection settings={data.settings} contact={data.contact} stats={data.stats} copy={copy} marqueeNames={[...selectedSkills.map(skill => skill.name), ...stack.map(item => item.name)]} />,
     },
     ...(services.length > 0
-      ? [{ id: 'services', label: 'Services', content: <ServicesSection services={services} /> }]
+      ? [{ id: 'services', label: nav('nav_services', 'nav_services') ?? '', content: <ServicesSection services={services} copy={copy} /> }]
       : []),
     ...(caseStudies.length > 0
-      ? [{ id: 'case-studies', label: 'Case Studies', content: <CaseStudiesSection caseStudies={caseStudies} /> }]
+      ? [{ id: 'work', label: nav('nav_work', 'nav_work') ?? '', content: <CaseStudiesSection caseStudies={caseStudies} copy={copy} /> }]
       : []),
     ...(projects.length > 0
-      ? [{ id: 'projects', label: 'Projects', content: <ProjectsSection projects={projects} /> }]
-      : []),
-    ...(selectedExperience.length > 0
-      ? [{ id: 'work-experience', label: 'Experience', content: <ExperienceSection experience={selectedExperience} /> }]
-      : []),
-    ...(selectedSkills.length > 0
-      ? [{ id: 'skills', label: 'Skills', content: <SkillsSection skills={selectedSkills} /> }]
-      : []),
-    ...(data.testimonials.length > 0
-      ? [{ id: 'testimonials', label: 'Testimonials', content: <TestimonialsSection testimonials={data.testimonials} /> }]
-      : []),
-    ...(selectedCertifications.length > 0
-      ? [{ id: 'certifications', label: 'Certifications', content: <CertificationsSection certifications={selectedCertifications} /> }]
-      : []),
-    ...(Object.values(data.contact).some(value => value.trim())
-      ? [{ id: 'contact', label: 'Contact', content: <ContactSection contact={data.contact} /> }]
-      : []),
-    ...(showPosts
-      ? [{ id: 'posts', label: 'Posts', content: <PostsSection posts={data.posts} settings={data.settings} /> }]
-      : []),
-    ...(stack.length > 0
-      ? [{ id: 'stack', label: 'Tech Stack', content: <StackSection stack={stack} /> }]
+      ? [{ id: 'projects', label: nav('nav_work', 'nav_work') ?? '', content: <ProjectsSection projects={projects} copy={copy} /> }]
       : []),
     ...(process.length > 0
-      ? [{ id: 'process', label: 'Process', content: <ProcessSection process={process} /> }]
+      ? [{ id: 'process', label: nav('nav_process', 'nav_process') ?? '', content: <ProcessSection process={process} copy={copy} /> }]
+      : []),
+    ...(selectedSkills.length > 0
+      ? [{ id: 'skills', label: nav('nav_skills', 'nav_skills') ?? '', content: <SkillsSection skills={selectedSkills} copy={copy} /> }]
+      : []),
+    ...(stack.length > 0
+      ? [{ id: 'stack', label: nav('nav_stack', 'nav_stack') ?? '', content: <StackSection stack={stack} copy={copy} /> }]
+      : []),
+    ...(selectedExperience.length > 0
+      ? [{ id: 'about', label: nav('nav_about', 'nav_about') ?? '', content: <ExperienceSection experience={selectedExperience} copy={copy} /> }]
+      : []),
+    ...(data.education.length > 0
+      ? [{ id: 'education', label: nav('nav_about', 'nav_about') ?? '', content: <EducationSection education={data.education} copy={copy} /> }]
+      : []),
+    ...(selectedCertifications.length > 0
+      ? [{ id: 'certifications', label: nav('nav_certifications', 'nav_certifications') ?? '', content: <CertificationsSection certifications={selectedCertifications} copy={copy} /> }]
+      : []),
+    ...(Object.values(data.contact).some(value => value.trim())
+      ? [{ id: 'contact', label: nav('nav_contact', 'nav_contact') ?? '', content: <ContactSection contact={data.contact} copy={copy} /> }]
+      : []),
+    ...(showPosts
+      ? [{ id: 'posts', label: nav('nav_posts', 'nav_posts') ?? '', content: <PostsSection posts={data.posts} copy={copy} /> }]
+      : []),
+    ...(data.testimonials.length > 0
+      ? [{ id: 'testimonials', label: nav('nav_testimonials', 'nav_testimonials') ?? '', content: <TestimonialsSection testimonials={data.testimonials} copy={copy} /> }]
       : []),
   ]
 
@@ -91,6 +99,11 @@ export default async function Home() {
     <HomeClient
       name={data.settings.name}
       sections={sections}
+      copy={copy}
+      callUrls={{
+        audit: data.contact.audit_call_url,
+        introduction: data.contact.intro_call_url,
+      }}
     />
   )
 }

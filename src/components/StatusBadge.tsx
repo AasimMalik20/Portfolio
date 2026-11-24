@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 type Status = 'Live' | 'In Progress' | 'Upcoming' | 'Paused'
 
@@ -32,10 +33,14 @@ const STATUS_CONFIG: Record<Status, { dot: string; label: string; bg: string; te
 interface StatusBadgeProps {
   status: Status
   className?: string
+  copy: SiteCopy
 }
 
-export function StatusBadge({ status, className }: StatusBadgeProps) {
+export function StatusBadge({ status, className, copy }: StatusBadgeProps) {
   const config = STATUS_CONFIG[status]
+  const statusKey = status === 'Live' ? 'status_live' : status === 'In Progress' ? 'status_in_progress' : status === 'Upcoming' ? 'status_upcoming' : 'status_paused'
+  const label = getSiteCopyValue(copy, statusKey)
+  if (!label) return null
   return (
     <span
       className={cn(
@@ -46,7 +51,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       )}
     >
       <span className={cn('w-1.5 h-1.5 rounded-full flex-shrink-0', config.dot)} />
-      {config.label}
+      {label}
     </span>
   )
 }

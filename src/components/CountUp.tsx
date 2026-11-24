@@ -11,7 +11,7 @@ interface CountUpProps {
 }
 
 export function CountUp({ to, suffix = '', duration = 1200, className }: CountUpProps) {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(to)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
   const hasAnimated = useRef(false)

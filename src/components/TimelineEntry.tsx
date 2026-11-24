@@ -8,24 +8,26 @@ import { Badge } from '@/components/ui/badge'
 import { parseFlexDate, formatDuration, formatMonthYear } from '@/lib/date-utils'
 import { cn } from '@/lib/utils'
 import { MapPin } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface TimelineEntryProps {
   entry: Experience
   isLast: boolean
   isFirst?: boolean
+  copy: SiteCopy
 }
 
-export function TimelineEntry({ entry, isLast, isFirst = false }: TimelineEntryProps) {
+export function TimelineEntry({ entry, isLast, isFirst = false, copy }: TimelineEntryProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
 
   const startDate = parseFlexDate(entry.start)
   const isPresent = !entry.end || entry.end.toLowerCase() === 'present'
   const endDate = isPresent ? new Date() : parseFlexDate(entry.end)
-  const duration = startDate && endDate ? formatDuration(startDate, endDate) : null
+  const duration = startDate && endDate ? formatDuration(startDate, endDate, copy) : null
 
   const startLabel = startDate ? formatMonthYear(startDate) : entry.start
-  const endLabel = isPresent ? 'Present' : endDate ? formatMonthYear(endDate) : entry.end
+  const endLabel = isPresent ? getSiteCopyValue(copy, 'present_label') : endDate ? formatMonthYear(endDate) : entry.end
 
   const dateRange = [startLabel, endLabel].filter(Boolean).join(' – ')
 
@@ -69,7 +71,7 @@ export function TimelineEntry({ entry, isLast, isFirst = false }: TimelineEntryP
               {isPresent && (
                 <span className="inline-flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  Now
+                  {getSiteCopyValue(copy, 'now_label')}
                 </span>
               )}
             </div>

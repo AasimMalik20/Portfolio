@@ -4,9 +4,11 @@ import { motion } from 'framer-motion'
 import type { Skill } from '@/lib/sheets'
 import { LogoBadge } from '@/components/LogoBadge'
 import { List } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface SkillsSectionProps {
   skills: Skill[]
+  copy: SiteCopy
 }
 
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
@@ -30,12 +32,12 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
   )
 }
 
-export function SkillsSection({ skills }: SkillsSectionProps) {
+export function SkillsSection({ skills, copy }: SkillsSectionProps) {
   if (skills.length === 0) return null
 
   // Group by category
   const grouped = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
-    const cat = skill.category || 'Other'
+    const cat = skill.category || getSiteCopyValue(copy, 'category_other') || ''
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(skill)
     return acc
@@ -50,7 +52,9 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <List className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Skills</h2>
+          {getSiteCopyValue(copy, 'skills_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'skills_heading')}</h2>
+          )}
         </div>
 
         <div className="space-y-10">

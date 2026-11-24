@@ -1,12 +1,14 @@
 import type { Testimonial } from '@/lib/sheets'
 import { Quote } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface TestimonialsSectionProps {
   testimonials: Testimonial[]
+  copy: SiteCopy
 }
 
-export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
+export function TestimonialsSection({ testimonials, copy }: TestimonialsSectionProps) {
   if (testimonials.length === 0) return null
 
   return (
@@ -14,7 +16,9 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <Quote className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">What People Say</h2>
+          {getSiteCopyValue(copy, 'testimonials_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'testimonials_heading')}</h2>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">

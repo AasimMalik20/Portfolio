@@ -5,12 +5,14 @@ import type { Certification } from '@/lib/sheets'
 import { LogoBadge } from '@/components/LogoBadge'
 import { Award, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface CertificationsSectionProps {
   certifications: Certification[]
+  copy: SiteCopy
 }
 
-export function CertificationsSection({ certifications }: CertificationsSectionProps) {
+export function CertificationsSection({ certifications, copy }: CertificationsSectionProps) {
   if (certifications.length === 0) return null
 
   return (
@@ -18,7 +20,9 @@ export function CertificationsSection({ certifications }: CertificationsSectionP
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <Award className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Certifications</h2>
+          {getSiteCopyValue(copy, 'certifications_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'certifications_heading')}</h2>
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -44,10 +48,10 @@ export function CertificationsSection({ certifications }: CertificationsSectionP
                   <p className="text-xs text-muted-foreground mt-0.5">{cert.date}</p>
                 )}
               </div>
-              {cert.credential_url && (
+              {cert.credential_url && getSiteCopyValue(copy, 'verify_label') && (
                 <Button variant="outline" size="sm" asChild>
                   <a href={cert.credential_url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-3 w-3 mr-1" /> Verify
+                    <ExternalLink className="h-3 w-3 mr-1" /> {getSiteCopyValue(copy, 'verify_label')}
                   </a>
                 </Button>
               )}

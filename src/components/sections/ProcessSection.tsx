@@ -1,11 +1,13 @@
 import type { ProcessStep } from '@/lib/sheets'
 import { GitBranch } from 'lucide-react'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface ProcessSectionProps {
   process: ProcessStep[]
+  copy: SiteCopy
 }
 
-export function ProcessSection({ process }: ProcessSectionProps) {
+export function ProcessSection({ process, copy }: ProcessSectionProps) {
   if (process.length === 0) return null
 
   const steps = [...process].sort((a, b) => (a.step || a.order) - (b.step || b.order))
@@ -15,7 +17,9 @@ export function ProcessSection({ process }: ProcessSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <GitBranch className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">How I Work</h2>
+          {getSiteCopyValue(copy, 'process_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'process_heading')}</h2>
+          )}
         </div>
 
         <div className="max-w-3xl mx-auto space-y-8">
@@ -28,6 +32,12 @@ export function ProcessSection({ process }: ProcessSectionProps) {
                 <h3 className="font-semibold text-foreground">{step.title}</h3>
                 {step.description && (
                   <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                )}
+                {step.deliverable && getSiteCopyValue(copy, 'process_deliverable_label') && (
+                  <p className="text-muted-foreground text-xs"><span className="font-medium">{getSiteCopyValue(copy, 'process_deliverable_label')}</span> {step.deliverable}</p>
+                )}
+                {step.timeframe && getSiteCopyValue(copy, 'process_timeframe_label') && (
+                  <p className="text-muted-foreground text-xs"><span className="font-medium">{getSiteCopyValue(copy, 'process_timeframe_label')}</span> {step.timeframe}</p>
                 )}
               </div>
             </div>

@@ -65,7 +65,11 @@ export function parseFlexDate(s: string | undefined | null): Date | null {
  * Compute human-readable duration between two dates.
  * Returns strings like "2 yrs 4 mos", "8 mos", "1 yr", "< 1 mo"
  */
-export function formatDuration(from: Date, to: Date): string {
+export function formatDuration(
+  from: Date,
+  to: Date,
+  copy?: Readonly<Record<string, string>>,
+): string {
   const totalMonths = Math.max(
     0,
     (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth()),
@@ -73,30 +77,36 @@ export function formatDuration(from: Date, to: Date): string {
   const years = Math.floor(totalMonths / 12)
   const months = totalMonths % 12
 
-  if (years === 0 && months === 0) return '< 1 mo'
-  if (years === 0) return `${months} mo${months !== 1 ? 's' : ''}`
-  if (months === 0) return `${years} yr${years !== 1 ? 's' : ''}`
-  return `${years} yr${years !== 1 ? 's' : ''} ${months} mo${months !== 1 ? 's' : ''}`
+  const get = (key: string) => copy?.[key]?.trim()
+  if (years === 0 && months === 0) return get('date_less_month') || ''
+  if (years === 0) return `${months} ${months === 1 ? get('date_month') || '' : get('date_months') || ''}`.trim()
+  if (months === 0) return `${years} ${years === 1 ? get('date_year') || '' : get('date_years') || ''}`.trim()
+  return `${years} ${years === 1 ? get('date_year') || '' : get('date_years') || ''} ${months} ${months === 1 ? get('date_month') || '' : get('date_months') || ''}`.trim()
 }
 
 /**
  * Return relative string from a past Date to now.
  * e.g. "today", "2 days ago", "3 months ago", "1 year ago"
  */
-export function relativeDays(from: Date): string {
+export function relativeDays(
+  from: Date,
+  copy?: Readonly<Record<string, string>>,
+): string {
   const now = new Date()
   const diffMs = now.getTime() - from.getTime()
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
-  if (diffDays === 0) return 'today'
-  if (diffDays === 1) return '1 day ago'
-  if (diffDays < 30) return `${diffDays} days ago`
+  const get = (key: string) => copy?.[key]?.trim()
+  const fill = (key: string, count: number) => get(key)?.replace('{count}', String(count)) || ''
+  if (diffDays === 0) return get('date_today') || ''
+  if (diffDays === 1) return fill('date_day_ago', 1)
+  if (diffDays < 30) return fill('date_days_ago', diffDays)
   const diffMonths = Math.floor(diffDays / 30)
-  if (diffMonths === 1) return '1 month ago'
-  if (diffMonths < 12) return `${diffMonths} months ago`
+  if (diffMonths === 1) return fill('date_month_ago', 1)
+  if (diffMonths < 12) return fill('date_months_ago', diffMonths)
   const diffYears = Math.floor(diffMonths / 12)
-  if (diffYears === 1) return '1 year ago'
-  return `${diffYears} years ago`
+  if (diffYears === 1) return fill('date_year_ago', 1)
+  return fill('date_years_ago', diffYears)
 }
 
 /**

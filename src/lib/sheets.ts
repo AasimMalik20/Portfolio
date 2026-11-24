@@ -18,6 +18,7 @@ import {
   isVisible,
   parseVisibleKeyValueRows,
 } from './portfolio-content'
+import { getMissingSiteCopyKeys } from './site-copy'
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -85,6 +86,9 @@ const ServiceRowSchema = z.object({
   icon_slug: z.string().optional(),
   cta_text: z.string().optional(),
   cta_url: z.string().optional(),
+  audience: z.string().optional(),
+  outcome: z.string().optional(),
+  deliverables: z.string().optional(),
 })
 
 const CaseStudyRowSchema = z.object({
@@ -129,6 +133,8 @@ const ProcessRowSchema = z.object({
   title: z.string().optional().default(''),
   description: z.string().optional().default(''),
   icon_slug: z.string().optional(),
+  deliverable: z.string().optional(),
+  timeframe: z.string().optional(),
 })
 
 const ExperienceRowSchema = z.object({
@@ -222,6 +228,9 @@ export type Service = {
   icon_slug?: string
   cta_text?: string
   cta_url?: string
+  audience?: string
+  outcome?: string
+  deliverables?: string
 }
 
 export type CaseStudy = {
@@ -262,6 +271,8 @@ export type ProcessStep = {
   title: string
   description: string
   icon_slug?: string
+  deliverable?: string
+  timeframe?: string
 }
 
 export type Experience = {
@@ -428,6 +439,9 @@ function parseServices(rows: Record<string, string>[]): Service[] {
       icon_slug: d.icon_slug || undefined,
       cta_text: d.cta_text || undefined,
       cta_url: d.cta_url || undefined,
+      audience: d.audience || undefined,
+      outcome: d.outcome || undefined,
+      deliverables: d.deliverables || undefined,
     })
   }
   return result.sort((a, b) => a.order - b.order)
@@ -520,6 +534,8 @@ function parseProcess(rows: Record<string, string>[]): ProcessStep[] {
       title: d.title ?? '',
       description: d.description ?? '',
       icon_slug: d.icon_slug || undefined,
+      deliverable: d.deliverable || undefined,
+      timeframe: d.timeframe || undefined,
     })
   }
   return result.sort((a, b) => a.order - b.order)
@@ -774,6 +790,10 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const contact = parseVisibleKeyValueRows(parseRange(getRange('Contact')))
     const settings = parseKeyValue(parseRange(getRange('Settings')))
     const siteCopy = parseVisibleKeyValueRows(parseRange(getRange('SiteCopy')))
+    const missingCopyKeys = getMissingSiteCopyKeys(siteCopy)
+    if (missingCopyKeys.length > 0) {
+      console.warn('[sheets] Missing required SiteCopy keys:', missingCopyKeys.join(', '))
+    }
     const stats = computeHeroStats(projects, experience, certifications, settings)
 
     return {

@@ -3,12 +3,14 @@ import { ArrowUpRight, BriefcaseBusiness } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 
 interface CaseStudiesSectionProps {
   caseStudies: CaseStudy[]
+  copy: SiteCopy
 }
 
-export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
+export function CaseStudiesSection({ caseStudies, copy }: CaseStudiesSectionProps) {
   if (caseStudies.length === 0) return null
 
   return (
@@ -16,7 +18,9 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <BriefcaseBusiness className="h-6 w-6 text-foreground" />
-          <h2 className="text-3xl font-semibold tracking-tight">Case Studies</h2>
+          {getSiteCopyValue(copy, 'case_studies_heading') && (
+            <h2 className="text-3xl font-semibold tracking-tight">{getSiteCopyValue(copy, 'case_studies_heading')}</h2>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -49,19 +53,19 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
                   <dl className="space-y-2 text-sm">
                     {caseStudy.problem && (
                       <div>
-                        <dt className="font-medium">Challenge</dt>
+                        {getSiteCopyValue(copy, 'case_challenge_label') && <dt className="font-medium">{getSiteCopyValue(copy, 'case_challenge_label')}</dt>}
                         <dd className="text-muted-foreground">{caseStudy.problem}</dd>
                       </div>
                     )}
                     {caseStudy.solution && (
                       <div>
-                        <dt className="font-medium">Solution</dt>
+                        {getSiteCopyValue(copy, 'case_solution_label') && <dt className="font-medium">{getSiteCopyValue(copy, 'case_solution_label')}</dt>}
                         <dd className="text-muted-foreground">{caseStudy.solution}</dd>
                       </div>
                     )}
                     {caseStudy.result && (
                       <div>
-                        <dt className="font-medium">Result</dt>
+                        {getSiteCopyValue(copy, 'case_result_label') && <dt className="font-medium">{getSiteCopyValue(copy, 'case_result_label')}</dt>}
                         <dd className="text-muted-foreground">{caseStudy.result}</dd>
                       </div>
                     )}
@@ -74,10 +78,10 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
                     ))}
                   </div>
                 )}
-                {caseStudy.url && (
+                {caseStudy.url && getSiteCopyValue(copy, 'view_case_study_label') && (
                   <Button variant="outline" size="sm" asChild>
                     <a href={caseStudy.url} target="_blank" rel="noopener noreferrer">
-                      View case study <ArrowUpRight className="ml-1 h-4 w-4" />
+                      {getSiteCopyValue(copy, 'view_case_study_label')} <ArrowUpRight className="ml-1 h-4 w-4" />
                     </a>
                   </Button>
                 )}
