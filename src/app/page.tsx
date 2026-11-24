@@ -61,10 +61,10 @@ export default async function Home() {
       ? [{ id: 'services', label: nav('nav_services', 'nav_services') ?? '', content: <ServicesSection services={services} copy={copy} /> }]
       : []),
     ...(caseStudies.length > 0
-      ? [{ id: 'work', label: nav('nav_work', 'nav_work') ?? '', content: <CaseStudiesSection caseStudies={caseStudies} copy={copy} /> }]
+      ? [{ id: 'work', label: nav('nav_work', 'nav_work') ?? '', content: <CaseStudiesSection caseStudies={caseStudies} copy={copy} sectionId="work" /> }]
       : []),
     ...(projects.length > 0
-      ? [{ id: 'projects', label: nav('nav_work', 'nav_work') ?? '', content: <ProjectsSection projects={projects} copy={copy} /> }]
+      ? [{ id: caseStudies.length > 0 ? 'work-projects' : 'work', label: nav('nav_work', 'nav_work') ?? '', content: <ProjectsSection projects={projects} copy={copy} sectionId={caseStudies.length > 0 ? 'work-projects' : 'work'} /> }]
       : []),
     ...(process.length > 0
       ? [{ id: 'process', label: nav('nav_process', 'nav_process') ?? '', content: <ProcessSection process={process} copy={copy} /> }]
@@ -79,7 +79,7 @@ export default async function Home() {
       ? [{ id: 'about', label: nav('nav_about', 'nav_about') ?? '', content: <ExperienceSection experience={selectedExperience} copy={copy} /> }]
       : []),
     ...(data.education.length > 0
-      ? [{ id: 'education', label: nav('nav_about', 'nav_about') ?? '', content: <EducationSection education={data.education} copy={copy} /> }]
+      ? [{ id: selectedExperience.length > 0 ? 'about-education' : 'about', label: nav('nav_about', 'nav_about') ?? '', content: <EducationSection education={data.education} copy={copy} sectionId={selectedExperience.length > 0 ? 'about-education' : 'about'} /> }]
       : []),
     ...(selectedCertifications.length > 0
       ? [{ id: 'certifications', label: nav('nav_certifications', 'nav_certifications') ?? '', content: <CertificationsSection certifications={selectedCertifications} copy={copy} /> }]

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
-import { isExternalLink } from '@/lib/portfolio-content'
+import { isExternalLink, isValidHttpUrl } from '@/lib/portfolio-content'
 
 interface ContactSectionProps {
   contact: ContactData
@@ -64,8 +64,8 @@ export function ContactSection({ contact, copy }: ContactSectionProps) {
     return href && label ? [{ key, label, href, Icon }] : []
   })
   const calls = [
-    contact.audit_call_url ? { href: getHref('audit_call', contact.audit_call_url), label: getSiteCopyValue(copy, 'cta_audit_call') } : undefined,
-    contact.intro_call_url ? { href: getHref('intro_call', contact.intro_call_url), label: getSiteCopyValue(copy, 'cta_intro_call') } : undefined,
+    isValidHttpUrl(contact.audit_call_url) ? { href: contact.audit_call_url!, label: getSiteCopyValue(copy, 'cta_audit_call') } : undefined,
+    isValidHttpUrl(contact.intro_call_url) ? { href: contact.intro_call_url!, label: getSiteCopyValue(copy, 'cta_intro_call') } : undefined,
   ].filter((call): call is { href: string; label: string } => Boolean(call?.href && call?.label))
 
   if (links.length === 0 && calls.length === 0) return null

@@ -8,13 +8,14 @@ import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 interface CaseStudiesSectionProps {
   caseStudies: CaseStudy[]
   copy: SiteCopy
+  sectionId?: string
 }
 
-export function CaseStudiesSection({ caseStudies, copy }: CaseStudiesSectionProps) {
+export function CaseStudiesSection({ caseStudies, copy, sectionId = 'work' }: CaseStudiesSectionProps) {
   if (caseStudies.length === 0) return null
 
   return (
-    <section id="case-studies" className="py-16 bg-secondary scroll-mt-20">
+    <section id={sectionId} className="py-16 bg-secondary scroll-mt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <BriefcaseBusiness className="h-6 w-6 text-foreground" />

@@ -83,6 +83,43 @@ export function isExternalLink(url: string): boolean {
 
 export const isExternalUrl = isExternalLink
 
+export function isValidHttpUrl(url: string | undefined | null): boolean {
+  if (!url?.trim()) return false
+  try {
+    const parsed = new URL(url.trim())
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+export function getRequiredHttpLinkIssues(
+  links: Readonly<Record<string, string>>,
+  requiredKeys: readonly string[],
+): { key: string; issue: 'missing' | 'invalid' }[] {
+  const issues: { key: string; issue: 'missing' | 'invalid' }[] = []
+  for (const key of requiredKeys) {
+    const raw = links[key]?.trim()
+    if (!raw) issues.push({ key, issue: 'missing' })
+    else if (!isValidHttpUrl(raw)) issues.push({ key, issue: 'invalid' })
+  }
+  return issues
+}
+
+export function isValidContactLink(key: string, raw: string | undefined | null): boolean {
+  const value = raw?.trim()
+  if (!value) return false
+  if (value.startsWith('#') || value.startsWith('/')) return true
+  if (key === 'email') return /^mailto:[^\s]+@[^\s]+$|^[^\s]+@[^\s]+$/i.test(value)
+  if (key === 'phone') return /^[+\d()[\]\s.-]+$/.test(value) && /\d/.test(value)
+  if (/^https?:\/\//i.test(value)) return isValidHttpUrl(value)
+  return /^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(value)
+}
+
+export function sortBySheetOrder<T extends { order: number }>(rows: readonly T[]): T[] {
+  return [...rows].sort((a, b) => a.order - b.order)
+}
+
 export function selectCaseStudies(rows: readonly CaseStudy[]): CaseStudy[] {
   return rows
     .filter(isMeaningfulCaseStudy)

@@ -1,6 +1,7 @@
 import type { ProcessStep } from '@/lib/sheets'
 import { GitBranch } from 'lucide-react'
 import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
+import { sortBySheetOrder } from '@/lib/portfolio-content'
 
 interface ProcessSectionProps {
   process: ProcessStep[]
@@ -10,7 +11,7 @@ interface ProcessSectionProps {
 export function ProcessSection({ process, copy }: ProcessSectionProps) {
   if (process.length === 0) return null
 
-  const steps = [...process].sort((a, b) => (a.step || a.order) - (b.step || b.order))
+  const steps = sortBySheetOrder(process)
 
   return (
     <section id="process" className="py-16 bg-secondary scroll-mt-20">

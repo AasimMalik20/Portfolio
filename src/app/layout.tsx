@@ -3,17 +3,25 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider'; // Import ThemeProvider
+import { fetchAllSheetData } from '@/lib/sheets'
+import { getSiteCopyValue } from '@/lib/site-copy'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
-export const metadata: Metadata = {
-  title: 'Aasim Malik - Cloud Architect Portfolio', // Updated Title
-  description:
-    'Portfolio of Aasim Malik, Google Cloud Certified Professional Cloud Architect, showcasing skills in GCP, OCI, Terraform, Kubernetes, and more.', // Updated Description
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await fetchAllSheetData()
+  const copy = data.siteCopy
+  const title = getSiteCopyValue(copy, 'site_title')
+  const description = getSiteCopyValue(copy, 'site_description')
+
+  return {
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+  }
+}
 
 export default function RootLayout({
   children,

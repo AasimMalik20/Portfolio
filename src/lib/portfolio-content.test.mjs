@@ -154,3 +154,45 @@ test('in-page and relative URLs are not classified as external', () => {
   assert.equal(portfolioContent.isExternalLink?.('https://example.com'), true)
   assert.equal(portfolioContent.isExternalLink?.('mailto:hello@example.com'), true)
 })
+
+test('HTTP link validation accepts only valid absolute web URLs', () => {
+  assert.equal(portfolioContent.isValidHttpUrl?.('https://cal.com/aasim-malik/audit'), true)
+  assert.equal(portfolioContent.isValidHttpUrl?.('http://example.com'), true)
+  assert.equal(portfolioContent.isValidHttpUrl?.('cal.com/audit'), false)
+  assert.equal(portfolioContent.isValidHttpUrl?.('not a url'), false)
+  assert.equal(portfolioContent.isValidHttpUrl?.(''), false)
+})
+
+test('contact link validation distinguishes valid and invalid destinations', () => {
+  assert.equal(portfolioContent.isValidContactLink?.('email', 'hello@example.com'), true)
+  assert.equal(portfolioContent.isValidContactLink?.('email', 'not-an-email'), false)
+  assert.equal(portfolioContent.isValidContactLink?.('phone', '+1 (555) 123-4567'), true)
+  assert.equal(portfolioContent.isValidContactLink?.('linkedin', 'linkedin.com/in/example'), true)
+  assert.equal(portfolioContent.isValidContactLink?.('github', 'javascript:alert(1)'), false)
+})
+
+test('process rows preserve Sheet order even when step values disagree', () => {
+  const rows = [
+    { order: 30, step: 1, title: 'Third' },
+    { order: 10, step: 3, title: 'First' },
+    { order: 20, step: 2, title: 'Second' },
+  ]
+
+  assert.deepEqual(
+    portfolioContent.sortBySheetOrder?.(rows).map(row => row.title),
+    ['First', 'Second', 'Third'],
+  )
+})
+
+test('required call link issues identify missing and invalid URLs', () => {
+  assert.deepEqual(
+    portfolioContent.getRequiredHttpLinkIssues?.(
+      { audit_call_url: 'not-a-url', intro_call_url: '' },
+      ['audit_call_url', 'intro_call_url'],
+    ),
+    [
+      { key: 'audit_call_url', issue: 'invalid' },
+      { key: 'intro_call_url', issue: 'missing' },
+    ],
+  )
+})

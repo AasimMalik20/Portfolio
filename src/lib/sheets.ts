@@ -16,6 +16,8 @@ import { parseFlexDate } from './date-utils'
 import {
   filterUsableTestimonials,
   isVisible,
+  getRequiredHttpLinkIssues,
+  isValidContactLink,
   parseVisibleKeyValueRows,
 } from './portfolio-content'
 import { getMissingSiteCopyKeys } from './site-copy'
@@ -788,6 +790,30 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const testimonials = parseTestimonials(parseRange(getRange('Testimonials')))
     const process = parseProcess(parseRange(getRange('Process')))
     const contact = parseVisibleKeyValueRows(parseRange(getRange('Contact')))
+    for (const { key, issue } of getRequiredHttpLinkIssues(
+      contact,
+      ['audit_call_url', 'intro_call_url'],
+    )) {
+      console.warn(`[sheets] ${issue === 'missing' ? 'Missing' : 'Invalid'} required Contact link: ${key}`)
+    }
+    for (const key of [
+      'email',
+      'phone',
+      'linkedin',
+      'github',
+      'x',
+      'reddit',
+      'leetcode',
+      'medium',
+      'youtube',
+      'instagram',
+      'website',
+      'resume_url',
+    ]) {
+      if (contact[key]?.trim() && !isValidContactLink(key, contact[key])) {
+        console.warn(`[sheets] Invalid Contact link: ${key}`)
+      }
+    }
     const settings = parseKeyValue(parseRange(getRange('Settings')))
     const siteCopy = parseVisibleKeyValueRows(parseRange(getRange('SiteCopy')))
     const missingCopyKeys = getMissingSiteCopyKeys(siteCopy)

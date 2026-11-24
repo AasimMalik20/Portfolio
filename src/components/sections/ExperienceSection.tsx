@@ -6,13 +6,14 @@ import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 interface ExperienceSectionProps {
   experience: Experience[]
   copy: SiteCopy
+  sectionId?: string
 }
 
-export function ExperienceSection({ experience, copy }: ExperienceSectionProps) {
+export function ExperienceSection({ experience, copy, sectionId = 'about' }: ExperienceSectionProps) {
   if (experience.length === 0) return null
 
   return (
-    <section id="work-experience" className="py-16 bg-secondary scroll-mt-20">
+    <section id={sectionId} className="py-16 bg-secondary scroll-mt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <Briefcase className="h-6 w-6 text-foreground" />

@@ -103,7 +103,7 @@ export function PostsClient({ posts, copy }: PostsClientProps) {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={post.image}
-                          alt={post.title || 'Post preview'}
+                          alt={getSiteCopyValue(copy, 'post_preview_alt')?.replace('{title}', post.title ?? '') || ''}
                           className="w-full h-44 object-cover border-b border-border"
                           loading="lazy"
                         />

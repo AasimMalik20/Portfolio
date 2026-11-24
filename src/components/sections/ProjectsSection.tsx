@@ -7,6 +7,7 @@ import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 interface ProjectsSectionProps {
   projects: EnrichedProject[]
   copy: SiteCopy
+  sectionId?: string
 }
 
 function Countdown({ targetDate, copy }: { targetDate: string; copy: SiteCopy }) {
@@ -30,14 +31,14 @@ function Countdown({ targetDate, copy }: { targetDate: string; copy: SiteCopy })
   )
 }
 
-export function ProjectsSection({ projects, copy }: ProjectsSectionProps) {
+export function ProjectsSection({ projects, copy, sectionId = 'work' }: ProjectsSectionProps) {
   if (projects.length === 0) return null
 
   const upcoming = projects.filter(p => p.status === 'Upcoming')
   const rest = projects.filter(p => p.status !== 'Upcoming')
 
   return (
-    <section id="projects" className="py-16 bg-background scroll-mt-20">
+    <section id={sectionId} className="py-16 bg-background scroll-mt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-12">
           <FolderGit2 className="h-6 w-6 text-foreground" />

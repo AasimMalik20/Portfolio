@@ -10,13 +10,14 @@ import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
 interface EducationSectionProps {
   education: Education[]
   copy: SiteCopy
+  sectionId?: string
 }
 
-export function EducationSection({ education, copy }: EducationSectionProps) {
+export function EducationSection({ education, copy, sectionId = 'about-education' }: EducationSectionProps) {
   if (education.length === 0) return null
 
   return (
-    <section id="education" className="py-16 bg-secondary scroll-mt-20">
+    <section id={sectionId} className="py-16 bg-secondary scroll-mt-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-center items-center gap-2 mb-8">
           <GraduationCap className="h-6 w-6 text-foreground" />
