@@ -11,25 +11,31 @@ export function parseVisibleKeyValueRows(
   const result: Record<string, string> = {}
 
   for (const row of rows) {
-    const findColumn = (name: string): string => {
+    const findColumn = (name: string): { found: boolean; value: string } => {
       const entry = Object.entries(row).find(
         ([column]) => column.trim().toLowerCase() === name,
       )
-      return entry?.[1] ?? ''
+      return { found: entry !== undefined, value: entry?.[1] ?? '' }
     }
 
     const firstValues = Object.values(row)
-    const key = (
-      findColumn('key') || firstValues[0] || ''
-    ).trim()
+    const keyColumn = findColumn('key')
+    const valueColumn = findColumn('value')
+    const key = (keyColumn.found ? keyColumn.value : firstValues[0] ?? '').trim()
     const value = (
-      findColumn('value') || firstValues[1] || ''
+      keyColumn.found || valueColumn.found
+        ? valueColumn.value
+        : firstValues[1] ?? ''
     ).trim()
-    const visible = findColumn('visible')
+    const visible = findColumn('visible').value
 
-    if (key && isVisible(visible)) {
-      result[key] = value
+    if (!key || !isVisible(visible)) continue
+    if (!value) {
+      console.warn(`[sheets] Key/value row is missing a value for key: ${key}`)
+      continue
     }
+
+    result[key] = value
   }
 
   return result

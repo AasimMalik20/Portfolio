@@ -116,3 +116,27 @@ test('parseVisibleKeyValueRows preserves existing key/value tab compatibility', 
     stats_live: '8',
   })
 })
+
+test('parseVisibleKeyValueRows omits and logs visible rows with missing values', () => {
+  const rows = [
+    { key: 'missing_value', visible: 'TRUE' },
+    { key: 'blank_value', value: '  ', visible: '' },
+    { first: 'legacy_key', second: 'legacy_value' },
+  ]
+  const warnings = []
+  const originalWarn = console.warn
+  console.warn = (...args) => warnings.push(args.join(' '))
+
+  try {
+    assert.deepEqual(portfolioContent.parseVisibleKeyValueRows(rows), {
+      legacy_key: 'legacy_value',
+    })
+  } finally {
+    console.warn = originalWarn
+  }
+
+  assert.equal(warnings.length, 2)
+  assert.match(warnings[0], /missing_value/)
+  assert.match(warnings[1], /blank_value/)
+  assert.doesNotMatch(warnings[0], /TRUE/)
+})
