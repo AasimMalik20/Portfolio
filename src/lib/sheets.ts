@@ -13,7 +13,11 @@ import { google } from 'googleapis'
 import { z } from 'zod'
 import { unstable_cache } from 'next/cache'
 import { parseFlexDate } from './date-utils'
-import { filterUsableTestimonials, isVisible } from './portfolio-content'
+import {
+  filterUsableTestimonials,
+  isVisible,
+  parseVisibleKeyValueRows,
+} from './portfolio-content'
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -310,6 +314,7 @@ export type Post = {
 
 export type ContactData = Record<string, string>
 export type SettingsData = Record<string, string>
+export type SiteCopyData = Record<string, string>
 
 export type HeroStats = {
   shipped?: number
@@ -332,6 +337,7 @@ export type AllSheetData = {
   process: ProcessStep[]
   contact: ContactData
   settings: SettingsData
+  siteCopy: SiteCopyData
   stats: HeroStats
 }
 
@@ -349,6 +355,7 @@ const EMPTY_DATA: AllSheetData = {
   process: [],
   contact: {},
   settings: {},
+  siteCopy: {},
   stats: {},
 }
 
@@ -676,7 +683,7 @@ export function computeHeroStats(
   return stats
 }
 
-/** Parse Contact and Settings: key/value rows → Record */
+/** Parse Settings: key/value rows → Record */
 function parseKeyValue(rows: Record<string, string>[]): Record<string, string> {
   const result: Record<string, string> = {}
   for (const row of rows) {
@@ -714,7 +721,7 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const TABS = [
       'Projects', 'Experience', 'Skills', 'Certifications', 'Education', 'Posts',
       'Services', 'CaseStudies', 'Stack', 'Testimonials', 'Process',
-      'Contact', 'Settings',
+      'Contact', 'Settings', 'SiteCopy',
     ]
 
     // Ask Google which tabs exist; request only those (case/space tolerant)
@@ -764,8 +771,9 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const stack = parseStack(parseRange(getRange('Stack')))
     const testimonials = parseTestimonials(parseRange(getRange('Testimonials')))
     const process = parseProcess(parseRange(getRange('Process')))
-    const contact = parseKeyValue(parseRange(getRange('Contact')))
+    const contact = parseVisibleKeyValueRows(parseRange(getRange('Contact')))
     const settings = parseKeyValue(parseRange(getRange('Settings')))
+    const siteCopy = parseVisibleKeyValueRows(parseRange(getRange('SiteCopy')))
     const stats = computeHeroStats(projects, experience, certifications, settings)
 
     return {
@@ -782,6 +790,7 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       process,
       contact,
       settings,
+      siteCopy,
       stats,
     }
   } catch (err) {

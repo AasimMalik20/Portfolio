@@ -5,6 +5,36 @@ export function isVisible(value: string | undefined | null): boolean {
   return value.trim().toUpperCase() !== 'FALSE'
 }
 
+export function parseVisibleKeyValueRows(
+  rows: readonly Record<string, string>[],
+): Record<string, string> {
+  const result: Record<string, string> = {}
+
+  for (const row of rows) {
+    const findColumn = (name: string): string => {
+      const entry = Object.entries(row).find(
+        ([column]) => column.trim().toLowerCase() === name,
+      )
+      return entry?.[1] ?? ''
+    }
+
+    const firstValues = Object.values(row)
+    const key = (
+      findColumn('key') || firstValues[0] || ''
+    ).trim()
+    const value = (
+      findColumn('value') || firstValues[1] || ''
+    ).trim()
+    const visible = findColumn('visible')
+
+    if (key && isVisible(visible)) {
+      result[key] = value
+    }
+  }
+
+  return result
+}
+
 export function filterUsableTestimonials(
   testimonials: readonly Testimonial[],
 ): Testimonial[] {

@@ -72,3 +72,47 @@ test('isMeaningfulCaseStudy requires a title and supporting detail', () => {
   assert.equal(portfolioContent.isMeaningfulCaseStudy({ title: '  ', summary: 'Reduced cost.' }), false)
   assert.equal(portfolioContent.isMeaningfulCaseStudy({ title: 'Migration', summary: '  ' }), false)
 })
+
+test('parseVisibleKeyValueRows excludes false visibility and keeps blank visibility', () => {
+  const rows = [
+    { key: 'hero_title', value: 'Visible title', visible: '' },
+    { key: 'hidden_title', value: 'Hidden title', visible: 'FALSE' },
+    { key: 'also_visible', value: 'Also visible', visible: ' true ' },
+  ]
+
+  assert.deepEqual(portfolioContent.parseVisibleKeyValueRows(rows), {
+    hero_title: 'Visible title',
+    also_visible: 'Also visible',
+  })
+})
+
+test('parseVisibleKeyValueRows returns SiteCopy values by key', () => {
+  const rows = [
+    { Key: 'nav_services', Value: 'Services' },
+    { Key: 'hero_title', Value: 'Build reliable systems', Visible: ' FALSE ' },
+  ]
+
+  assert.deepEqual(portfolioContent.parseVisibleKeyValueRows(rows), {
+    nav_services: 'Services',
+  })
+})
+
+test('parseVisibleKeyValueRows preserves existing key/value tab compatibility', () => {
+  const contactRows = [
+    { key: 'email', value: 'hello@example.com' },
+    { key: 'audit_call_url', value: 'https://cal.com/aasim-malik/audit', visible: 'TRUE' },
+  ]
+  const settingsRows = [
+    { key: 'stats_shipped', value: '12' },
+    { Key: 'stats_live', Value: '8' },
+  ]
+
+  assert.deepEqual(portfolioContent.parseVisibleKeyValueRows(contactRows), {
+    email: 'hello@example.com',
+    audit_call_url: 'https://cal.com/aasim-malik/audit',
+  })
+  assert.deepEqual(portfolioContent.parseVisibleKeyValueRows(settingsRows), {
+    stats_shipped: '12',
+    stats_live: '8',
+  })
+})
