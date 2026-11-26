@@ -3,6 +3,7 @@ import { Wrench } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { getSiteCopyValue, type SiteCopy } from '@/lib/site-copy'
+import { isExternalLink } from '@/lib/portfolio-content'
 
 interface ServicesSectionProps {
   services: Service[]
@@ -49,7 +50,11 @@ export function ServicesSection({ services, copy }: ServicesSectionProps) {
               {service.cta_text && service.cta_url && (
                 <CardContent>
                   <Button variant="outline" size="sm" asChild>
-                    <a href={service.cta_url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={service.cta_url}
+                      target={isExternalLink(service.cta_url) ? '_blank' : undefined}
+                      rel={isExternalLink(service.cta_url) ? 'noopener noreferrer' : undefined}
+                    >
                       {service.cta_text}
                     </a>
                   </Button>

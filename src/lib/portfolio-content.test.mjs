@@ -22,6 +22,33 @@ test('selectProjects keeps projects linked to case studies', () => {
   assert.deepEqual(portfolioContent.selectProjects?.(projects), projects.slice(0, 3))
 })
 
+test('selectStandaloneProjects excludes projects already represented by a case study', () => {
+  const projects = [
+    { name: 'Automation rollout', case_study_slug: 'automation-rollout' },
+    { name: 'Earlier cloud work' },
+    { name: '  ' },
+  ]
+
+  assert.deepEqual(portfolioContent.selectStandaloneProjects?.(projects), [projects[1]])
+})
+
+test('selectCapabilities combines skills and stack into unique grouped names', () => {
+  const skills = [
+    { name: 'n8n', category: 'Automation' },
+    { name: 'OpenAI', category: 'AI' },
+  ]
+  const stack = [
+    { name: 'n8n', category: 'Automation' },
+    { name: 'PostgreSQL', category: 'Data' },
+  ]
+
+  assert.deepEqual(portfolioContent.selectCapabilities?.(skills, stack), [
+    { name: 'n8n', category: 'Automation' },
+    { name: 'OpenAI', category: 'AI' },
+    { name: 'PostgreSQL', category: 'Data' },
+  ])
+})
+
 test('selectCaseStudies returns all meaningful rows ordered by priority', () => {
   const rows = [
     { order: 5, title: 'Release Automation', summary: 'Reduced deployment time.' },

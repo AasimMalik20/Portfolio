@@ -24,9 +24,10 @@ interface HomeClientProps {
   sections: HomeSection[]
   copy: SiteCopy
   callUrls: { audit?: string; introduction?: string }
+  email?: string
 }
 
-export function HomeClient({ name, sections, copy, callUrls }: HomeClientProps) {
+export function HomeClient({ name, sections, copy, callUrls, email }: HomeClientProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const displayName = name?.trim()
   const mainNavLabel = getSiteCopyValue(copy, 'a11y_main_navigation')
@@ -41,7 +42,7 @@ export function HomeClient({ name, sections, copy, callUrls }: HomeClientProps) 
     Boolean(call?.href && call?.label && (/^https?:\/\//i.test(call.href.trim()) || /^#[^\s]+/.test(call.href.trim()) || /^\//.test(call.href.trim()))),
   )
   const navSections = sections.filter(({ id, label }) =>
-    label.trim() && ['services', 'work', 'projects', 'process', 'about', 'education'].includes(id),
+    label.trim() && ['services', 'work', 'process', 'about'].includes(id),
   ).filter((section, index, all) =>
     all.findIndex(candidate => candidate.label === section.label) === index,
   )
@@ -67,16 +68,16 @@ export function HomeClient({ name, sections, copy, callUrls }: HomeClientProps) 
                   {label.toUpperCase()}
                 </a>
               ))}
-              {calls.map(call => (
-                <a
-                  key={call.href}
-                  href={call.href}
-                  target={isExternalLink(call.href) ? '_blank' : undefined}
-                  rel={isExternalLink(call.href) ? 'noopener noreferrer' : undefined}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {call.label.toUpperCase()}
-                </a>
+              {calls.slice(0, 1).map(call => (
+                <Button key={call.href} size="sm" asChild>
+                  <a
+                    href={call.href}
+                    target={isExternalLink(call.href) ? '_blank' : undefined}
+                    rel={isExternalLink(call.href) ? 'noopener noreferrer' : undefined}
+                  >
+                    {call.label}
+                  </a>
+                </Button>
               ))}
             </nav>
 
@@ -132,9 +133,21 @@ export function HomeClient({ name, sections, copy, callUrls }: HomeClientProps) 
       </main>
 
       <footer className="py-6 border-t border-border mt-16 bg-background">
-        <div className="container mx-auto text-center text-muted-foreground text-xs px-4 md:px-6">
+        <div className="container mx-auto flex flex-col items-center gap-3 text-center text-muted-foreground text-xs px-4 md:px-6">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            {navSections.map(({ id, label }) => (
+              <a key={id} href={`#${id}`} className="hover:text-foreground transition-colors">
+                {label}
+              </a>
+            ))}
+            {email?.trim() && (
+              <a href={`mailto:${email.trim()}`} className="hover:text-foreground transition-colors">
+                {email.trim()}
+              </a>
+            )}
+          </div>
           {getSiteCopyValue(copy, 'footer_copyright') && displayName
-            ? `${getSiteCopyValue(copy, 'footer_copyright')} ${new Date().getFullYear()} ${displayName}`
+            ? <span>{`${getSiteCopyValue(copy, 'footer_copyright')} ${new Date().getFullYear()} ${displayName}`}</span>
             : null}
         </div>
       </footer>

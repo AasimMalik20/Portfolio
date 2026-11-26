@@ -1,25 +1,39 @@
 import type {Metadata} from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider'; // Import ThemeProvider
 import { fetchAllSheetData } from '@/lib/sheets'
 import { getSiteCopyValue } from '@/lib/site-copy'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
+import { resolveSiteUrl } from '@/lib/site-metadata'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await fetchAllSheetData()
   const copy = data.siteCopy
   const title = getSiteCopyValue(copy, 'site_title')
   const description = getSiteCopyValue(copy, 'site_description')
+  const siteUrl = resolveSiteUrl(data.settings.site_url ?? process.env.NEXT_PUBLIC_SITE_URL)
 
   return {
+    ...(siteUrl ? {
+      metadataBase: siteUrl,
+      alternates: { canonical: '/' },
+    } : {}),
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
+    ...(title && description ? {
+      openGraph: {
+        type: 'website',
+        title,
+        description,
+        ...(siteUrl ? { url: siteUrl.toString() } : {}),
+      },
+      twitter: {
+        card: 'summary',
+        title,
+        description,
+      },
+    } : {}),
+    robots: { index: true, follow: true },
   }
 }
 
@@ -30,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

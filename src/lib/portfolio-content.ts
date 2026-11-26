@@ -1,4 +1,4 @@
-import type { CaseStudy, Post, Project, Testimonial } from './sheets'
+import type { CaseStudy, Post, Project, Skill, StackItem, Testimonial } from './sheets'
 
 export function isVisible(value: string | undefined | null): boolean {
   if (!value || value.trim() === '') return true
@@ -61,6 +61,36 @@ export function isMeaningfulCaseStudy(
 
 export function selectProjects(projects: readonly Project[]): Project[] {
   return projects.filter(project => project.name.trim())
+}
+
+export function selectStandaloneProjects(projects: readonly Project[]): Project[] {
+  return selectProjects(projects).filter(project => !project.case_study_slug?.trim())
+}
+
+type CapabilitySource = Pick<Skill, 'name' | 'category'> | Pick<StackItem, 'name' | 'category'>
+
+export type Capability = {
+  name: string
+  category: string
+}
+
+export function selectCapabilities(
+  skills: readonly CapabilitySource[],
+  stack: readonly CapabilitySource[],
+): Capability[] {
+  const seen = new Set<string>()
+
+  return [...skills, ...stack].flatMap(item => {
+    const name = item.name.trim()
+    if (!name) return []
+
+    const category = item.category.trim()
+    const key = `${category.toLocaleLowerCase()}\u0000${name.toLocaleLowerCase()}`
+    if (seen.has(key)) return []
+    seen.add(key)
+
+    return [{ name, category }]
+  })
 }
 
 export function shouldShowPosts(posts: readonly Post[], redditUsername?: string): boolean {
