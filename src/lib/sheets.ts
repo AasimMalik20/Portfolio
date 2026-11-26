@@ -137,6 +137,7 @@ const ProcessRowSchema = z.object({
   icon_slug: z.string().optional(),
   deliverable: z.string().optional(),
   timeframe: z.string().optional(),
+  duration: z.string().optional(),
 })
 
 const ExperienceRowSchema = z.object({
@@ -275,6 +276,7 @@ export type ProcessStep = {
   icon_slug?: string
   deliverable?: string
   timeframe?: string
+  duration?: string
 }
 
 export type Experience = {
@@ -352,7 +354,10 @@ export type AllSheetData = {
   settings: SettingsData
   siteCopy: SiteCopyData
   stats: HeroStats
+  proof: ProofItem[]
 }
+
+export type ProofItem = { order: number; value: string; label: string; source_url?: string }
 
 const EMPTY_DATA: AllSheetData = {
   projects: [],
@@ -370,6 +375,7 @@ const EMPTY_DATA: AllSheetData = {
   settings: {},
   siteCopy: {},
   stats: {},
+  proof: [],
 }
 
 // ─── Row Parsers ──────────────────────────────────────────────────────────────
@@ -538,6 +544,7 @@ function parseProcess(rows: Record<string, string>[]): ProcessStep[] {
       icon_slug: d.icon_slug || undefined,
       deliverable: d.deliverable || undefined,
       timeframe: d.timeframe || undefined,
+      duration: d.duration || undefined,
     })
   }
   return result.sort((a, b) => a.order - b.order)
@@ -739,7 +746,7 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const TABS = [
       'Projects', 'Experience', 'Skills', 'Certifications', 'Education', 'Posts',
       'Services', 'CaseStudies', 'Stack', 'Testimonials', 'Process',
-      'Contact', 'Settings', 'SiteCopy',
+      'Contact', 'Settings', 'SiteCopy', 'Proof',
     ]
 
     // Ask Google which tabs exist; request only those (case/space tolerant)
@@ -789,10 +796,14 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
     const stack = parseStack(parseRange(getRange('Stack')))
     const testimonials = parseTestimonials(parseRange(getRange('Testimonials')))
     const process = parseProcess(parseRange(getRange('Process')))
+    const proof = parseRange(getRange('Proof'))
+      .filter(row => isVisible(row.visible) && row.value?.trim() && row.label?.trim())
+      .map(row => ({ order: Number(row.order) || 0, value: row.value.trim(), label: row.label.trim(), source_url: row.source_url?.trim() || undefined }))
+      .sort((a, b) => a.order - b.order)
     const contact = parseVisibleKeyValueRows(parseRange(getRange('Contact')))
     for (const { key, issue } of getRequiredHttpLinkIssues(
       contact,
-      ['audit_call_url', 'intro_call_url'],
+      ['booking_url'],
     )) {
       console.warn(`[sheets] ${issue === 'missing' ? 'Missing' : 'Invalid'} required Contact link: ${key}`)
     }
@@ -809,6 +820,10 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       'instagram',
       'website',
       'resume_url',
+      'cv_url',
+      'booking_url',
+      'audit_call_url',
+      'intro_call_url',
     ]) {
       if (contact[key]?.trim() && !isValidContactLink(key, contact[key])) {
         console.warn(`[sheets] Invalid Contact link: ${key}`)
@@ -838,6 +853,7 @@ async function _fetchAllSheetData(): Promise<AllSheetData> {
       settings,
       siteCopy,
       stats,
+      proof,
     }
   } catch (err) {
     console.error('[sheets] Failed to fetch sheet data:', err)

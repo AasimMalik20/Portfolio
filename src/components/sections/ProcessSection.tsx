@@ -23,9 +23,9 @@ export function ProcessSection({ process, copy }: ProcessSectionProps) {
           )}
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, i) => (
-            <div key={step.title + i} className="flex gap-6 items-start">
+            <div key={step.title + i} className="flex gap-4 items-start">
               <div className="flex-shrink-0 w-10 h-10 rounded-full border-2 border-primary/40 bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
                 {step.step || i + 1}
               </div>
@@ -37,8 +37,8 @@ export function ProcessSection({ process, copy }: ProcessSectionProps) {
                 {step.deliverable && getSiteCopyValue(copy, 'process_deliverable_label') && (
                   <p className="text-muted-foreground text-xs"><span className="font-medium">{getSiteCopyValue(copy, 'process_deliverable_label')}</span> {step.deliverable}</p>
                 )}
-                {step.timeframe && getSiteCopyValue(copy, 'process_timeframe_label') && (
-                  <p className="text-muted-foreground text-xs"><span className="font-medium">{getSiteCopyValue(copy, 'process_timeframe_label')}</span> {step.timeframe}</p>
+                {(step.duration || step.timeframe) && (
+                  <p className="text-muted-foreground text-xs">{step.duration || step.timeframe}</p>
                 )}
               </div>
             </div>

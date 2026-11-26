@@ -23,24 +23,20 @@ interface HomeClientProps {
   name?: string
   sections: HomeSection[]
   copy: SiteCopy
-  callUrls: { audit?: string; introduction?: string }
   email?: string
+  bookingUrl?: string
+  bookingLabel?: string
+  cvUrl?: string
+  cvLabel?: string
 }
 
-export function HomeClient({ name, sections, copy, callUrls, email }: HomeClientProps) {
+export function HomeClient({ name, sections, copy, email, bookingUrl, bookingLabel, cvUrl, cvLabel }: HomeClientProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const displayName = name?.trim()
   const mainNavLabel = getSiteCopyValue(copy, 'a11y_main_navigation')
   const mobileNavLabel = getSiteCopyValue(copy, 'a11y_mobile_navigation')
   const openMenuLabel = getSiteCopyValue(copy, 'a11y_open_menu')
-  const auditLabel = getSiteCopyValue(copy, 'cta_audit_call')
-  const introductionLabel = getSiteCopyValue(copy, 'cta_intro_call')
-  const calls = [
-    callUrls.audit ? { href: callUrls.audit, label: auditLabel } : undefined,
-    callUrls.introduction ? { href: callUrls.introduction, label: introductionLabel } : undefined,
-  ].filter((call): call is { href: string; label: string } =>
-    Boolean(call?.href && call?.label && (/^https?:\/\//i.test(call.href.trim()) || /^#[^\s]+/.test(call.href.trim()) || /^\//.test(call.href.trim()))),
-  )
+  const navBooking = bookingUrl && bookingLabel ? { href: bookingUrl, label: bookingLabel } : undefined
   const navSections = sections.filter(({ id, label }) =>
     label.trim() && ['services', 'work', 'process', 'about'].includes(id),
   ).filter((section, index, all) =>
@@ -68,17 +64,8 @@ export function HomeClient({ name, sections, copy, callUrls, email }: HomeClient
                   {label.toUpperCase()}
                 </a>
               ))}
-              {calls.slice(0, 1).map(call => (
-                <Button key={call.href} size="sm" asChild>
-                  <a
-                    href={call.href}
-                    target={isExternalLink(call.href) ? '_blank' : undefined}
-                    rel={isExternalLink(call.href) ? 'noopener noreferrer' : undefined}
-                  >
-                    {call.label}
-                  </a>
-                </Button>
-              ))}
+              {navBooking && <Button size="sm" asChild><a href={navBooking.href} target="_blank" rel="noopener noreferrer">{navBooking.label}</a></Button>}
+              {cvUrl && cvLabel && <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-foreground">{cvLabel}</a>}
             </nav>
 
             <div className="hidden md:block">
@@ -106,18 +93,18 @@ export function HomeClient({ name, sections, copy, callUrls, email }: HomeClient
                         </a>
                       </SheetClose>
                     ))}
-                    {calls.map(call => (
-                      <SheetClose asChild key={call.href}>
+                    {navBooking && (
+                      <SheetClose asChild key={navBooking.href}>
                         <a
-                          href={call.href}
-                          target={isExternalLink(call.href) ? '_blank' : undefined}
-                          rel={isExternalLink(call.href) ? 'noopener noreferrer' : undefined}
+                          href={navBooking.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-lg font-medium text-foreground hover:text-primary transition-colors"
                         >
-                          {call.label}
+                          {navBooking.label}
                         </a>
                       </SheetClose>
-                    ))}
+                    )}
                   </nav>
                 </SheetContent>
               </Sheet>
@@ -145,6 +132,7 @@ export function HomeClient({ name, sections, copy, callUrls, email }: HomeClient
                 {email.trim()}
               </a>
             )}
+            {cvUrl && cvLabel && <a href={cvUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">{cvLabel}</a>}
           </div>
           {getSiteCopyValue(copy, 'footer_copyright') && displayName
             ? <span>{`${getSiteCopyValue(copy, 'footer_copyright')} ${new Date().getFullYear()} ${displayName}`}</span>
