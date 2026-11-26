@@ -52,3 +52,7 @@ key.json
 
 # SDD workspace (scratch, git-ignored)
 .superpowers/
+docs/superpowers/
+
+# Local working notes (not published)
+/SITE_AUDIT.md
